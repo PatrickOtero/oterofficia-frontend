@@ -57,8 +57,13 @@ export const GreetBotContainer = styled("div")`
         transform-style: preserve-3d;
 
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         animation: greetBotFloating 4000ms infinite;
+
+        background: linear-gradient(#222121ff 0%, #202020ff 10%, #0f0f0fff 50%, #000000ff 100%);
 
         height: 30rem;
         width: 30rem;
@@ -68,28 +73,24 @@ export const GreetBotContainer = styled("div")`
         transition: 1000ms;
       }
 
+      .greetbot01-inner-form {
+            position: absolute;
+
+            height: 27rem;
+            width: 27rem;
+
+            background: linear-gradient(#4d4c4cff 0%, #2e2d2dff 10%, #0f0f0fff 50%, #000000ff 100%);
+
+            border-radius: 50%;
+
+            filter: blur(1rem);
+        }
+
       .bot-showing-menu {
         transform: translateZ(-60rem) translateX(90rem);
 
         animation: none;
       }
-
-      .greetbot01-static-part {        
-        position: absolute;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        height: 15rem;
-        width: 30rem;
-
-        background: linear-gradient(#413f3f 0%, #333232 10%, #1d1c1c 50%, #030303 100%);
-
-        border-radius: 15rem 15rem 0 0;
-
-        perspective: 45rem;
-        transform-style: preserve-3d;
 
         .greetBot01-visor {
             display: flex;
@@ -116,17 +117,6 @@ export const GreetBotContainer = styled("div")`
 
         .visor-to-right {
             transform: translateX(10rem) translateZ(2rem) rotateY(31deg);
-        }
-
-        .greetbot01-static-part-inner-form {
-            height: 13rem;
-            width: 27rem;
-
-            background: linear-gradient(#686565 0%, #272626 10%, #1d1c1c 50%, #030303 100%);
-
-            border-radius: 15rem 15rem 0 0;
-
-            filter: blur(0.4rem);
         }
 
         .gb-visor-horizontal {
@@ -188,7 +178,6 @@ export const GreetBotContainer = styled("div")`
                 margin-top: 2rem;
             }
         }
-      }
 
       .greetbot01-moving-part {
         position: absolute;
@@ -199,7 +188,7 @@ export const GreetBotContainer = styled("div")`
         
         animation: rotateBotPart 5s linear infinite;
 
-        background-image: linear-gradient(#292828 0%, #222121 10%, #181717 50%, #030303 100%);
+        background-image: linear-gradient(#0c0c0c 0%, #0f0f0f 10%, #0c0c0c 50%, #000000 100%);
         background-repeat: repeat;
         background-size: 15rem;
 
@@ -235,14 +224,16 @@ export const GreetBotContainer = styled("div")`
         .greetbot01-moving-part-inner-form {
             position: absolute;
 
+            top: -4rem;
+
             height: 13rem;
             width: 27rem;
 
-            background-image: linear-gradient(#444343 0%, #2c2b2b 10%, #1d1c1c 50%, #030303 100%);
+            background-image: linear-gradient(#0f0f0f 0%, #080808 10%, #0e0d0d 50%, #000000 100%);
 
             border-radius: 0 0 15rem 15rem;
 
-            filter: blur(1rem);
+            filter: blur(2rem);
         }
       }
 

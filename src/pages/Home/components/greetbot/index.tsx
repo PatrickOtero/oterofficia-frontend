@@ -22,8 +22,9 @@ export const GreetBot = ({setHologramActivated, setBotPosition, setVisorPosition
                     setBotPosition("bot-showing-menu");
                     setHologramActivated(true);
                 }} className={`greetbot-body ${botPosition}`}>
-                <div className="greetbot01-static-part">
-                    <div className="greetbot01-static-part-inner-form"></div>
+                    <div className="greetbot01-inner-form">
+                        
+                </div>
                     <div className={`greetBot01-visor ${visorPosition}`}>
                         <div className="gb-visor-horizontal">
                             <div className="gb-eyes eyeLeft"></div>
@@ -33,11 +34,6 @@ export const GreetBot = ({setHologramActivated, setBotPosition, setVisorPosition
                         <div className="gb-mouth"></div>
                         </div>
                     </div>
-                </div>
-                <div className="greetbot01-moving-part">
-                <div className="greetbot01-moving-part-inner-form">
-                </div>
-                </div>
                 <div className="turbines-container">
                     <GreetBotTurbine animDelay="1s"/>
                     <GreetBotTurbine animDelay="2s"/>

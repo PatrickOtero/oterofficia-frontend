@@ -36,6 +36,7 @@ export const InitialMenuContainer = styled(Box)`
     
     .initial-menu-main {
         display: flex;
+        align-items: center;
         flex-direction: column;
 
         padding: 4rem;
@@ -61,7 +62,6 @@ export const InitialMenuContainer = styled(Box)`
 
     .initial-menu-button {
         margin-bottom: 5rem;
-        margin-left: 5rem;
 
         border-radius: 1rem;
         background-color: #288a9128;
@@ -75,7 +75,7 @@ export const InitialMenuContainer = styled(Box)`
         width: 20rem;
         height: 6rem;
 
-        transition: 400ms;
+        transition: 200ms;
 
         cursor: pointer;
 
