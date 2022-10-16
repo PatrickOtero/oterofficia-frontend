@@ -8,7 +8,6 @@ export const HomeContainer = styled(Box)`
     display: flex;
 
     transform-style: preserve-3d;
-    perspective: 1000px;
 
     justify-content: center;
     align-items: center; 

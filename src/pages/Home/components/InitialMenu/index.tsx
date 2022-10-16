@@ -2,12 +2,17 @@ import { InitialMenuContainer } from "./InitialMenu.style";
 import { Dispatch, SetStateAction} from "react"
 
 interface IInitialMenu {
+    setInfoTextHolo: Dispatch<SetStateAction<boolean>>
     setHologramActivated: Dispatch<SetStateAction<boolean>>
+    setIsShowingMenu: Dispatch<SetStateAction<boolean>>
     setVisorPosition: Dispatch<SetStateAction<string>>
     setBotPosition: Dispatch<SetStateAction<string>>
+    setEyeState: Dispatch<SetStateAction<string>>
+
+    eyeState: string;
 }
 
-export const InitialMenu = ({setHologramActivated, setVisorPosition, setBotPosition}: IInitialMenu) => {
+export const InitialMenu = ({setEyeState, eyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition}: IInitialMenu) => {
 
     return (
         <InitialMenuContainer>
@@ -19,8 +24,11 @@ export const InitialMenu = ({setHologramActivated, setVisorPosition, setBotPosit
                 <button onClick={() =>
                      {
                         setHologramActivated(false);
-                        setVisorPosition("");
+                        setIsShowingMenu(false);
+                        setInfoTextHolo(false);
+                        setVisorPosition("visor-to-top");
                         setBotPosition("");
+                        setEyeState("");
                      }} className="initial-menu-button studies">FECHAR</button>
             </div>
         </InitialMenuContainer>

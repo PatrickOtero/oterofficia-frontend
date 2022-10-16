@@ -31,17 +31,17 @@ export const GreetBotContainer = styled("div")`
         }
     }
 
-    @keyframes hologramBeam {
+    @keyframes eyeEmittingHolo {
         0% {
-            box-shadow: 10px 0px 100px 0px #276881;
+            box-shadow: 0 -1px 20px 20px #288a91;
         }
 
         50% {
-            box-shadow: -10px -100px 60px 50px #276881;
+            box-shadow: 0 -1px 10px 5px #288a91;
         }
 
         100% {
-            box-shadow: 10px 0px 20px 0px #276881;
+            box-shadow: 0 -1px 20px 20px #288a91;
         }
     }
 
@@ -152,6 +152,13 @@ export const GreetBotContainer = styled("div")`
             top: 2rem;
             right: 4rem;
             }
+
+            .emitting-holo {
+                animation: eyeEmittingHolo 10ms infinite;
+
+                background-color: #288a91;
+                box-shadow: 0.5px -1px 15px 12px #288a91;                
+            }
         }
 
         .gb-visor-vertical {
@@ -236,36 +243,4 @@ export const GreetBotContainer = styled("div")`
             filter: blur(2rem);
         }
       }
-
-      .greetBot-menu-hologram-light-beam {
-        position: absolute;
-
-        animation: hologramBeam 10ms linear infinite;
-
-        transition: 1000ms;
-
-        width: 0.1rem;
-
-        background-color: #1e7da388;
-        box-shadow: 0 0 0px -10px #276881;
-      }
-
-      .eye-beam-1 {
-        transform: translateZ(5rem) rotateZ(-80deg);
-
-        right: 44rem;
-        bottom: 6rem;
-
-        height: 44rem;
-      }
-
-      .eye-beam-2 {
-        transform: translateZ(2rem) rotateZ(-80deg);
-
-        right: 47.5rem;
-        bottom: 7.3rem;
-
-        height: 40rem;
-    }
-
 `
