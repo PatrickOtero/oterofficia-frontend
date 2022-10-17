@@ -1,8 +1,9 @@
 import { ThemeProvider } from "styled-components"
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter, useNavigate } from "react-router-dom"
 import { GlobalStyle } from "./Styles/global";
 import { Router } from "./Router";
 import { blackTheme } from "./Styles/themes/blackTheme";
+import { useEffect } from "react";
 
 function App() {
 

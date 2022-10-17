@@ -106,6 +106,30 @@ export const GreetBotContainer = styled("div")`
         transform-style: preserve-3d;
       }
 
+      .bot-showing-aboutme {
+        transform: translateZ(-360rem) translateX(130rem);
+
+        animation: none;
+
+        transform-style: preserve-3d;
+      }
+
+      .bot-showing-portfolio {
+        transform: translateZ(-260rem) translateX(90rem);
+
+        animation: none;
+
+        transform-style: preserve-3d;
+      }
+
+      .bot-showing-studies {
+        transform: translateZ(-260rem) translateX(90rem);
+
+        animation: none;
+
+        transform-style: preserve-3d;
+      }
+
         .greetBot01-visor {
             display: flex;
 

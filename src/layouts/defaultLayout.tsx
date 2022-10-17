@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useBotFunctionsContext } from "../hooks/useBotFunctionsContext";
+import { HomePage } from "../pages/Home";
 import { PlanetEarth } from "./components/Earth";
 import { GreetBot } from "./components/greetbot";
 import { GreetingLetters } from "./components/GreetingLetters";
@@ -9,11 +10,13 @@ import { DefaultContainer } from "./default.style";
 
 export function DefaultLayout() {
 
-    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setVisorPosition, setBotPosition, visorPosition, botPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu } = useBotFunctionsContext();
+    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setVisorPosition, setBotPosition, visorPosition, botPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, setHomePage, aboutMePage } = useBotFunctionsContext();
 
     return (
        <DefaultContainer>
             <GreetBot
+                setHomePage={setHomePage}
+                aboutMePage={aboutMePage}
                 setInfoTextHolo={setInfoTextHolo}
                 infoTextHolo={infoTextHolo}
                 setHologramActivated={setHologramActivated}

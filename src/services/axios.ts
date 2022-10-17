@@ -1,9 +1,14 @@
 import axios from "axios"
 
+const githubUsersApi = "https://api.github.com/users"
 const serverUrl = "https://api-dev.blox.education"
 
 export const api = axios.create({ 
     baseURL: serverUrl,
+});
+
+export const githubApi = axios.create({ 
+    baseURL: githubUsersApi,
 });
 
 export const apiAuth = axios.create({

@@ -7,6 +7,7 @@ interface IGreetBot {
     setIsShowingMenu: Dispatch<SetStateAction<boolean>>
     setInfoTextHolo: Dispatch<SetStateAction<boolean>>
     setEyeState: Dispatch<SetStateAction<string>>
+    setHomePage: Dispatch<SetStateAction<boolean>>;
 
     eyeState: string;
     visorPosition: string;
@@ -14,4 +15,5 @@ interface IGreetBot {
     infoTextHolo: boolean;
     hologramActivated: boolean;
     isShowingMenu: boolean;
+    aboutMePage: boolean
 }

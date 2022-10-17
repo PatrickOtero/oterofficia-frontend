@@ -4,7 +4,7 @@ import { HologramBeam } from "./hologramBeam";
 import { GreetText } from "../GreetText";
 import { IGreetBot } from "../../../@Types/components/layout/greetBot";
 
-export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition}: IGreetBot) => {
+export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition, aboutMePage, setHomePage}: IGreetBot) => {
 
     return (
         <GreetBotContainer>
@@ -19,9 +19,9 @@ export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, s
                 {
                     setInfoTextHolo(false);
                     setVisorPosition("visor-to-left");
-                    setEyeState("blue")
-                    setBotPosition("bot-showing-menu");
+                    setBotPosition( !aboutMePage ? "bot-showing-menu" : botPosition);
                     setEyeState("emitting-holo")
+                    setHomePage(true);
                     setHologramActivated(true);
                     setIsShowingMenu(true);
                 }}>

@@ -2,8 +2,7 @@ import { InitialMenuContainer } from "./InitialMenu.style";
 import { useNavigate } from "react-router-dom";
 import { IInitialMenu } from "../../../../@Types/components/home/initialMenu";
 
-
-export const InitialMenu = ({setEyeState, eyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition}: IInitialMenu) => {
+export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition, setAboutMePage, setHomePage}: IInitialMenu) => {
 
     const navigate = useNavigate();
 
@@ -13,13 +12,16 @@ export const InitialMenu = ({setEyeState, eyeState, setInfoTextHolo, setIsShowin
                 <b className="site-title-on-initial-menu">OTEROFFICIA</b>
                 <button onClick={() =>
                     {
-                        setHologramActivated(false)
+                        setHomePage(false)
+                        setBotPosition("bot-showing-aboutme")
+                        setAboutMePage(true)
                         navigate("/aboutme")
                     }} className="initial-menu-button about-me">SOBRE MIM</button>
                 <button className="initial-menu-button portfolio">PORTFOLIO</button>
                 <button className="initial-menu-button studies">ESTUDOS</button>
                 <button onClick={() =>
                      {
+                        setHomePage(false)
                         setHologramActivated(false);
                         setIsShowingMenu(false);
                         setInfoTextHolo(false);
