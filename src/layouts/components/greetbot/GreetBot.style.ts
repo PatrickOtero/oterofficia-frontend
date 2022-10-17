@@ -46,6 +46,9 @@ export const GreetBotContainer = styled("div")`
     }
 
      position: absolute;
+
+     transform: translateY(0) translateX(0);
+
      animation: greetBotArriving 1000ms linear;
 
     transform-style: preserve-3d;
@@ -53,8 +56,8 @@ export const GreetBotContainer = styled("div")`
      border-radius: 50%;
 
      .greetbot-body {
-        perspective: 1000px;
         transform-style: preserve-3d;
+        perspective: 1000px;
 
         position: relative;
         display: flex;
@@ -73,6 +76,15 @@ export const GreetBotContainer = styled("div")`
         transition: 1000ms;
       }
 
+        .turbines-container {
+            position: absolute;
+
+            top: 18rem;
+            left: 15rem;
+
+            transform-style: preserve-3d;
+      }
+
       .greetbot01-inner-form {
             position: absolute;
 
@@ -87,13 +99,17 @@ export const GreetBotContainer = styled("div")`
         }
 
       .bot-showing-menu {
-        transform: translateZ(-60rem) translateX(90rem);
+        transform: translateZ(-260rem) translateX(90rem);
 
         animation: none;
+
+        transform-style: preserve-3d;
       }
 
         .greetBot01-visor {
             display: flex;
+
+            transform-style: preserve-3d;
 
             justify-content: center;
             align-items: center;
@@ -112,10 +128,14 @@ export const GreetBotContainer = styled("div")`
         }
 
         .visor-to-left {
+            transform-style: preserve-3d;
+
             transform: translateX(-10rem) translateZ(2rem) rotateY(-31deg);
         }
 
         .visor-to-right {
+            transform-style: preserve-3d;
+            
             transform: translateX(10rem) translateZ(2rem) rotateY(31deg);
         }
 
@@ -133,24 +153,24 @@ export const GreetBotContainer = styled("div")`
             z-index: 1;
 
             .gb-eyes {
-            position: absolute;
+                position: absolute;
 
-            border-radius: 50%;
-            background-color: #f0c44aff;
-            box-shadow: 0.5px -1px 15px 12px #dbb240;
+                border-radius: 50%;
+                background-color: #f0c44aff;
+                box-shadow: 0.5px -1px 15px 12px #dbb240;
 
-            width: 0.3rem;
-            height: 0.3rem;
+                width: 0.3rem;
+                height: 0.3rem;
             }
 
             .eyeLeft {
-            top: 2rem;
-            left: 4rem;
+                top: 2rem;
+                left: 4rem;
             }
 
             .eyeRight {
-            top: 2rem;
-            right: 4rem;
+                top: 2rem;
+                right: 4rem;
             }
 
             .emitting-holo {
@@ -186,29 +206,6 @@ export const GreetBotContainer = styled("div")`
             }
         }
 
-      .greetbot01-moving-part {
-        position: absolute;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        
-        animation: rotateBotPart 5s linear infinite;
-
-        background-image: linear-gradient(#0c0c0c 0%, #0f0f0f 10%, #0c0c0c 50%, #000000 100%);
-        background-repeat: repeat;
-        background-size: 15rem;
-
-        height: 15rem;
-        width: 30rem;
-
-        top: 15rem;
-
-        border-radius: 0 0 15rem 15rem;
-
-        transform-style: preserve-3d;
-        perspective: 45rem;
-
         .bot-text {
             position: absolute;
             top: 1rem;
@@ -227,20 +224,4 @@ export const GreetBotContainer = styled("div")`
         .robot-name-text {
             z-index: -1;
         }
-
-        .greetbot01-moving-part-inner-form {
-            position: absolute;
-
-            top: -4rem;
-
-            height: 13rem;
-            width: 27rem;
-
-            background-image: linear-gradient(#0f0f0f 0%, #080808 10%, #0e0d0d 50%, #000000 100%);
-
-            border-radius: 0 0 15rem 15rem;
-
-            filter: blur(2rem);
-        }
-      }
 `

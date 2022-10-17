@@ -5,7 +5,7 @@ export const SpaceContainer = styled(Box)`
 
 position: absolute;
 
-transform: translateZ(-281rem) scale(4);
+transform: translateZ(-1000rem) scale(3);
 
 @keyframes starsGlow {
         0% {

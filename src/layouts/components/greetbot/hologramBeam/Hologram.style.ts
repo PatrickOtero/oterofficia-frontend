@@ -36,18 +36,18 @@ export const HoloBeamContainer = styled("div")`
       .eye-beam-1 {
         transform: translateZ(1rem) rotateZ(-80deg);
 
-        top: -20rem;
-        right: 35rem;
+        top: -23.4rem;
+        right: 38rem;
         
-        height: 45rem;
+        height: 50rem;
       }
 
       .eye-beam-2 {
         transform: translateZ(5rem) rotateZ(-80deg);
 
-        top: -23rem;
-        right: 33rem;
+        top: -26.3rem;
+        right: 35rem;
 
-        height: 50rem;
+        height: 55rem;
     }
 `

@@ -1,30 +1,15 @@
 import { GreetBotContainer } from "./GreetBot.style";
 import { GreetBotTurbine } from "./turbines";
-import {Dispatch, SetStateAction} from "react"
 import { HologramBeam } from "./hologramBeam";
 import { GreetText } from "../GreetText";
-
-interface IGreetBot {
-    setVisorPosition: Dispatch<SetStateAction<string>>
-    setBotPosition: Dispatch<SetStateAction<string>>
-    setHologramActivated: Dispatch<SetStateAction<boolean>>
-    setIsShowingMenu: Dispatch<SetStateAction<boolean>>
-    setInfoTextHolo: Dispatch<SetStateAction<boolean>>
-    setEyeState: Dispatch<SetStateAction<string>>
-
-    eyeState: string;
-    visorPosition: string;
-    botPosition: string;
-    infoTextHolo: boolean;
-    hologramActivated: boolean;
-    isShowingMenu: boolean;
-}
+import { IGreetBot } from "../../../@Types/components/layout/greetBot";
 
 export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition}: IGreetBot) => {
 
     return (
         <GreetBotContainer>
             <div
+             className={`greetbot-body ${botPosition}`}
              onMouseEnter={() =>
                  {
                     setEyeState("emitting-holo")
@@ -39,7 +24,7 @@ export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, s
                     setEyeState("emitting-holo")
                     setHologramActivated(true);
                     setIsShowingMenu(true);
-                }} className={`greetbot-body ${botPosition}`}>
+                }}>
                     <div className="greetbot01-inner-form">
                         
                 </div>

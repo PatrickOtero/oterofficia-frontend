@@ -26,6 +26,9 @@ body {
     max-height: 100vh;
 
     overflow: hidden;
+
+    perspective: 1000rem;
+    transform-style: preserve-3d;
 }
 
 .theme-changer {

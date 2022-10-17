@@ -33,8 +33,12 @@ export const InitialMenuContainer = styled(Box)`
 
     height: 60rem;
     width: 40rem;
+
+    transform-style: preserve-3d;
     
     .initial-menu-main {
+        transform-style: preserve-3d;
+        
         display: flex;
         align-items: center;
         flex-direction: column;

@@ -1,8 +1,47 @@
 import styled from "styled-components";
 
 export const TurbineContainer = styled("div")`
+        @keyframes turbineShuttle {
+            from {
+                    opacity: 0;
+                    height: 0.1rem;
+                }
+                to {
+                    opacity: 1;
+                    height: 4rem ;
+                }
+            }
 
-        perspective: 1000px;
+            @keyframes turbineRotationX {
+                from {
+                    transform: translateZ(0) translateX(-19rem);
+                }
+                50% {
+                    transform: translateZ(0) translateX(19rem);
+                }
+                50.01% {
+                    transform: translateZ(-0.1rem) translateX(19rem);
+                }
+                to {
+                    transform: translateZ(-0.1rem) translateX(-19rem);
+                }
+            }
+
+            @keyframes turbineRotationZ {
+                from {
+                    transform: translateZ(0)
+                } 
+                25% {
+                    transform: translateZ(5rem)
+                }
+                75% {
+                    transform: translateZ(-5rem)
+                }
+                100% {
+                    transform: translateZ(0);
+                }
+            }
+            
         transform-style: preserve-3d;
 
       .turbine-container-zindex {
