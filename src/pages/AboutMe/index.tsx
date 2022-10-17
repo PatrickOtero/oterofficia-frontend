@@ -1,31 +1,47 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
 import { AboutMeContainer } from "./AboutMe.style";
+import { AboutMeSection } from "./AboutMeSection";
+import linkedinPhoto from "./assets/linkedinPhoto.png"
+import { useSectionData } from "./hooks/useSectionData";
 
 export const AboutMePage = () => {
 
-    const {handleGetGithubProfile, githubProfile, aboutMePage } = useBotFunctionsContext();
+    const {aboutMePage, setAboutMePage, setHomePage, setBotPosition, handleGetGithubProfile, githubProfile } = useBotFunctionsContext();
+
+    const { linkedinDescription, linkedinName, linkedinUrl } = useSectionData()
 
     useEffect(() => {
         handleGetGithubProfile()
     }, [])
 
+    const navigate = useNavigate();
+
     return (
         <AboutMeContainer>           
             { aboutMePage &&
             <div className="aboutme-page-main">
-                <div className="github-info-container">
-                    <b className="github-title">Perfil GITHUB</b>
-                    <div className="github-info-main">
-                        <div className="img-filter">
-                        </div>
-                        <img src={githubProfile.avatar_url} alt="github-image"/>
-                        <div className="github-name-and-description">
-                            <b className="github-profile-name">{githubProfile.name}</b>
-                            <p className="github-description">{githubProfile.bio}</p>
-                        </div>
-                    </div>
-                </div>
+                <AboutMeSection
+                 avatarUrl={githubProfile?.avatar_url}
+                 profileBio={githubProfile?.bio}
+                 profileName={githubProfile?.name}
+                 title="GITHUB"
+                 profileUrl={githubProfile?.url}
+                 />
+                <AboutMeSection
+                 avatarUrl={linkedinPhoto}
+                 profileBio={linkedinDescription}
+                 profileName={linkedinName}
+                 title="LINKEDIN"
+                 profileUrl={linkedinUrl}
+                 />
+                <button onClick={() => {
+                    setAboutMePage(false);
+                    setHomePage(true)
+                    setBotPosition("bot-showing-menu");
+                    navigate("/")
+                }} className="aboutme-return-button" type="button">Voltar</button>
             </div>
             }     
         </AboutMeContainer>

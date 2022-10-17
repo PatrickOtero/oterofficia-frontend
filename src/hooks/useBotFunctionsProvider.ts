@@ -11,6 +11,8 @@ export const useBotFunctionsContextProvider = () => {
     const [ eyeState, setEyeState ] = useState<string>("")
 
     const [ aboutMePage, setAboutMePage ] = useState<boolean>(false)
+    const [ aboutMeState, setAboutMeState ] = useState<string>("")
+
     const [ homePage, setHomePage ] = useState<boolean>(false)
 
     const [ githubProfile, setGithubProfile ] = useState<IGithubProfile>()
@@ -21,7 +23,7 @@ export const useBotFunctionsContextProvider = () => {
 
             const gitProfile = {
                 avatar_url: response.data.avatar_url,
-                url: response.data.url,
+                url: response.data.html_url,
                 name: response.data.name,
                 bio: response.data.bio,
             }
@@ -49,6 +51,7 @@ export const useBotFunctionsContextProvider = () => {
 
         aboutMePage,
         setAboutMePage,
+
         homePage,
         setHomePage,
 

@@ -31,6 +31,31 @@ body {
     transform-style: preserve-3d;
 }
 
+button {
+    margin-bottom: 5rem;
+
+    border-radius: 1rem;
+    background-color: #288a9128;
+    box-shadow: 0 0 50px 10px #288a91 inset;
+
+    color: #88c4c9;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 0 10px #88c4c9;
+
+    width: 20rem;
+    height: 6rem;
+
+    transition: 200ms;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: #288a9100;
+        box-shadow: 0 0 20px 15px #288a91 inset;            
+    }
+}
+
 .theme-changer {
     display: flex;
     justify-content: center;

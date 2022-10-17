@@ -2,20 +2,67 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 
 export const AboutMeContainer = styled(Box)`
+    @keyframes hologramExpandToAboutMe {
+        0% {
+            height: 60rem;
+            width: 40rem;         
+        }
+
+        100% {
+            height: 90rem;
+            width: 80rem;
+        }
+    }
+
+    @keyframes hologramCollapseToInitialMenu {
+        0% {
+            height: 90rem;
+            width: 80rem;
+        }
+        100% {
+            height: 60rem;
+            width: 40rem;         
+        }
+    }
+
+    @keyframes hologramBeamSection {
+        0% {
+            box-shadow: 0 0 30px 30px #288a91 inset;
+        }
+
+        50% {
+            box-shadow: 0 0 80px -10px #288a91 inset;
+        }
+
+        100% {
+            box-shadow: 0 0 30px 30px #288a91 inset;
+        }
+    }
+
     position: absolute;
 
     height: 90rem;
     width: 80rem;
 
+   overflow: auto; 
+
     transform-style: preserve-3d;
 
     transform: translateZ(-140);
+
+    animation: hologramExpandToAboutMe 500ms;
+    
+    transition: 1000ms;
     
     .aboutme-page-main {
         display: flex;
         flex-direction: column;
 
+        overflow: auto;
+
         padding: 5rem;
+
+        gap: 5rem;
         
         width: 100%;
         height: 100%;
@@ -26,74 +73,11 @@ export const AboutMeContainer = styled(Box)`
         box-shadow: -20px 1px 50px 10px #288a91 inset;
     }
 
-    .github-info-container {
-        display: flex;
-        flex-direction: column;
-
-        gap: 2rem;
-    }
-
-    .github-title {
-        font-size: 4rem;
-        color: #88c4c9;
-        text-shadow: 0 0 10px #88c4c9;
-    }
-
-    .github-info-main {
-        display: flex;
-        align-items: center;
-
-        gap: 3rem;
-    }
-
-    .github-description {
-        color: #88c4c9;
-        text-shadow: 0 0 10px #88c4c9;
-        font-size: 2rem;
-    }
-
-    .img-filter {
+    .aboutme-return-button {
         position: absolute;
-        width: 16rem;
-        height: 16rem;
 
-        border-radius: 50%;
-
-        background-color: #88c4c9bd;
-        animation: hologramBeamMenu 10ms linear infinite;
-        box-shadow: -20px 1px 50px 10px #88c4c9bd inset;
-        
-        transition: 400ms;
-
-        z-index: 1;
-
-        &:hover {
-            animation: hologramBeamMenu 10ms linear infinite;
-            background-color: #88c4c900;
-            
-            cursor: pointer;
-        }
-    }
-
-    .github-name-and-description {
-        display: flex;
-        flex-direction: column;
-
-        gap: 2rem;
-    }
-
-    .github-profile-name {
-        font-size: 3rem;
-        color: #88c4c9;
-        text-shadow: 0 0 10px #88c4c9;
-    }
-
-    .github-info-main img {
-        width: 16rem;
-        height: 16rem;
-
-        border-radius: 50%;
-
-        z-index: 0;
+        background-color: #288a9100;
+        bottom: 1rem;
+        right: 5rem;
     }
 `
