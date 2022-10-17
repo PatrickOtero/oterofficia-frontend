@@ -8,7 +8,7 @@ export const MoonContainer = styled("div")`
                 transform: rotateZ(-45deg) translateX(300rem) translateZ(-900rem)
             }
             50% {
-                transform: rotateZ(-45deg) translateX(-300rem) translateZ(-500rem)
+                transform: rotateZ(-45deg) translateX(-900rem) translateZ(-500rem)
             }
             to {
                 transform: rotateZ(-45deg) translateX(-300rem) translateZ(-900rem)
@@ -25,9 +25,9 @@ export const MoonContainer = styled("div")`
 
     transform: translateX(300rem) translateZ(-900rem) rotateZ(-45deg);
 
-    box-shadow: -10px -30px 40px -50px #ffffff;
+    box-shadow: -8px -25px 50px -20px #ffffff;
 
-    animation: moonOrbit 1200s linear infinite;
+    animation: moonOrbit 3000s linear infinite;
 
     .moon-rotation-container {
         position: absolute;

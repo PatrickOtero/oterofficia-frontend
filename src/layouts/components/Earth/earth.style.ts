@@ -13,11 +13,11 @@ export const EarthContainer = styled("div")`
 
     position: absolute;
 
-    width: 100rem;
-    height: 200rem;
+    width: 50rem;
+    height: 150rem;
     border-radius: 45%;
 
-    transform: translateZ(-10rem) translateY(45rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(1.8);
+    transform: translateZ(-10rem) translateY(45rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
 
     overflow: hidden;
     background-image: url(${earthMap});
