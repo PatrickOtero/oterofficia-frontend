@@ -4,6 +4,7 @@ import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
 import { AboutMeContainer } from "./AboutMe.style";
 import { AboutMeSection } from "./AboutMeSection";
 import linkedinPhoto from "./assets/linkedinPhoto.png"
+import { DirectMessageSection } from "./DirectMessageSection";
 import { useSectionData } from "./hooks/useSectionData";
 
 export const AboutMePage = () => {
@@ -36,6 +37,7 @@ export const AboutMePage = () => {
                  title="LINKEDIN"
                  profileUrl={linkedinUrl}
                  />
+                 <DirectMessageSection/>
                 <button onClick={() => {
                     setAboutMePage(false);
                     setHomePage(true)
