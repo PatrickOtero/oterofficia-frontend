@@ -44,8 +44,6 @@ export const AboutMeContainer = styled(Box)`
     height: 90rem;
     width: 80rem;
 
-   overflow: auto; 
-
     transform-style: preserve-3d;
 
     transform: translateZ(-140);
@@ -71,6 +69,17 @@ export const AboutMeContainer = styled(Box)`
         animation: hologramBeamMenu 10ms linear infinite;
         background-color: #288a9128;
         box-shadow: -20px 1px 50px 10px #288a91 inset;
+        
+        &::-webkit-scrollbar {          
+            background-color: #ffffff00; 
+            width: 1rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3rem; 
+            background-color: #26a0a8;
+        }
+
     }
 
     .aboutme-return-button {
