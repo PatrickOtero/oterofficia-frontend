@@ -15,6 +15,20 @@ export const LettersContainer = styled("div")`
             }
     }
 
+    @keyframes lettersTravellingSmallWidth {
+        from {
+                transform: translateX(150rem) translateZ(0) scale(0.4) translateY(40rem);
+            }
+            50% {
+                transform: translateX(-150rem) translateZ(400rem);
+            }
+
+            to {
+                display: none;
+                transform: translateZ(-1000rem) translateX(50rem) translateY(-40rem) scale(0);
+            }
+    }
+
     @keyframes lettersRotation {
         0% {
             transform: rotateZ(-360deg);
@@ -49,4 +63,32 @@ export const LettersContainer = styled("div")`
         color: #a5c2c4;
         text-shadow: 1px 1px 20px #c4d7d8;
     }
+
+    @media (max-width: 500px)
+        {
+            .floating-letter-container {
+                transform: translateX(200rem);
+
+                animation: lettersTravellingSmallWidth 200s forwards
+            }
+        }
+
+    /* @media (min-width: 400px)
+        {
+            .floating-letter-container {
+                transform: translateX(200rem);
+
+                animation: lettersTravellingSmallWidth 70s forwards
+            }
+        }
+
+
+        @media (min-width: 800px)
+        {
+            .floating-letter-container {
+                transform: translateX(200rem);
+
+                animation: lettersTravellingSmallWidth 70s forwards
+            }
+        } */
 `

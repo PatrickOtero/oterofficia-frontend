@@ -63,4 +63,52 @@ export const InitialMenuContainer = styled(Box)`
         text-shadow: 0 0 10px #88c4c9;
         font-weight: 800;
     }
+
+    @media (min-width: 100px)
+        {
+            .initial-menu-main {
+                transform-style: preserve-3d;
+
+                transform: scale(0.8) translateX(-20rem) translateY(-15rem);
+            }
+        }
+
+    @media (min-width: 400px)
+        {
+            .initial-menu-main {
+                transform-style: preserve-3d;
+
+                transform: scale(0.9) translateX(-17rem) translateY(-15rem);
+            }
+        }
+
+
+        @media (min-width: 800px)
+        {
+            .initial-menu-main {
+                transform-style: preserve-3d;
+
+                transform: scale(0.9) translateX(-12rem) translateY(-10rem);
+            }
+        }
+
+        @media (min-width: 900px)
+        {
+            .initial-menu-main {
+                
+                transform-style: preserve-3d;
+
+                transform: scale(1) translateX(0rem) translateY(-5rem);
+            }
+        }
+
+        @media (max-height: 900px)
+        {
+            .initial-menu-main {
+                
+                transform-style: preserve-3d;
+
+                transform: scale(1.5) translateX(-5rem) translateY(0rem);
+            }
+        }
 `
