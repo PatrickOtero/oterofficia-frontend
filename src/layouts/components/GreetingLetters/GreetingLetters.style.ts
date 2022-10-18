@@ -73,22 +73,5 @@ export const LettersContainer = styled("div")`
             }
         }
 
-    /* @media (min-width: 400px)
-        {
-            .floating-letter-container {
-                transform: translateX(200rem);
 
-                animation: lettersTravellingSmallWidth 70s forwards
-            }
-        }
-
-
-        @media (min-width: 800px)
-        {
-            .floating-letter-container {
-                transform: translateX(200rem);
-
-                animation: lettersTravellingSmallWidth 70s forwards
-            }
-        } */
 `

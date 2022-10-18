@@ -35,20 +35,6 @@ export const EarthContainer = styled("div")`
 
         animation: celestialBodyRotation 800s linear infinite;
     }
-
-    @media (max-width: 600px)
-        {
-            .earth-main {
-                transform: translateZ(-10rem) translateY(40rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
-            }
-        }
-
-        @media (max-height: 900px)
-        {
-            .earth-main {
-                transform: translateZ(-10rem) translateY(60rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
-            }
-        }
 `
 
 // background: radial-gradient(100% 125% at 40% 50%, rgba(0, 0, 0, 0) 40%, black 50%), radial-gradient(100% 100% at center, rgba(40, 120, 240, 0) 47%, rgba(40, 120, 240, 0.5) 48.5%, #c2e4fa 50%);

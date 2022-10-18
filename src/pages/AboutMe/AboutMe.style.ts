@@ -58,7 +58,7 @@ export const AboutMeContainer = styled(Box)`
 
         overflow: auto;
 
-        padding: 5rem 5rem 0 5rem ;
+        padding: 5rem;
 
         gap: 5rem;
         
@@ -83,70 +83,10 @@ export const AboutMeContainer = styled(Box)`
     }
 
     .aboutme-return-button {
-        padding: 1.5rem;
-        margin-left: 45rem;
+        position: fixed;
+
         background-color: #288a9100;
-
+        bottom: 1rem;
+        right: 5rem;
     }
-
-    @media (min-width: 100px)
-        {
-            .aboutme-page-main {
-
-                transform-style: preserve-3d;
-
-                transform: scale(0.5) translateX(0rem) translateY(-15rem);
-            }
-        }
-
-    @media (min-width: 400px)
-        {
-            .aboutme-page-main {
-
-                transform-style: preserve-3d;
-
-                transform: scale(0.6) translateX(0rem) translateY(-10rem);
-            }
-        }
-
-
-        @media (min-width: 800px)
-        {
-            .aboutme-page-main {
-                
-                transform-style: preserve-3d;
-
-                transform: scale(0.7) translateX(0rem) translateY(-5rem);
-            }
-        }
-
-        @media (min-width: 900px)
-        {
-            .aboutme-page-main {
-                
-                transform-style: preserve-3d;
-
-                transform: scale(0.8) translateX(0rem) translateY(-5rem);
-            }
-        }
-
-        @media (max-height: 900px)
-        {
-            .aboutme-page-main {
-                
-                transform-style: preserve-3d;
-
-                transform: scale(1.2) translateX(-0rem) translateY(-5rem);
-            }
-        }
-
-        @media (min-width: 1200px)
-        {
-            .aboutme-page-main {
-                
-                transform-style: preserve-3d;
-
-                transform: scale(1) translateX(0rem) translateY(-2rem);
-            }
-        }
 `
