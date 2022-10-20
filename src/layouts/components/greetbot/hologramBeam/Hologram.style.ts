@@ -3,15 +3,15 @@ import styled from "styled-components";
 export const HoloBeamContainer = styled("div")`
     @keyframes menuHologramBeam {
         0% {
-            box-shadow: 10px 0px 100px 0px #276881;
+            box-shadow: 10px 0px 100px 0px #276881c0;
         }
 
         50% {
-            box-shadow: -10px 0px 60px 20px #276881;
+            box-shadow: -10px 0px 60px 20px #27688185;
         }
 
         100% {
-            box-shadow: 10px 0px 20px 0px #276881;
+            box-shadow: 10px 0px 20px 0px #276881c5;
         }
     }
 
@@ -26,8 +26,6 @@ export const HoloBeamContainer = styled("div")`
         animation: menuHologramBeam 10ms linear infinite;
 
         transition: 1000ms;
-
-        width: 0.1rem;
 
         background-color: #1e7da388;
       }
