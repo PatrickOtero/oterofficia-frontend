@@ -29,7 +29,19 @@ export const SectionContainer = styled(Box)`
         text-shadow: 0 0 10px #88c4c9;
         font-size: 2rem;
 
+        height: 20rem;
+
         overflow: auto;
+
+        &::-webkit-scrollbar {          
+            background-color: #ffffff00; 
+            width: 1rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3rem; 
+            background-color: #26a0a8;
+        }
     }
 
     .img-container {

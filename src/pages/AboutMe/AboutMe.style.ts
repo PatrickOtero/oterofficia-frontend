@@ -68,7 +68,7 @@ export const AboutMeContainer = styled(Box)`
         border-radius: 5rem 0 0 5rem;
         background-color: #288a9128;
         box-shadow: 0px 0px 50px 10px #288a91 inset;
-        
+
         &::-webkit-scrollbar {          
             background-color: #ffffff00; 
             width: 1rem;
@@ -78,7 +78,6 @@ export const AboutMeContainer = styled(Box)`
             border-radius: 3rem; 
             background-color: #26a0a8;
         }
-
     }
 
     .aboutme-return-button {

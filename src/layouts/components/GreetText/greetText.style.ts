@@ -17,7 +17,7 @@ export const GreetTextContainer = styled(Box)`
     position: absolute;
 
     width: 40rem;
-    height: 7rem;
+    /* height: 7rem; */
 
     top: 4rem;
 
