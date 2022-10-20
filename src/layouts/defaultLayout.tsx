@@ -1,9 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useBotFunctionsContext } from "../hooks/useBotFunctionsContext";
-import { HomePage } from "../pages/Home";
 import { PlanetEarth } from "./components/Earth";
 import { GreetBot } from "./components/greetbot";
-import { GreetingLetters } from "./components/GreetingLetters";
 import { Moon } from "./components/Moon";
 import { StarsBackground } from "./components/StarsBackground";
 import { DefaultContainer } from "./default.style";
@@ -30,7 +28,6 @@ export function DefaultLayout() {
                 isShowingMenu={isShowingMenu}
                 />
             <StarsBackground/>
-            <GreetingLetters/>
             <Moon/>
             <PlanetEarth/>
             <Outlet/>

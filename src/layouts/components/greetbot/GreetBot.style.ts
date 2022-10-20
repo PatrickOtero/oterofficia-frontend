@@ -33,15 +33,15 @@ export const GreetBotContainer = styled("div")`
 
     @keyframes eyeEmittingHolo {
         0% {
-            box-shadow: 0 -1px 20px 20px #288a91;
+            box-shadow: 0 -1px 20px 20px #288a91ff;
         }
 
         50% {
-            box-shadow: 0 -1px 10px 5px #288a91;
+            box-shadow: 0 -1px 10px 5px #288a918e;
         }
 
         100% {
-            box-shadow: 0 -1px 20px 20px #288a91;
+            box-shadow: 0 -1px 20px 20px #288a91ff;
         }
     }
 

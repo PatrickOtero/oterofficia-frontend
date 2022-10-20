@@ -14,20 +14,6 @@ export const GreetTextContainer = styled(Box)`
         }
     }
 
-    @keyframes hologramBeamText {
-        0% {
-            box-shadow: 0 0 10px 5px #288a91 inset;
-        }
-
-        50% {
-            box-shadow: 0 0 20px -5px #288a91 inset;
-        }
-
-        100% {
-            box-shadow: 0 0 10px 5px #288a91 inset;
-        }
-    }
-
     position: absolute;
 
     width: 40rem;
@@ -41,13 +27,11 @@ export const GreetTextContainer = styled(Box)`
     .apparition-container {
         padding: 2rem;
 
-        animation: hologramBeamText 10ms infinite;
-
         transition: 1000ms;
 
         border-radius: 3rem;
         background-color: #288a9128;
-        box-shadow: 0 -3px 10px 5px #288a91 inset;
+        box-shadow: 0 0 10px 5px #288a91 inset;
     }
 
     b {

@@ -28,7 +28,7 @@ export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, set
                         setVisorPosition("visor-to-top");
                         setBotPosition("");
                         setEyeState("");
-                     }} className="initial-menu-button studies">FECHAR</button>
+                     }} className="initial-menu-button studies">SAIR</button>
             </div>
         </InitialMenuContainer>
     );
