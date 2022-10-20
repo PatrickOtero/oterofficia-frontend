@@ -7,7 +7,7 @@ export const HoloBeamContainer = styled("div")`
         }
 
         50% {
-            box-shadow: -10px -100px 60px 50px #276881;
+            box-shadow: -10px 0px 60px 20px #276881;
         }
 
         100% {
@@ -30,7 +30,6 @@ export const HoloBeamContainer = styled("div")`
         width: 0.1rem;
 
         background-color: #1e7da388;
-        box-shadow: 0 0 0px -10px #276881;
       }
 
       .eye-beam-1 {

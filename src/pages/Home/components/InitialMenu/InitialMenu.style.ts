@@ -14,20 +14,6 @@ export const InitialMenuContainer = styled(Box)`
         }
     }
 
-    @keyframes hologramBeamMenu {
-        0% {
-            box-shadow: -20px 1px 50px 50px #288a91 inset;
-        }
-
-        50% {
-            box-shadow: -20px 1px 100px -10px #288a91 inset;
-        }
-
-        100% {
-            box-shadow: -20px 1px 50px 50px #288a91 inset;
-        }
-    }
-
     animation: hologramMenuShowing 500ms;        
     position: absolute;
 
@@ -48,10 +34,10 @@ export const InitialMenuContainer = styled(Box)`
         width: 100%;
         height: 100%;
 
-        border-radius: 5rem;
-        animation: hologramBeamMenu 10ms linear infinite;
+        border-radius: 5rem 0 0 5rem;
+
         background-color: #288a9128;
-        box-shadow: -20px 1px 50px 10px #288a91 inset;
+        box-shadow: 0px 0px 50px 10px #288a91 inset;
     }
 
     .site-title-on-initial-menu {

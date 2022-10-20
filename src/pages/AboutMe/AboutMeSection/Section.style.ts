@@ -11,8 +11,6 @@ export const SectionContainer = styled(Box)`
         
     border-radius: 3rem;
 
-    animation: hologramBeamSection 10ms linear infinite;
-
     .section-title {
         font-size: 4rem;
         color: #88c4c9;
@@ -54,15 +52,15 @@ export const SectionContainer = styled(Box)`
 
         border-radius: 50%;
 
-        background-color: #88c4c9bd;
-        animation: hologramBeamSection 10ms linear infinite;
+        background-color: #88c4c986;
+        animation: imgHologramEffect 10ms linear infinite;
         
         transition: 400ms;
 
         z-index: 1;
 
         &:hover {
-            animation: hologramBeamSection 10ms linear infinite;
+            animation: imgHologramEffect 10ms linear infinite;
             background-color: #88c4c900;
             
             cursor: pointer;

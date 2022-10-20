@@ -25,17 +25,17 @@ export const AboutMeContainer = styled(Box)`
         }
     }
 
-    @keyframes hologramBeamSection {
+    @keyframes imgHologramEffect {
         0% {
-            box-shadow: 0 0 30px 30px #288a91 inset;
+            box-shadow: 0 0 10px 20px #288a91 inset;
         }
 
         50% {
-            box-shadow: 0 0 80px -10px #288a91 inset;
+            box-shadow: 0 0 60px -20px #288a91 inset;
         }
 
         100% {
-            box-shadow: 0 0 30px 30px #288a91 inset;
+            box-shadow: 0 0 10px 20px #288a91 inset;
         }
     }
 
@@ -65,10 +65,9 @@ export const AboutMeContainer = styled(Box)`
         width: 100%;
         height: 100%;
 
-        border-radius: 5rem;
-        animation: hologramBeamMenu 10ms linear infinite;
+        border-radius: 5rem 0 0 5rem;
         background-color: #288a9128;
-        box-shadow: -20px 1px 50px 10px #288a91 inset;
+        box-shadow: 0px 0px 50px 10px #288a91 inset;
         
         &::-webkit-scrollbar {          
             background-color: #ffffff00; 

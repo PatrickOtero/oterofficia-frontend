@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import styled from "styled-components";
 
-export const DirectMessageContainer = styled(Box)`
+export const DirectMessageContainer = styled(Box)`    
     display: flex;
     flex-direction: column;
 
@@ -10,8 +10,6 @@ export const DirectMessageContainer = styled(Box)`
     gap: 2rem;
         
     border-radius: 3rem;
-
-    animation: hologramBeamSection 10ms linear infinite;
 
     .section-title {
         font-size: 4rem;
@@ -46,15 +44,15 @@ export const DirectMessageContainer = styled(Box)`
 
         border-radius: 50%;
 
-        background-color: #88c4c9bd;
-        animation: hologramBeamSection 10ms linear infinite;
+        background-color: #88c4c98f;
+        animation: imgHologramEffect 10ms linear infinite;
         
         transition: 400ms;
 
         z-index: 1;
 
         &:hover {
-            animation: hologramBeamSection 10ms linear infinite;
+            animation: imgHologramEffect 10ms linear infinite;
             background-color: #88c4c900;
             
             cursor: pointer;
