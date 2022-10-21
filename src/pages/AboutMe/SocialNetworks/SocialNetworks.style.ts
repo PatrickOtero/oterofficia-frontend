@@ -32,8 +32,8 @@ export const DirectMessageContainer = styled(Box)`
     }
 
     .section-info-main img {
-        width: 16rem;
-        height: 16rem;
+        width: 10rem;
+        height: 10rem;
 
         border-radius: 50%;
 
@@ -42,8 +42,8 @@ export const DirectMessageContainer = styled(Box)`
 
     .img-filter {
         position: absolute;
-        width: 16rem;
-        height: 16rem;
+        width: 10rem;
+        height: 10rem;
 
         border-radius: 50%;
 
