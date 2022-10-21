@@ -52,8 +52,10 @@ export const AboutMeContainer = styled(Box)`
     
     transition: 1000ms;
 
-    color: #26a0a8;
+    color: #88c4c9;
     text-shadow: 0 0 10px #88c4c9;
+
+    line-height: 4rem;
     
     .aboutme-page-main {
         display: flex;
@@ -98,12 +100,11 @@ export const AboutMeContainer = styled(Box)`
     }
 
     .aboutme-titles {
-        font-size: 4rem;
+        font-size: 3rem;
     }
 
     .aboutme-page-main h2 {
-        font-size: 3rem;
-
+        font-size: 2rem;
     }
 
     .aboutme-name {

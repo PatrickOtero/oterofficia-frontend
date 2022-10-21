@@ -14,7 +14,7 @@ export const EmailContainer = styled(Box)`
     animation: hologramBeamSection 10ms linear infinite;
 
     label {
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
      p {
@@ -22,7 +22,7 @@ export const EmailContainer = styled(Box)`
     }
 
     .email-section-title {
-        font-size: 4rem;
+        font-size: 3rem;
         color: #88c4c9;
         text-shadow: 0 0 10px #88c4c9;
     }

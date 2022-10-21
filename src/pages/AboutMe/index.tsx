@@ -11,7 +11,7 @@ export const AboutMePage = () => {
 
     const {aboutMePage, setAboutMePage, setHomePage, setBotPosition, setEarthPosition, handleGetGithubProfile } = useBotFunctionsContext();
 
-    const { profileDescription, profileDescription2, profileDescription3 } = useSectionData()
+    const { profileDescription, profileDescription2, profileDescription3, profileDescription4, profileDescription5, profileDescription6, profileDescription7, profileDescription8, profileDescription9, profileDescription10, profileDescription11, profileDescription12 } = useSectionData()
 
     useEffect(() => {
         handleGetGithubProfile()
@@ -31,6 +31,15 @@ export const AboutMePage = () => {
                 <p className="profile-description">{profileDescription}</p>
                 <p className="profile-description">{profileDescription2}</p>
                 <p className="profile-description">{profileDescription3}</p>
+                <p className="profile-description">{profileDescription4}</p>
+                <p className="profile-description">{profileDescription5}</p>
+                <p className="profile-description">{profileDescription6}</p>
+                <p className="profile-description">{profileDescription7}</p>
+                <p className="profile-description">{profileDescription8}</p>
+                <p className="profile-description">{profileDescription9}</p>
+                <p className="profile-description">{profileDescription10}</p>
+                <p className="profile-description">{profileDescription11}</p>
+                <p className="profile-description">{profileDescription12}</p>
                 <ul>
                     <h1 className="aboutme-titles">Quais tecnologias tenho conhecimento?</h1>
                     <h2>Node (Javascript/Typescript)</h2>

@@ -11,7 +11,7 @@ export const DirectMessageContainer = styled(Box)`
     border-radius: 3rem;
 
     .section-title {
-        font-size: 4rem;
+        font-size: 3rem;
         color: #88c4c9;
         text-shadow: 0 0 10px #88c4c9;
     }
