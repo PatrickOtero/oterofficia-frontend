@@ -4,7 +4,7 @@ import { HomeContainer } from "./Home.style"
 
 export const HomePage = () => {
 
-    const { homePage, setHomePage, setInfoTextHolo, setHologramActivated, setIsShowingMenu, setVisorPosition, setEyeState, eyeState, setBotPosition, setAboutMePage} = useBotFunctionsContext();
+    const { homePage, setHomePage, setInfoTextHolo, setHologramActivated, setIsShowingMenu, setVisorPosition, setEyeState, eyeState, setBotPosition, setAboutMePage, setEarthPosition} = useBotFunctionsContext();
 
     return (
         <HomeContainer>
@@ -17,6 +17,7 @@ export const HomePage = () => {
                 setEyeState={setEyeState}
                 eyeState={eyeState}
                 setBotPosition={setBotPosition}
+                setEarthPosition={setEarthPosition}
                 setHomePage={setHomePage}
                 setAboutMePage={setAboutMePage}
                 />

@@ -34,7 +34,7 @@ export const InitialMenuContainer = styled(Box)`
         width: 100%;
         height: 100%;
 
-        border-radius: 5rem 0 0 5rem;
+        border-radius: 1rem;
 
         background-color: #288a9128;
         box-shadow: 0px 0px 50px 10px #288a91 inset;
@@ -48,5 +48,9 @@ export const InitialMenuContainer = styled(Box)`
         color: #88c4c9;
         text-shadow: 0 0 10px #88c4c9;
         font-weight: 800;
+    }
+
+    button {
+        margin-bottom: 5rem;
     }
 `

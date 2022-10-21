@@ -32,8 +32,6 @@ body {
 }
 
 button {
-    margin-bottom: 5rem;
-
     border-radius: 1rem;
     background-color: #288a9128;
     box-shadow: 0 0 50px 10px #288a91 inset;
@@ -54,6 +52,18 @@ button {
         background-color: #288a9100;
         box-shadow: 0 0 20px 15px #288a91 inset;            
     }
+}
+
+input, textarea {
+    border-radius: 1rem;
+
+    background-color: #288a9177;
+    color: #2dcdd8;
+    text-shadow: 0 0 10px #96e0e7;
+
+    padding-left: 2rem;
+
+    border: none;
 }
 
 b, p, span, h1, h2, h3, h4, h5, h6 {

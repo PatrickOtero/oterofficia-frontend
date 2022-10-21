@@ -6,12 +6,12 @@ export const useBotFunctionsContextProvider = () => {
     const [ infoTextHolo, setInfoTextHolo ] = useState<boolean>(false)
     const [ visorPosition, setVisorPosition ] = useState<string>("visor-to-top")
     const [ botPosition, setBotPosition ] = useState<string>("")
+    const [ earthPosition, setEarthPosition] = useState<string>("")
     const [ hologramActivated, setHologramActivated ] = useState<boolean>(false)
     const [ isShowingMenu, setIsShowingMenu ] = useState<boolean>(false)
     const [ eyeState, setEyeState ] = useState<string>("")
 
     const [ aboutMePage, setAboutMePage ] = useState<boolean>(false)
-    const [ aboutMeState, setAboutMeState ] = useState<string>("")
 
     const [ homePage, setHomePage ] = useState<boolean>(false)
 
@@ -42,6 +42,8 @@ export const useBotFunctionsContextProvider = () => {
         setVisorPosition,
         botPosition,
         setBotPosition,
+        earthPosition,
+        setEarthPosition,
         hologramActivated,
         setHologramActivated,
         isShowingMenu,

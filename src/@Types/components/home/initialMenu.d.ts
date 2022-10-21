@@ -6,6 +6,7 @@ interface IInitialMenu {
     setIsShowingMenu: Dispatch<SetStateAction<boolean>>
     setVisorPosition: Dispatch<SetStateAction<string>>
     setBotPosition: Dispatch<SetStateAction<string>>
+    setEarthPosition: Dispatch<SetStateAction<string>>
     setEyeState: Dispatch<SetStateAction<string>>
     setAboutMePage: Dispatch<SetStateAction<boolean>>;
     setHomePage: Dispatch<SetStateAction<boolean>>;

@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import styled from "styled-components";
 
-export const DirectMessageContainer = styled(Box)`
+export const EmailContainer = styled(Box)`
     display: flex;
     flex-direction: column;
 
@@ -13,16 +13,47 @@ export const DirectMessageContainer = styled(Box)`
 
     animation: hologramBeamSection 10ms linear infinite;
 
-    .section-title {
+    label {
+        font-size: 3rem;
+    }
+
+     p {
+        font-size: 2rem;
+    }
+
+    .email-section-title {
         font-size: 4rem;
         color: #88c4c9;
         text-shadow: 0 0 10px #88c4c9;
     }
 
-    .section-info-main {
+    .email-section-info-main {
         display: flex;
-        align-items: center;
+        flex-direction: column;
+
+        justify-content: center;
 
         gap: 3rem;
+    }
+
+    .email-section-info-main div {
+        display: flex;
+        flex-direction: column;
+
+        gap: 1rem;
+    }
+
+    .email-input-container input {
+        width: 50rem;
+        height: 5rem;
+
+        font-size: 2rem;
+    }
+
+    .email-content-input-container textarea {
+        width: 50rem;
+        height: 15rem;
+
+        font-size: 2rem;
     }
 `

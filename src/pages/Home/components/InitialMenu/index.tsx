@@ -2,7 +2,7 @@ import { InitialMenuContainer } from "./InitialMenu.style";
 import { useNavigate } from "react-router-dom";
 import { IInitialMenu } from "../../../../@Types/components/home/initialMenu";
 
-export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition, setAboutMePage, setHomePage}: IInitialMenu) => {
+export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition, setEarthPosition, setAboutMePage, setHomePage}: IInitialMenu) => {
 
     const navigate = useNavigate();
 
@@ -14,6 +14,7 @@ export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, set
                     {
                         setHomePage(false)
                         setBotPosition("bot-showing-aboutme")
+                        setEarthPosition("earth-hidden")
                         setAboutMePage(true)
                         navigate("/aboutme")
                     }} className="initial-menu-button about-me">SOBRE MIM</button>

@@ -1,53 +1,9 @@
 export const useSectionData = () => {
-    const linkedinDescription = `Sou apaixonado pela minha família e viciado no universo gamer e filmes épicos, além de ser um eterno curioso quando o assunto é tecnologia, robótica e astronomia. E foi justamente a complexidade da computação que me levou para área de Desenvolvimento de softwares.
+    const profileDescription = `Desde a infância me vislumbrava com coisas como astronomia e tecnologia (mais especificamente robótica), mas principalmente com o que via no monitor do meu primeiro velho pc, com 96 megabytes de RAM e no máximo 32 gigabytes de HD. A imagem que saia no monitor me fazia pensar incessantemente a respeito de como aquilo era possível de ocorrer, como que aquela imagem conseguia ser transportada através de peças físicas e como que os comandos de entrada, como o movimento do mouse ou as funções das teclas do teclado eram reconhecidas. Na minha infância, todo esse vislumbre me fazia olhar a tecnologia computacional como algo não humano, fora da capacidade intelectual de criação humana, junto a isso também me vinham questionamentos parecidos sobre como o que eu via na televisão era transmitido, mas o que acontecia nos computadores, aparelhos celulares e consoles de video game que eu tinha acesso na época, como nintendinho e mega drive 3, me chamavam mais atenção do que a televisão. Por muitos anos mantive essas curiosidades, apenas, como curiosidades, e as estudei de maneira superficial e rasa, devido à imaturidade que eu tinha na época, culpa exclusivamente minha, que me levava à preguiça de se aprofundar em qualquer coisa, perdi muitos anos apenas querendo me distrair com meu vício em jogos eletrônicos tanto de computadores quanto de consoles, e com outras infantilidades juvenis. Se arrependimento matasse, eu com certeza estaria morto.`
 
-    Tenho interesse em conquistar minha primeira oportunidade focada na área de front-end.
-    
-    Minhas principais habilidades em front-end e complementares são:
-    
-    - React
-    - Javascript
-    - Typescript
-    - Jest
-    - Cypress
-    - Html
-    - Css
-    - Sass
-    - Styled Components
-    - Js vanilla
-    - React-router-dom
-    - React-use
-    - Context Api
-    - Consumo de APIs com Fetch ou Axios
-    - Material-ui
-    - Single Page Applications
-    
-    Minhas habilidades front-end de consumo de APIs são aprofundadas, pois também tenho conhecimentos em back-end. Minhas habilidades em back-end são as seguintes:
-    
-    - Node
-    - Javascript
-    - Typescript
-    - Express
-    - MySQL ou PostgreSQL
-    - Pg (node-postgres)
-    - Knex
-    - Bcrypt
-    - Jsonwebtoken
-    - Yup
-    - APIs RESTful
-    - Jest com supertest (unitário e integral)
-    - Docker
-    - Documentação com Swagger
-    - Conceitos de SOLID e MVC
-    - Conceitos de Clean Code
-    
-    Versionamento e workflow: Git
-    Metodologias de trabalho: SCRUM.
-    
-    Formado em desenvolvimento web full stack na Cubos Academy, já acumulo algumas experiências informais com projetos em Front-end (ReactJS, Typescript) e Back-end (NodeJS, Typescript).`
+    const profileDescription2 = `Depois de um certo tempo de ter aberto os olhos para o tempo que estava perdendo com coisas insignificantes, ainda desempregado (desta vez não era por preguiça) minha atual companheira e futura esposa decidiu me estender a mão e me ajudar a correr atrás de um dos meus principais sonhos: Me especializar em tecnologia, no setor de programação. Para tal, ela decidiu pagar minha faculdade atual, até o momento que eu conseguisse arrumar um trabalho e conseguir pagar a faculdade eu mesmo. Até o momento, fiz jus ao sacrifício dela, me esforço para ter uma boa média na faculdade e em me qualificar cada vez mais no setor que tenho paixão, que é o setor de desenvolvimento de softwares. Tive o primeigo contato com a programação no curso Discover, gratuito, da Rocketseat, com javascript, um pouco antes de ter um contato mais aprofundado na matéria de Algoritmos e Lógica de Programação I, com lógica de programação e pseudocódigos e logo após com Algoritmos e Lógica de Programação II na faculdade, com C. Mais para frente me aprofundei mais na lógica de programação com as matérias de Estrutura de Dados I e II, ainda com C e mais pra frente com as matérias de Programação I e II, desta vez com Java. Fora da faculdade, ainda no segundo semestre, em Agosto de 2021, havia iniciado o curso intensivo de 6 meses (725 horas) da edtech Cubos Academy, que ensina desenvolvimento de softwares, do zero ao nível júnior, com a linguagem javascript e seus frameworks e bibliotecas mais usados no mercado, além de banco de dados, ou seja, desde back-end até front-end. As tecnologias ensinadas, foram: Javascript, Node, React e PostgreSQL.`
 
-    const linkedinName= "Patrick da Rocha Otero";
-    const linkedinUrl = "https://www.linkedin.com/in/patrick-da-rocha-otero/"
+    const profileDescription3 = "Após o término do curso, em Março de 2022, participei do evento da ProviHack 2022 - Não existe planeta B, e atuei em uma squad como desenvolvedor full-stack, apesar de ter trabalhado em grande parte no back-end, construindo toda a versão inicial da API da aplicação, que chamava-se GreenPoints. O convívio com a equipe foi maravilhoso, participei ao lado de talentos incríveis, cujos quais, inclusive, me reconheceram bem a ponto de me recomendarem no linkedin. Após o evento, fui convidado pela Cubos Academy a participar de um programa de residência da empresa, que põe ex-alunos escolhidos em projetos reais cujos quais a empresa fora contratada para fazê-los, para que os ex-alunos tenham uma vivência do mercado de trabalho e aprimorem suas hard e soft-skills. Durante e após esses episódios, permaneci praticando tudo que aprendi, pois o foco em uma stack ou linguagem específica é importante para um aprofundamento mais rápido, e com conhecimentos mais profundos, mais atraente para o mercado o profissional em início de carreira se torna."
 
-    return { linkedinDescription, linkedinUrl, linkedinName }
+    return { profileDescription, profileDescription2, profileDescription3 }
 }

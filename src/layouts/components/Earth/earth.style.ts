@@ -18,13 +18,13 @@ export const EarthContainer = styled("div")`
 
     transform-style: preserve-3d;
 
-    .earth-main {
-        
+    .earth-main {       
         width: 100%;
         height: 100%;
         
         border-radius: 45%;
 
+        transition: 1000ms;
         transform: translateZ(-10rem) translateY(45rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
 
         overflow: hidden;
@@ -34,6 +34,10 @@ export const EarthContainer = styled("div")`
         box-shadow: 0 0 100px 45px #5ea6e0;
 
         animation: celestialBodyRotation 800s linear infinite;
+    }
+
+    .earth-hidden {
+        transform: translateZ(-10rem) translateY(65rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
     }
 `
 

@@ -18,6 +18,9 @@ export interface IBotContext {
 
     botPosition: string;
     setBotPosition: Dispatch<SetStateAction<string>>;
+    
+    earthPosition: string;
+    setEarthPosition: Dispatch<SetStateAction<string>>;
 
     hologramActivated: boolean;
     setHologramActivated: Dispatch<SetStateAction<boolean>>;

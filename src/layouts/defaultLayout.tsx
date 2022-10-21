@@ -8,7 +8,7 @@ import { DefaultContainer } from "./default.style";
 
 export function DefaultLayout() {
 
-    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setVisorPosition, setBotPosition, visorPosition, botPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, setHomePage, aboutMePage } = useBotFunctionsContext();
+    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setVisorPosition, setBotPosition, visorPosition, botPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, setHomePage, aboutMePage, earthPosition } = useBotFunctionsContext();
 
     return (
        <DefaultContainer>
@@ -29,7 +29,7 @@ export function DefaultLayout() {
                 />
             <StarsBackground/>
             <Moon/>
-            <PlanetEarth/>
+            <PlanetEarth earthPosition={earthPosition}/>
             <Outlet/>
        </DefaultContainer>
     )

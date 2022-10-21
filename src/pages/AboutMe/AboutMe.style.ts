@@ -51,6 +51,9 @@ export const AboutMeContainer = styled(Box)`
     animation: hologramExpandToAboutMe 500ms;
     
     transition: 1000ms;
+
+    color: #26a0a8;
+    text-shadow: 0 0 10px #88c4c9;
     
     .aboutme-page-main {
         display: flex;
@@ -58,14 +61,14 @@ export const AboutMeContainer = styled(Box)`
 
         overflow: auto;
 
-        padding: 5rem;
+        padding: 5rem 5rem 0 5rem;
 
         gap: 5rem;
         
         width: 100%;
         height: 100%;
 
-        border-radius: 5rem 0 0 5rem;
+        border-radius: 1rem;
         background-color: #288a9128;
         box-shadow: 0px 0px 50px 10px #288a91 inset;
 
@@ -80,11 +83,54 @@ export const AboutMeContainer = styled(Box)`
         }
     }
 
-    .aboutme-return-button {
-        position: fixed;
+    .aboutme-section-info {
+        display: flex;
+        align-items: center;
 
+        gap: 5rem;
+    }
+
+    .aboutme-page-main ul {
+        display: flex;
+        flex-direction: column;
+
+        gap: 2rem;
+    }
+
+    .aboutme-titles {
+        font-size: 4rem;
+    }
+
+    .aboutme-page-main h2 {
+        font-size: 3rem;
+
+    }
+
+    .aboutme-name {
+        font-size: 5rem;
+    }
+
+    li {
+        margin-left: 2rem;
+        font-size: 2rem;       
+    }
+
+    .profile-description {
+        font-size: 2rem;      
+    }
+
+    .profile-photo {
+        border-radius: 50%;
+        height: 30rem;
+        width: 30rem;
+    }
+
+    .aboutme-return-button {
         background-color: #288a9100;
-        bottom: 1rem;
-        right: 5rem;
+
+        margin-bottom: 4rem;
+        padding: 2rem 0;
+
+        margin-left: 48rem;
     }
 `
