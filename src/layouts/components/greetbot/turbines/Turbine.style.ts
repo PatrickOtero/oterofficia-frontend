@@ -14,16 +14,16 @@ export const TurbineContainer = styled("div")`
 
             @keyframes turbineRotationX {
                 from {
-                    transform: translateZ(0) translateX(-19rem);
+                    transform: translateZ(0) translateX(-15rem);
                 }
                 50% {
-                    transform: translateZ(0) translateX(19rem);
+                    transform: translateZ(0) translateX(15rem);
                 }
                 50.01% {
-                    transform: translateZ(-0.1rem) translateX(19rem);
+                    transform: translateZ(-0.1rem) translateX(15rem);
                 }
                 to {
-                    transform: translateZ(-0.1rem) translateX(-19rem);
+                    transform: translateZ(-0.1rem) translateX(-15rem);
                 }
             }
 
@@ -48,7 +48,7 @@ export const TurbineContainer = styled("div")`
           position: absolute;
           animation: turbineRotationZ 3s infinite forwards;
 
-          right: -3.5rem;
+          right: -0.8rem;
       
           transform: translateZ(0);
         }

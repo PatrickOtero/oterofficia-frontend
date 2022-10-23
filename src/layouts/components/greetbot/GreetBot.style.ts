@@ -68,8 +68,8 @@ export const GreetBotContainer = styled("div")`
 
         background: linear-gradient(#222121ff 0%, #202020ff 10%, #0f0f0fff 50%, #000000ff 100%);
 
-        height: 30rem;
-        width: 30rem;
+        height: 25rem;
+        width: 25rem;
 
         border-radius: 50%;
 
@@ -88,8 +88,8 @@ export const GreetBotContainer = styled("div")`
       .greetbot01-inner-form {
             position: absolute;
 
-            height: 27rem;
-            width: 27rem;
+            height: 22rem;
+            width: 22rem;
 
             background: linear-gradient(#4d4c4cff 0%, #2e2d2dff 10%, #0f0f0fff 50%, #000000ff 100%);
 
@@ -107,7 +107,7 @@ export const GreetBotContainer = styled("div")`
       }
 
       .bot-showing-aboutme {
-        transform: translateZ(-360rem) translateX(130rem);
+        transform: translateZ(-380rem) translateX(130rem);
 
         animation: none;
 
@@ -140,7 +140,7 @@ export const GreetBotContainer = styled("div")`
 
             position: absolute;
 
-            left: 7.5rem;
+            left: 5.2rem;
             top: 4rem;
 
             width: 15rem;

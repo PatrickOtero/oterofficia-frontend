@@ -5,11 +5,7 @@ export type ICompProps = {
     children: ReactNode;
   };  
 
-export interface IBotContext {
-    handleGetGithubProfile: () => Promise<void>;
-    githubProfile: IGithubProfile;
-    setGithubProfile: Dispatch<SetStateAction<IGithubProfile>>;
-    
+export interface IBotContext {    
     infoTextHolo: boolean;
     setInfoTextHolo: Dispatch<SetStateAction<boolean>>;
 
@@ -36,11 +32,4 @@ export interface IBotContext {
 
     aboutMePage: boolean;
     setAboutMePage: Dispatch<SetStateAction<boolean>>;
-}
-
-export interface IGithubProfile {
-    name: string;
-    avatar_url: string;
-    url: string;
-    bio: string;
 }

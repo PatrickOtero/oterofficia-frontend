@@ -58,6 +58,8 @@ export const AboutMeContainer = styled(Box)`
     line-height: 4rem;
     
     .aboutme-page-main {
+        position: relative;
+        
         display: flex;
         flex-direction: column;
 
@@ -85,6 +87,16 @@ export const AboutMeContainer = styled(Box)`
         }
     }
 
+    .aboutme-close-button {
+        position: absolute;
+
+        font-size: 3rem;
+        cursor: pointer;
+
+        right: 5rem;
+        top: 2rem;
+    }
+
     .aboutme-section-info {
         display: flex;
         align-items: center;
@@ -109,6 +121,7 @@ export const AboutMeContainer = styled(Box)`
 
     .aboutme-name {
         font-size: 5rem;
+        line-height: 6rem;
     }
 
     li {
@@ -121,17 +134,8 @@ export const AboutMeContainer = styled(Box)`
     }
 
     .profile-photo {
-        border-radius: 50%;
+        border-radius: 3rem;
         height: 30rem;
         width: 30rem;
-    }
-
-    .aboutme-return-button {
-        background-color: #288a9100;
-
-        margin-bottom: 4rem;
-        padding: 2rem 0;
-
-        margin-left: 48rem;
     }
 `

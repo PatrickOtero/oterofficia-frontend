@@ -9,13 +9,9 @@ import { EmailSection } from "./EmailSection";
 
 export const AboutMePage = () => {
 
-    const {aboutMePage, setAboutMePage, setHomePage, setBotPosition, setEarthPosition, handleGetGithubProfile } = useBotFunctionsContext();
+    const {aboutMePage, setAboutMePage, setHomePage, setBotPosition, setEarthPosition, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState } = useBotFunctionsContext();
 
     const { profileDescription, profileDescription2, profileDescription3, profileDescription4, profileDescription5, profileDescription6, profileDescription7, profileDescription8, profileDescription9, profileDescription10, profileDescription11, profileDescription12 } = useSectionData()
-
-    useEffect(() => {
-        handleGetGithubProfile()
-    }, [])
 
     const navigate = useNavigate();
 
@@ -23,6 +19,18 @@ export const AboutMePage = () => {
         <AboutMeContainer>           
             { aboutMePage &&
             <div className="aboutme-page-main">
+                <b className="aboutme-close-button" onClick={() => {
+                    setBotPosition("")
+                    setEarthPosition("")
+                    setAboutMePage(false)
+                    setHomePage(false)
+                    setHologramActivated(false);
+                    setIsShowingMenu(false);
+                    setInfoTextHolo(false);
+                    setVisorPosition("visor-to-top");
+                    setEyeState("")
+                    navigate("/")
+                }}>X</b>
                 <div className="aboutme-section-info">
                     <img className="profile-photo" src={profilePhoto} alt="Minha foto deveria estar aqui"/>
                     <h1 className="aboutme-name">Patrick da Rocha Otero</h1>
@@ -51,6 +59,7 @@ export const AboutMePage = () => {
                     <li>Bcrypt</li>
                     <li>Yup</li>
                     <li>Nodemailer</li>
+                    <li>Swagger</li>
                     <li>Date-fns</li>
                     <h2>React (Javascript/Typescript)</h2>
                     <li>React-router-dom</li>
@@ -64,14 +73,8 @@ export const AboutMePage = () => {
                     <li>Docker</li>
                 </ul>
                  <DirectMessageSection/>
-                 <EmailSection/>
-                <button onClick={() => {
-                    setAboutMePage(false);
-                    setHomePage(true)
-                    setBotPosition("bot-showing-menu");
-                    setEarthPosition("")
-                    navigate("/")
-                }} className="aboutme-return-button" type="button">Voltar</button>
+                 <EmailSection
+                  setAboutMePage={setAboutMePage} setBotPosition={setBotPosition} setEarthPosition={setEarthPosition} setHomePage={setHomePage}/>
             </div>
             }     
         </AboutMeContainer>

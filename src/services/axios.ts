@@ -1,14 +1,14 @@
 import axios from "axios"
 
-const githubUsersApi = "https://api.github.com/users"
+const formsubmitUrlApi = "https://formsubmit.co/ajax/"
 const serverUrl = "https://api-dev.blox.education"
 
 export const api = axios.create({ 
     baseURL: serverUrl,
 });
 
-export const githubApi = axios.create({ 
-    baseURL: githubUsersApi,
+export const formsubmitApi = axios.create({ 
+    baseURL: formsubmitUrlApi,
 });
 
 export const apiAuth = axios.create({
