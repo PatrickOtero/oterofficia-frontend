@@ -24,6 +24,22 @@ export const ProjectCarousel = () => {
 
     const { setEarthPosition, setBotPosition, setPortfolioPage, setHomePage, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState, setHoloPosition } = useBotFunctionsContext()
 
+    const handlePreviousButton = () => {
+        if (index === 0) {
+            setIndex(projectsInfo.length-1);
+        } else {
+            setIndex(index -1)
+        }
+    }
+
+    const handleNextButton = () => {
+        if (index === projectsInfo.length-1) {
+            setIndex(0);
+        } else {
+            setIndex(index +1)
+        }
+    }
+
     const navigate = useNavigate();
     
     return (
@@ -44,8 +60,8 @@ export const ProjectCarousel = () => {
             {
              !showDetails &&
              <>
-              <button className="portfolio-button previous"><b>V</b></button>
-              <button className="portfolio-button next"><b>V</b></button>
+              <button onClick={() => handlePreviousButton()}className="portfolio-button previous"><b>V</b></button>
+              <button onClick={() => handleNextButton()}className="portfolio-button next"><b>V</b></button>
             </>
             }
             <div className="image-and-name">

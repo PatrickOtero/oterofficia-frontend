@@ -29,5 +29,36 @@ export const ProjectDescriptionContainer = styled(Box)`
     margin-top: 5rem;
     font-size: 2rem;
 }
+
+.front-end-link-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    b {
+        font-size: 2.5rem;
+    }
+
+    a {
+        font-size: 2rem;
+    }
+
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.back-end-link-container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    
+    b {
+        font-size: 2.5rem;
+    }
+
+    a {
+        font-size: 2rem;
+    }
+}
    
 `

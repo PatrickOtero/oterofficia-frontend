@@ -123,6 +123,7 @@ export const ProjectCarouselContainer = styled(Box)`
 
         b {
             transform: rotate(90deg);
+            cursor: pointer;
         }
 
         .arrowUp {
@@ -142,11 +143,16 @@ export const ProjectCarouselContainer = styled(Box)`
 
         b {
             transform: rotate(-90deg);
+            cursor: pointer;
         }
     }
 
     .image-and-name {
         position: relative;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
         
         opacity: 0;
 
@@ -156,7 +162,9 @@ export const ProjectCarouselContainer = styled(Box)`
 
         margin-top: 2rem;
 
-        animation: portfolioCarouselFadingIn 400ms forwards 1s
+        animation: portfolioCarouselFadingIn 400ms forwards 0.5s;
+
+        transition: 400ms
     }
 
     img {
@@ -164,6 +172,8 @@ export const ProjectCarouselContainer = styled(Box)`
         height: 37rem;
 
         border-radius: 3rem;
+
+        transition: 400ms
     }
 
     .project-image-filter {
@@ -196,10 +206,6 @@ export const ProjectCarouselContainer = styled(Box)`
         font-size: 5rem;
         color: #FFFFFF;
         text-shadow: 0 0 10px #FFFFFF;
-
-        top: 35%;
-        right: 30%;
-        width: 23rem;
         
         z-index: 2;
     }

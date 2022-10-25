@@ -31,10 +31,24 @@ body {
     transform-style: preserve-3d;
 }
 
+a {
+    text-decoration: none;
+
+    color: #2dcdd8;
+    text-shadow: 0 0 10px #96e0e7;
+
+    transition: 200ms;
+    
+    &:hover {
+        color: #63d3db;
+        text-shadow: 0 0 10px #96e0e7;     
+    }
+}
+
 button {
     border-radius: 1rem;
     background-color: #288a9128;
-    box-shadow: 0 0 50px 10px #288a91 inset;
+    box-shadow: 0 0 50px 10px #56cbd3 inset;
 
     color: #88c4c9;
     font-size: 1.5rem;
