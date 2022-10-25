@@ -1,10 +1,14 @@
 import { HoloBeamContainer } from "./Hologram.style";
 
-export const HologramBeam = () => {
+interface IHologramBeam  {
+    eyeBeamPosition: string;
+}
+
+export const HologramBeam = ({ eyeBeamPosition }: IHologramBeam) => {
     return (
         <HoloBeamContainer>
-            <div className="greetBot-menu-hologram-light-beam eye-beam-1"></div>
-            <div className="greetBot-menu-hologram-light-beam eye-beam-2"></div>           
+            <div className={`greetBot-menu-hologram-light-beam eye-beam-1 ${eyeBeamPosition}`}></div>
+            <div className={`greetBot-menu-hologram-light-beam eye-beam-2 ${eyeBeamPosition}`}></div>           
         </HoloBeamContainer>
     );
 }

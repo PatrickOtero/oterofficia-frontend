@@ -2,9 +2,11 @@ import { GreetBotContainer } from "./GreetBot.style";
 import { GreetBotTurbine } from "./turbines";
 import { HologramBeam } from "./hologramBeam";
 import { GreetText } from "../GreetText";
-import { IGreetBot } from "../../../@Types/components/layout/greetBot";
+import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 
-export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition, aboutMePage, setHomePage}: IGreetBot) => {
+export const GreetBot = () => {
+
+    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition, aboutMePage, setHomePage, holoPosition } = useBotFunctionsContext()
 
     return (
         <GreetBotContainer>
@@ -44,8 +46,8 @@ export const GreetBot = ({setInfoTextHolo, infoTextHolo, setHologramActivated, s
                 </div>
                 { hologramActivated &&
                     <>
-                        <HologramBeam/>
-                        <HologramBeam/>
+                        <HologramBeam eyeBeamPosition={holoPosition}/>
+                        <HologramBeam eyeBeamPosition={holoPosition}/>
                     </>
                 }
                 { !isShowingMenu && infoTextHolo &&

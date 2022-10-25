@@ -107,7 +107,7 @@ export const GreetBotContainer = styled("div")`
       }
 
       .bot-showing-aboutme {
-        transform: translateZ(-380rem) translateX(130rem);
+        transform: translateZ(-350rem) translateX(120rem);
 
         animation: none;
 
@@ -115,7 +115,7 @@ export const GreetBotContainer = styled("div")`
       }
 
       .bot-showing-portfolio {
-        transform: translateZ(-260rem) translateX(90rem);
+        transform: translateZ(-400rem) translateX(90rem);
 
         animation: none;
 
@@ -148,13 +148,19 @@ export const GreetBotContainer = styled("div")`
 
             transition: 1000ms;
 
-            transform: translateZ(2rem) 
+            transform: translateZ(1rem) 
         }
 
         .visor-to-left {
             transform-style: preserve-3d;
 
             transform: translateX(-10rem) translateZ(2rem) rotateY(-31deg);
+        }
+
+        .visor-to-diagonal-left {
+            transform-style: preserve-3d;
+
+            transform: translateX(-6rem) translateZ(2rem) rotateY(-20deg);
         }
 
         .visor-to-right {

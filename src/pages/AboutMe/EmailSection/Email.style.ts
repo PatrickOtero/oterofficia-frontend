@@ -33,11 +33,13 @@ export const EmailContainer = styled(Box)`
     }
 
     .email-section-messages {
+        position: absolute;
+        bottom: 9.5rem;
         font-size: 2rem;
         color: #88c4c9;
         text-shadow: 0 0 10px #88c4c9;  
         
-        animation: hoverToRight 400ms;
+        animation: hoverToRight 1000ms;
         transition: 400ms;
     }
 
@@ -48,6 +50,8 @@ export const EmailContainer = styled(Box)`
     }
 
     .email-section-info-main {
+        position: relative
+        ;
         display: flex;
         flex-direction: column;
 
@@ -56,14 +60,14 @@ export const EmailContainer = styled(Box)`
         gap: 3rem;
     }
 
-    .email-input-container, .name-input-container {
+    .email-input-container, .name-input-container, .subject-input-container {
         display: flex;
         flex-direction: column;
 
         gap: 1rem;
     }
 
-    .email-input-container input, .name-input-container input {
+    .email-input-container input, .name-input-container input, .subject-input-container input {
         width: 50rem;
         height: 5rem;
 
@@ -94,8 +98,17 @@ export const EmailContainer = styled(Box)`
 
     .email-buttons-container button {
         font-size: 2rem;
-        background-color: #288a9100;
 
         margin-bottom: 4rem;
+    }
+
+    .email-return-button {
+        background-color: #26656900;
+        color: #88c4c9;
+    }
+
+    .email-send-button {
+        background-color: #06eeffff;
+        color: #2c4c4eff;
     }
 `

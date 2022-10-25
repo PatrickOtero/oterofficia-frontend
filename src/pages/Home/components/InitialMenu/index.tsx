@@ -1,8 +1,9 @@
 import { InitialMenuContainer } from "./InitialMenu.style";
 import { useNavigate } from "react-router-dom";
-import { IInitialMenu } from "../../../../@Types/components/home/initialMenu";
+import { useBotFunctionsContext } from "../../../../hooks/useBotFunctionsContext";
 
-export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, setHologramActivated, setVisorPosition, setBotPosition, setEarthPosition, setAboutMePage, setHomePage}: IInitialMenu) => {
+export const InitialMenu = () => {
+    const { setHomePage, setInfoTextHolo, setHologramActivated, setIsShowingMenu, setVisorPosition, setEyeState, eyeState, setBotPosition, setAboutMePage, setEarthPosition, setPortfolioPage, setHoloPosition } = useBotFunctionsContext()
 
     const navigate = useNavigate();
 
@@ -18,7 +19,15 @@ export const InitialMenu = ({setEyeState, setInfoTextHolo, setIsShowingMenu, set
                         setAboutMePage(true)
                         navigate("/aboutme")
                     }} className="initial-menu-button about-me">SOBRE MIM</button>
-                <button className="initial-menu-button portfolio">PORTFOLIO</button>
+                <button onClick={() =>
+                    {
+                        setHomePage(false)
+                        setBotPosition("bot-showing-portfolio")
+                        setVisorPosition("visor-to-diagonal-left")
+                        setHoloPosition("eye-beam-position-for-portfolio")
+                        setPortfolioPage(true)
+                        navigate("/portfolio")
+                    }}  className="initial-menu-button portfolio">PORTFOLIO</button>
                 <button className="initial-menu-button studies">ESTUDOS</button>
                 <button onClick={() =>
                      {
