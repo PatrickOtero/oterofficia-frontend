@@ -10,7 +10,7 @@ export function DefaultLayout() {
 
     const { earthPosition } = useBotFunctionsContext();
 
-    const {setHoloPosition, setHomePage, setBotPosition, setEarthPosition, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState } = useBotFunctionsContext();
+    const {setHoloPosition, setHomePage, setBotPosition, setEarthPosition, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState, setAboutMePage } = useBotFunctionsContext();
 
     const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ export function DefaultLayout() {
             <div  className="layout-clicable-container" onClick={() => {
                     setBotPosition("")
                     setEarthPosition("")
+                    setAboutMePage(false)
                     setHomePage(false)
                     setHologramActivated(false);
                     setIsShowingMenu(false);
