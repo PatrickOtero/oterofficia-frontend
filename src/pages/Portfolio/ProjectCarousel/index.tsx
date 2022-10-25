@@ -19,6 +19,7 @@ export const ProjectCarousel = () => {
     const [ containerHeight, setContainerHeight ] = useState<number>(45)
     const [ containerPosition, setContainerPosition ] = useState<number>(0)
     const [ arrowPosition, setArrowPosition ] = useState<string>("")
+    const [ newProject, setNewProject ] = useState<boolean>(false)
 
     const { projectsInfo } = useProjectsCarousel()
 
@@ -60,11 +61,21 @@ export const ProjectCarousel = () => {
             {
              !showDetails &&
              <>
-              <button onClick={() => handlePreviousButton()}className="portfolio-button previous"><b>V</b></button>
-              <button onClick={() => handleNextButton()}className="portfolio-button next"><b>V</b></button>
+              <button onClick={() =>
+                {
+                
+                    setNewProject(!newProject)
+                    handlePreviousButton()
+                     
+                }}className="portfolio-button previous"><b>V</b></button>
+              <button onClick={() =>
+                {
+                    setNewProject(!newProject)
+                    handleNextButton()    
+                }}className="portfolio-button next"><b>V</b></button>
             </>
             }
-            <div className="image-and-name">
+            <div className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
                 <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
                 <div onMouseEnter={() => setShowName(true)} onMouseLeave={() => setShowName(false)}className="project-image-filter">
                 </div>

@@ -16,11 +16,13 @@ export const ProjectCarouselContainer = styled(Box)`
 
     @keyframes portfolioCarouselFadingIn {
         0% {
-            opacity: 0;         
+            opacity: 0;
+            transform: scale(0.8);
         }
 
         100% {
             opacity: 1;
+            transform: scale(1);
         }
     }
 
@@ -162,9 +164,17 @@ export const ProjectCarouselContainer = styled(Box)`
 
         margin-top: 2rem;
 
-        animation: portfolioCarouselFadingIn 400ms forwards 0.5s;
+        animation: portfolioCarouselFadingIn 600ms forwards;
 
         transition: 400ms
+    }
+
+    .carousel-effect-1 {
+        animation: projectNameShow 600ms forwards;
+    }
+
+    .carousel-effect-2 {
+        animation: projectNameShow 600ms forwards;
     }
 
     img {
@@ -173,7 +183,11 @@ export const ProjectCarouselContainer = styled(Box)`
 
         border-radius: 3rem;
 
-        transition: 400ms
+        transition: 400ms;
+    }
+
+    .new-project-shown {
+        animation: portfolioCarouselFadingIn 2000ms;
     }
 
     .project-image-filter {
