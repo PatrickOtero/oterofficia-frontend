@@ -1,16 +1,9 @@
 import { useProjectsCarousel } from "../hooks/useProjectsCarousel";
 import { ProjectCarouselContainer } from "./Carousel.style";
 import { useState } from "react"
-import { ArrowDown } from "phosphor-react";
 import { ProjectDescription } from "../ProjectDescription";
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useNavigate } from "react-router-dom";
-
-// interface IProjectInfo {
-//     imageUrl: string;
-//     name: string
-// }
-
 
 export const ProjectCarousel = () => {
     const [ index, setIndex ] = useState<number>(0)
@@ -48,8 +41,7 @@ export const ProjectCarousel = () => {
     
     return (
         <ProjectCarouselContainer style={{ height: `${containerHeight}rem`, width: `${containerWidth}rem` , marginTop: `-${containerPosition}rem`}}>
-            <b onClick={() => {
-                if (!isShowingVideo) {
+            <b className="portfolio-close-button" onClick={() => {
                     setBotPosition("")
                     setEarthPosition("")
                     setPortfolioPage(false)
@@ -61,64 +53,39 @@ export const ProjectCarousel = () => {
                     setEyeState("")
                     setHoloPosition("")
                     navigate("/")
-                } else {
-                    setBotPosition("bot-showing-portfolio")
-                    setContainerWidth(70)
-                    setIsShowingVideo(false)
-
-                    if (!showDetails) {
-                        setContainerHeight(45)
-                    } else {
-                        setContainerHeight(90)  
-                    }
-                }
-            }} className="portfolio-close-button">X</b>
+            }}>X</b>
             {
-             (!showDetails && !isShowingVideo) &&
+             !showDetails &&
              <>
-              <button onClick={() =>
+              <button className="portfolio-button previous"
+               onClick={() =>
                 {
                 
                     setNewProject(!newProject)
                     handlePreviousButton()
                      
-                }}className="portfolio-button previous"><b>V</b></button>
-              <button onClick={() =>
+                }}><b>V</b></button>
+              <button className="portfolio-button next"
+               onClick={() =>
                 {
                     setNewProject(!newProject)
                     handleNextButton()    
-                }}className="portfolio-button next"><b>V</b></button>
+                }}><b>V</b></button>
             </>
             }
-            <div onClick={() =>
-            {
-                setContainerHeight(70)
-                setContainerWidth(130)
-                setBotPosition("bot-showing-portfolio-video")
-                setIsShowingVideo(true)
-            }} className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
-                { !isShowingVideo &&
+            <div className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
                     <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
-                }
-                { isShowingVideo &&
-                    <video autoPlay controls src={projectsInfo[index].video}/>
-                }
-                <div onMouseEnter={() =>
-                    {
-                        if(isShowingVideo) {
-                            return
-                        }
-                        setShowName(true)
-                    }}
-                     onMouseLeave={() => setShowName(false)}className={`${isShowingVideo ? "project-video-filter" : "project-image-filter"}`}>
+                <div className={`${isShowingVideo ? "project-video-filter" : "project-image-filter"}`} onMouseEnter={() => setShowName(true)}
+                     onMouseLeave={() => setShowName(false)}>
                 </div>
-               { showName && <b className="project-name">Exibir Vídeo</b>}
+               { showName && <a onMouseEnter={() => setShowName(true)} className="project-name" href={projectsInfo[index].videoUrl} target="blank">{`${projectsInfo[index].videoUrl.length ? "Exibir vídeo no Linkedin" : "Sem vídeo"}`}</a>
+               }
             </div>
             {
                 !isShowingVideo && 
             <div className="project-description-button-container">
                 <b className={`button-description-arrow arrow1 ${arrowPosition}`}>v</b>
-                <button
+                <button className="portfolio-button"
                  onClick={() => 
                     {
                         if (!showDetails) {
@@ -135,11 +102,11 @@ export const ProjectCarousel = () => {
                             setEarthPosition("")
                         }
                     }
-                 } className="portfolio-button">{!showDetails ? "Exibir detalhes" : "Ocultar detalhes"}</button>
+                 }>{!showDetails ? "Exibir detalhes" : "Ocultar detalhes"}</button>
                 <b className={`button-description-arrow arrow2 ${arrowPosition}`}>v</b>
             </div>
             }
-            {showDetails && !isShowingVideo &&
+            {showDetails &&
             <ProjectDescription index={index}/>
             }
         </ProjectCarouselContainer>

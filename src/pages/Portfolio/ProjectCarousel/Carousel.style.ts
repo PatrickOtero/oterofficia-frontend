@@ -28,7 +28,7 @@ export const ProjectCarouselContainer = styled(Box)`
 
     @keyframes imgHologramEffect {
         0% {
-            box-shadow: 0 0 10px 30px #288a91 inset;
+            box-shadow: 0 0 10px 10px #288a91 inset;
         }
 
         50% {
@@ -36,7 +36,7 @@ export const ProjectCarouselContainer = styled(Box)`
         }
 
         100% {
-            box-shadow: 0 0 10px 30px #288a91 inset;
+            box-shadow: 0 0 10px 10px #288a91 inset;
         }
     }
 
@@ -55,14 +55,12 @@ export const ProjectCarouselContainer = styled(Box)`
     @keyframes videoShowingIn {
         0% {
             opacity: 0;
-            width: 62rem;
-            height: 37rem;
+            transform: scale(0.3)
         }
 
         100% {
             opacity: 1;
-            width: 120rem;
-            height: 60rem;
+            transform: scale(0.55);
         }
     }
 
@@ -202,17 +200,6 @@ export const ProjectCarouselContainer = styled(Box)`
         transition: 400ms;
     }
 
-    video {
-        animation: videoShowingIn 1000ms;
-
-        margin-top: 26rem;
-        width: 120rem;
-        height: 60rem;
-
-        cursor: default;
-        transition: 400ms;
-    }
-
     .new-project-shown {
         animation: portfolioCarouselFadingIn 2000ms;
     }
@@ -237,23 +224,6 @@ export const ProjectCarouselContainer = styled(Box)`
             background-color: #88c4c98f;
             animation: imgHologramEffect 10ms linear infinite;
         }
-    }
-
-    .project-video-filter {
-        position: absolute;
-
-        width: 114rem;
-        height: 65rem;
-        border-radius: 3rem;
-
-        top: -1rem;
-
-        animation: imgHologramEffect 10ms linear infinite;
-        background-color: #88c4c900;
-        
-        transition: 400ms;
-
-        z-index: -1;
     }
 
     .project-name {
