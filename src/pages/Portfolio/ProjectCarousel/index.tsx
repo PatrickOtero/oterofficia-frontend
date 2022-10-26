@@ -63,9 +63,14 @@ export const ProjectCarousel = () => {
                     navigate("/")
                 } else {
                     setBotPosition("bot-showing-portfolio")
-                    setContainerHeight(45)
                     setContainerWidth(70)
                     setIsShowingVideo(false)
+
+                    if (!showDetails) {
+                        setContainerHeight(45)
+                    } else {
+                        setContainerHeight(90)  
+                    }
                 }
             }} className="portfolio-close-button">X</b>
             {
@@ -96,9 +101,16 @@ export const ProjectCarousel = () => {
                     <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
                 }
                 { isShowingVideo &&
-                    <video controls src={projectsInfo[index].video}/>
+                    <video autoPlay controls src={projectsInfo[index].video}/>
                 }
-                <div onMouseEnter={() => setShowName(true)} onMouseLeave={() => setShowName(false)}className={`project-image-filter ${isShowingVideo ? "filter-hidden-for-video" : ""}`}>
+                <div onMouseEnter={() =>
+                    {
+                        if(isShowingVideo) {
+                            return
+                        }
+                        setShowName(true)
+                    }}
+                     onMouseLeave={() => setShowName(false)}className={`${isShowingVideo ? "project-video-filter" : "project-image-filter"}`}>
                 </div>
                { showName && <b className="project-name">Exibir Vídeo</b>}
             </div>
@@ -127,7 +139,7 @@ export const ProjectCarousel = () => {
                 <b className={`button-description-arrow arrow2 ${arrowPosition}`}>v</b>
             </div>
             }
-            {showDetails &&
+            {showDetails && !isShowingVideo &&
             <ProjectDescription index={index}/>
             }
         </ProjectCarouselContainer>

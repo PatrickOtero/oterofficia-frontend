@@ -62,7 +62,7 @@ export const ProjectCarouselContainer = styled(Box)`
         100% {
             opacity: 1;
             width: 120rem;
-            height: 65rem;
+            height: 60rem;
         }
     }
 
@@ -167,6 +167,8 @@ export const ProjectCarouselContainer = styled(Box)`
         position: relative;
         display: flex;
 
+        cursor: pointer;
+
         justify-content: center;
         align-items: center;
         
@@ -203,10 +205,11 @@ export const ProjectCarouselContainer = styled(Box)`
     video {
         animation: videoShowingIn 1000ms;
 
-        margin-top: 25rem;
+        margin-top: 26rem;
         width: 120rem;
-        height: 65rem;
+        height: 60rem;
 
+        cursor: default;
         transition: 400ms;
     }
 
@@ -236,8 +239,21 @@ export const ProjectCarouselContainer = styled(Box)`
         }
     }
 
-    .filter-hidden-for-video {
-        display: none;
+    .project-video-filter {
+        position: absolute;
+
+        width: 114rem;
+        height: 65rem;
+        border-radius: 3rem;
+
+        top: -1rem;
+
+        animation: imgHologramEffect 10ms linear infinite;
+        background-color: #88c4c900;
+        
+        transition: 400ms;
+
+        z-index: -1;
     }
 
     .project-name {
