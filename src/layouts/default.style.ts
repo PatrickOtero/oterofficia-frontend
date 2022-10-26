@@ -14,7 +14,7 @@ export const DefaultContainer = styled(Box)`
         min-width: 100vw;
         min-height: 100vh;
 
-    .layout-clicable-container {
+    .layout-clickable-container {
         position: absolute;
         top: 0;
         right: 0;

@@ -99,7 +99,7 @@ export const GreetBotContainer = styled("div")`
         }
 
       .bot-showing-menu {
-        transform: translateZ(-260rem) translateX(90rem);
+        transform: translateZ(-260rem) translateX(80rem);
 
         animation: none;
 

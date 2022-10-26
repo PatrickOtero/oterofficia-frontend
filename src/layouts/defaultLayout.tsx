@@ -17,7 +17,7 @@ export function DefaultLayout() {
 
     return (
        <DefaultContainer>
-            <div  className="layout-clicable-container" onClick={() => {
+            <div  className="layout-clickable-container" onClick={() => {
                     if (homePage) {
                         setBotPosition("")
                         setEarthPosition("")
@@ -42,6 +42,7 @@ export function DefaultLayout() {
                         setPortfolioPage(false);
                         setHomePage(true)
                         setBotPosition("bot-showing-menu");
+                        setVisorPosition("visor-to-left")
                         setEarthPosition("")
                         setHoloPosition("")
                         navigate("/")
