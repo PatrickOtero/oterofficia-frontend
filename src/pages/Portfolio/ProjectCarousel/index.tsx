@@ -16,10 +16,13 @@ export const ProjectCarousel = () => {
     const [ index, setIndex ] = useState<number>(0)
     const [ showName, setShowName ] = useState<boolean>(false)
     const [ showDetails, setShowDetails ] = useState<boolean>(false)
+    const [ newProject, setNewProject ] = useState<boolean>(false)
+    const [ isShowingVideo, setIsShowingVideo ] = useState<boolean>(false)
+
     const [ containerHeight, setContainerHeight ] = useState<number>(45)
+    const [ containerWidth, setContainerWidth ] = useState<number>(70)
     const [ containerPosition, setContainerPosition ] = useState<number>(0)
     const [ arrowPosition, setArrowPosition ] = useState<string>("")
-    const [ newProject, setNewProject ] = useState<boolean>(false)
 
     const { projectsInfo } = useProjectsCarousel()
 
@@ -44,8 +47,9 @@ export const ProjectCarousel = () => {
     const navigate = useNavigate();
     
     return (
-        <ProjectCarouselContainer style={{ height: `${containerHeight}rem`, marginTop: `-${containerPosition}rem`}}>
+        <ProjectCarouselContainer style={{ height: `${containerHeight}rem`, width: `${containerWidth}rem` , marginTop: `-${containerPosition}rem`}}>
             <b onClick={() => {
+                if (!isShowingVideo) {
                     setBotPosition("")
                     setEarthPosition("")
                     setPortfolioPage(false)
@@ -57,9 +61,15 @@ export const ProjectCarousel = () => {
                     setEyeState("")
                     setHoloPosition("")
                     navigate("/")
+                } else {
+                    setBotPosition("bot-showing-portfolio")
+                    setContainerHeight(45)
+                    setContainerWidth(70)
+                    setIsShowingVideo(false)
+                }
             }} className="portfolio-close-button">X</b>
             {
-             !showDetails &&
+             (!showDetails && !isShowingVideo) &&
              <>
               <button onClick={() =>
                 {
@@ -75,12 +85,25 @@ export const ProjectCarousel = () => {
                 }}className="portfolio-button next"><b>V</b></button>
             </>
             }
-            <div className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
-                <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
-                <div onMouseEnter={() => setShowName(true)} onMouseLeave={() => setShowName(false)}className="project-image-filter">
+            <div onClick={() =>
+            {
+                setContainerHeight(70)
+                setContainerWidth(130)
+                setBotPosition("bot-showing-portfolio-video")
+                setIsShowingVideo(true)
+            }} className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
+                { !isShowingVideo &&
+                    <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
+                }
+                { isShowingVideo &&
+                    <video controls src={projectsInfo[index].video}/>
+                }
+                <div onMouseEnter={() => setShowName(true)} onMouseLeave={() => setShowName(false)}className={`project-image-filter ${isShowingVideo ? "filter-hidden-for-video" : ""}`}>
                 </div>
-               { showName && <b className="project-name">{projectsInfo[index].name}</b>}
+               { showName && <b className="project-name">Exibir Vídeo</b>}
             </div>
+            {
+                !isShowingVideo && 
             <div className="project-description-button-container">
                 <b className={`button-description-arrow arrow1 ${arrowPosition}`}>v</b>
                 <button
@@ -103,6 +126,7 @@ export const ProjectCarousel = () => {
                  } className="portfolio-button">{!showDetails ? "Exibir detalhes" : "Ocultar detalhes"}</button>
                 <b className={`button-description-arrow arrow2 ${arrowPosition}`}>v</b>
             </div>
+            }
             {showDetails &&
             <ProjectDescription index={index}/>
             }

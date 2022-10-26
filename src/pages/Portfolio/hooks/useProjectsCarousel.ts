@@ -1,4 +1,6 @@
 import goBarber from "../assets/goBarber.png"
+import goBarberVideo from "../assets/goBarber.mp4"
+
 import dindin from "../assets/dindin.jpeg"
 import kontacts from "../assets/kontacts.jpeg"
 import blox from "../assets/blox.jpeg"
@@ -14,6 +16,7 @@ export const useProjectsCarousel = () => {
             description: "A aplicação foi disponibilizada pela Rocketseat em um de seus bootcamps pagos chamado 'GoStack'. Seu figma foi disponibilizado para mim através de um amigo que possui o mesmo bootcamp. A aplicação possui front-end e back-end, ambos feitos com Javascript. O front-end foi feito com React, no modelo SPA, enquanto seu back-end foi feito com Node e Express, com banco de dados PostgreSQL, no modelo REST e MVC. A aplicação foi feita inteiramente sem o auxílio de quaisquer aulas ou tutoriais da Rocketseat (criadora do projeto), e isso pode ser constatado através do código da aplicação disponível no meu Github, que será disponibilizado no final desta descrição, onde pode ser visto que toda a estrutura do código e a forma como foi feita é diferente, além de optar por não usar Typescript, pelo fato de não ter segurança para trabalhar com o citado superset na época em que eu o fiz. Foi uma experiência difícil, mas uma experiência que me forneceu muita prática.",
             frontendUrl: "https://github.com/PatrickOtero/Go-Barber-front-end",
             backendUrl: "https://github.com/PatrickOtero/Go-Barber-back-end",
+            video: goBarberVideo
         },
         {
             imageUrl: dindin,

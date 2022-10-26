@@ -46,7 +46,7 @@ export function DefaultLayout() {
                         setEarthPosition("")
                         setHoloPosition("")
                         navigate("/")
-                            }
+                    }
                     }}>
             </div>
                 <GreetBot/>

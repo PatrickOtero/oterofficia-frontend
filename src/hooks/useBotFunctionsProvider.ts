@@ -14,6 +14,7 @@ export const useBotFunctionsContextProvider = () => {
     const [ homePage, setHomePage ] = useState<boolean>(false)
     const [ aboutMePage, setAboutMePage ] = useState<boolean>(false)
     const [ portfolioPage, setPortfolioPage ] = useState<boolean>(false)
+    const [ isShowingVideo, setIsShowingVideo ] = useState<boolean>(false)
 
     return {
         visorPosition,

@@ -40,7 +40,7 @@ export const ProjectCarouselContainer = styled(Box)`
         }
     }
 
-    @keyframes projectNameShow {
+    @keyframes elementShowingIn {
         0% {
             opacity: 0;
             transform: scale(0.8);
@@ -49,6 +49,20 @@ export const ProjectCarouselContainer = styled(Box)`
         100% {
             opacity: 1;
             transform: scale(1);
+        }
+    }
+
+    @keyframes videoShowingIn {
+        0% {
+            opacity: 0;
+            width: 62rem;
+            height: 37rem;
+        }
+
+        100% {
+            opacity: 1;
+            width: 120rem;
+            height: 65rem;
         }
     }
 
@@ -170,11 +184,11 @@ export const ProjectCarouselContainer = styled(Box)`
     }
 
     .carousel-effect-1 {
-        animation: projectNameShow 600ms forwards;
+        animation: elementShowingIn 600ms forwards;
     }
 
     .carousel-effect-2 {
-        animation: projectNameShow 600ms forwards;
+        animation: elementShowingIn 600ms forwards;
     }
 
     img {
@@ -182,6 +196,16 @@ export const ProjectCarouselContainer = styled(Box)`
         height: 37rem;
 
         border-radius: 3rem;
+
+        transition: 400ms;
+    }
+
+    video {
+        animation: videoShowingIn 1000ms;
+
+        margin-top: 25rem;
+        width: 120rem;
+        height: 65rem;
 
         transition: 400ms;
     }
@@ -212,10 +236,14 @@ export const ProjectCarouselContainer = styled(Box)`
         }
     }
 
+    .filter-hidden-for-video {
+        display: none;
+    }
+
     .project-name {
         position: absolute;
 
-        animation: projectNameShow 400ms;
+        animation: elementShowingIn 400ms;
 
         font-size: 5rem;
         color: #FFFFFF;

@@ -122,6 +122,14 @@ export const GreetBotContainer = styled("div")`
         transform-style: preserve-3d;
       }
 
+      .bot-showing-portfolio-video {
+        transform: translateZ(-400rem) translateX(140rem);
+
+        animation: none;
+
+        transform-style: preserve-3d;
+      }
+
       .bot-showing-studies {
         transform: translateZ(-260rem) translateX(90rem);
 
