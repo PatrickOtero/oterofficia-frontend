@@ -77,6 +77,15 @@ export const ProjectCarouselContainer = styled(Box)`
             margin-bottom: 1rem;
         }
     }   
+
+    @keyframes loadingBarProgressing {
+        0% {
+            width: 0;
+        } 
+        100% {
+            width: 20rem;
+        }
+    }
     
     position: relative;
 
@@ -98,6 +107,41 @@ export const ProjectCarouselContainer = styled(Box)`
     background-color: #288a9128;
     box-shadow: 0px 0px 50px 10px #288a91 inset;
     transition: 600ms;
+
+    .loading-container {
+        position: relative;
+        
+        left: -18%;
+    }
+
+    .loading-text {
+        position: absolute;
+
+        top: -2.5rem;
+        font-size: 2rem;
+
+        color: #88c4c9;
+        text-shadow: 0 0 10px #88c4c9;     
+    }
+
+    .loading-track {
+        position: absolute;
+
+        background-color: #ffffff00;
+        border: 4px solid #288a91;
+
+        height: 5rem;
+        width: 25rem;
+    }
+
+    .loading-bar {
+        animation: loadingBarProgressing 10000ms forwards;
+
+        height: 100%;
+        width: 0;
+        background-color: #10ddecff;
+        box-shadow: 0px 0px 50px 10px #288a91;
+    }
 
     .portfolio-close-button {
         position: absolute;
@@ -219,14 +263,14 @@ export const ProjectCarouselContainer = styled(Box)`
         transition: 400ms;
 
         z-index: 1;
-
-        &:hover {
-            background-color: #88c4c98f;
-            animation: imgHologramEffect 10ms linear infinite;
-        }
     }
 
-    .project-name {
+    .project-image-filter-hover {
+        background-color: #88c4c9d2;
+            animation: imgHologramEffect 10ms linear infinite;
+    }
+
+    .project-link {
         position: absolute;
 
         animation: elementShowingIn 400ms;
@@ -236,6 +280,12 @@ export const ProjectCarouselContainer = styled(Box)`
         text-shadow: 0 0 10px #FFFFFF;
         
         z-index: 2;
+    }
+
+    .projects-list-empty-message {
+        font-size: 3rem;
+
+        z-index: 1;
     }
 
     .project-description-button-container {

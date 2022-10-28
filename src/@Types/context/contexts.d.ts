@@ -18,6 +18,8 @@ export interface IBotContext {
     setHologramActivated: Dispatch<SetStateAction<boolean>>;
     isShowingMenu: boolean;
     setIsShowingMenu: Dispatch<SetStateAction<boolean>>;
+    isLoading: boolean;
+    setIsLoading: Dispatch<SetStateAction<boolean>>;
 
     visorPosition: string;
     setVisorPosition: Dispatch<SetStateAction<string>>;

@@ -14,7 +14,7 @@ export const useBotFunctionsContextProvider = () => {
     const [ homePage, setHomePage ] = useState<boolean>(false)
     const [ aboutMePage, setAboutMePage ] = useState<boolean>(false)
     const [ portfolioPage, setPortfolioPage ] = useState<boolean>(false)
-    const [ isShowingVideo, setIsShowingVideo ] = useState<boolean>(false)
+    const [ isLoading, setIsLoading ] = useState<boolean>(true);
 
     return {
         visorPosition,
@@ -39,6 +39,8 @@ export const useBotFunctionsContextProvider = () => {
         hologramActivated,
         setHologramActivated,
         infoTextHolo,
-        setInfoTextHolo
+        setInfoTextHolo,
+        setIsLoading,
+        isLoading
     }
 }

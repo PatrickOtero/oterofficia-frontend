@@ -1,25 +1,55 @@
-import { useProjectsCarousel } from "../hooks/useProjectsCarousel";
 import { ProjectCarouselContainer } from "./Carousel.style";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ProjectDescription } from "../ProjectDescription";
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../services/axios";
+
+export interface IProjectsInfo {
+    image_url: string;
+    project_name: string;
+    project_description: string;
+    frontend_url: string | undefined;
+    backend_url: string | undefined;
+    video_url: string | undefined;
+}
 
 export const ProjectCarousel = () => {
     const [ index, setIndex ] = useState<number>(0)
-    const [ showName, setShowName ] = useState<boolean>(false)
+    const [ showLink, setShowLink ] = useState<boolean>(false)
     const [ showDetails, setShowDetails ] = useState<boolean>(false)
     const [ newProject, setNewProject ] = useState<boolean>(false)
-    const [ isShowingVideo, setIsShowingVideo ] = useState<boolean>(false)
 
     const [ containerHeight, setContainerHeight ] = useState<number>(45)
     const [ containerWidth, setContainerWidth ] = useState<number>(70)
     const [ containerPosition, setContainerPosition ] = useState<number>(0)
     const [ arrowPosition, setArrowPosition ] = useState<string>("")
 
-    const { projectsInfo } = useProjectsCarousel()
+    const [ projectsInfo, setProjectsInfo ] = useState<IProjectsInfo[]>([]);
+    const [ projectsErrors, setProjectsErrors ] = useState<string>("");
 
-    const { setEarthPosition, setBotPosition, setPortfolioPage, setHomePage, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState, setHoloPosition } = useBotFunctionsContext()
+    const { setEarthPosition, setBotPosition, setPortfolioPage, setHomePage, setHologramActivated, setIsShowingMenu, setInfoTextHolo, setVisorPosition, setEyeState, setHoloPosition, isLoading, setIsLoading } = useBotFunctionsContext()
+
+    const handleGetProjects = async () => {
+        setIsLoading(true)
+
+        try {
+            const response = await api.get("/projects");
+
+            setProjectsInfo(response.data);
+            setIsLoading(false)
+        } catch ( error: any ) {
+            setIsLoading(false)
+            setProjectsErrors(error.response.data.message)
+        }
+    }
+
+    useEffect(() => {
+        const handleLoadGetProjects = async () => {
+            await handleGetProjects()
+        }
+        handleLoadGetProjects()
+    }, [])
 
     const handlePreviousButton = () => {
         if (index === 0) {
@@ -55,7 +85,7 @@ export const ProjectCarousel = () => {
                     navigate("/")
             }}>X</b>
             {
-             !showDetails &&
+             !showDetails && projectsInfo.length > 0 &&
              <>
               <button className="portfolio-button previous"
                onClick={() =>
@@ -74,16 +104,25 @@ export const ProjectCarousel = () => {
             </>
             }
             <div className={`image-and-name ${newProject ? "carousel-effect-1" : ""}`}>
-                    <img src={projectsInfo[index].imageUrl} alt="Imagem do projeto"/>
-                <div className={`${isShowingVideo ? "project-video-filter" : "project-image-filter"}`} onMouseEnter={() => setShowName(true)}
-                     onMouseLeave={() => setShowName(false)}>
+            {isLoading &&
+                <div className="loading-container">
+                    <b className="loading-text">Carregando...</b>
+                    <div className="loading-track">
+                        <div className="loading-bar"></div>
+                    </div>
+                </div>}
+                {!isLoading && projectsInfo.length > 0 &&
+                    <img src={projectsInfo[index].image_url} alt="Imagem do projeto"/>
+                }
+                <div className={`project-image-filter ${showLink && projectsInfo.length > 0 ? "project-image-filter-hover" : ""}`} onMouseEnter={() => setShowLink(true)}
+                     onMouseLeave={() => setShowLink(false)}>
                 </div>
-               { showName && <a onMouseEnter={() => setShowName(true)} className="project-name" href={projectsInfo[index].videoUrl} target="blank">{`${projectsInfo[index].videoUrl.length ? "Exibir vídeo no Linkedin" : "Sem vídeo"}`}</a>
+               {!isLoading && showLink && projectsInfo.length > 0 && <a onMouseEnter={() => setShowLink(true)} className="project-link" href={projectsInfo[index].video_url} target="blank">{`${projectsInfo[index].video_url?.length ? "Exibir vídeo no Linkedin" : "Sem vídeo"}`}</a>
                }
+               {!isLoading && projectsInfo.length <= 0 && <b className="projects-list-empty-message">Não existem projetos no banco de dados</b>}
             </div>
             {
-                !isShowingVideo && 
-            <div className="project-description-button-container">
+                projectsInfo.length > 0 && <div className="project-description-button-container">
                 <b className={`button-description-arrow arrow1 ${arrowPosition}`}>v</b>
                 <button className="portfolio-button"
                  onClick={() => 
@@ -107,7 +146,7 @@ export const ProjectCarousel = () => {
             </div>
             }
             {showDetails &&
-            <ProjectDescription index={index}/>
+            <ProjectDescription projectsInfo={projectsInfo} index={index}/>
             }
         </ProjectCarouselContainer>
     );
