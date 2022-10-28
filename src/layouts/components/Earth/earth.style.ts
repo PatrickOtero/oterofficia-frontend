@@ -3,12 +3,14 @@ import earthMap from "../../../assets/world-map.png"
 
 export const EarthContainer = styled("div")`
     @keyframes celestialBodyRotation {
-        from {
-            background-position: 0;
+        0% {
+            background-position: 0 0;
         }
-         to {
-            background-position: 200%;
+
+        100% {
+            background-position: 120%;
         }
+        
     }
 
     position: absolute;
@@ -29,11 +31,12 @@ export const EarthContainer = styled("div")`
 
         overflow: hidden;
         background-image: url(${earthMap});
+        background-position: 0 0;
         background-size: cover;
 
         box-shadow: 0 0 100px 45px #5ea6e0;
 
-        animation: celestialBodyRotation 800s linear infinite;
+        animation: celestialBodyRotation 1000s linear infinite;
     }
 
     .earth-hidden {
