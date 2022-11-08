@@ -15,7 +15,7 @@ export const DirectMessageSection = () => {
                         <img src={telegramImage} alt="section-image"/>
                     </div>
                     <div className="img-container">
-                        <a href="https://wa.me/21983036378" target="blank"><div className="img-filter">
+                        <a href="https://wa.me/5521983036378" target="blank"><div className="img-filter">
                         </div></a>
                         <img src={whatsappImage} alt="section-image"/>
                     </div>
