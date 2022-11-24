@@ -21,6 +21,6 @@
 
 ## Página de Estudos
 
-### Esta página ainda não está pronta e não tenho um prazo para terminá-la pois estou fazendo tudo do zero, como o serviço de e-mail que está na API que eu construí para este site e que pode ser usado na página 'Sobre Mim' e desejo fazer, para esta página, as funcionalidades de um sistema de postagens, com imagens, textos e comentários, sem a ajuda de nenhuma biblioteca.
+### Esta página ainda não está pronta e não tenho um prazo para terminá-la pois estou fazendo tudo do zero, como o serviço de e-mail que está na API que eu construí para este site e que pode ser usado na página 'Sobre Mim' (link do repositório do backend deste site: https://github.com/PatrickOtero/oterofficia-backend) e desejo fazer, para esta página, "Estudos", as funcionalidades de um sistema de postagens, com imagens, textos e comentários, sem a ajuda de nenhuma biblioteca.
 
 ## Obrigado pelo interesse em conhecer meu trabalho.
