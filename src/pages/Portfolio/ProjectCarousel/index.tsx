@@ -8,7 +8,7 @@ import { api } from "../../../services/axios";
 export interface IProjectsInfo {
     image_url: string;
     project_name: string;
-    project_description: string;
+    project_desc: string;
     frontend_url: string | undefined;
     backend_url: string | undefined;
     video_url: string | undefined;
