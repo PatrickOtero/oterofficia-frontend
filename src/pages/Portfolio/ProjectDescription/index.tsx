@@ -15,7 +15,7 @@ export const ProjectDescription = ({ projectsInfo, index }: IProjectDescription)
     return (
         <ProjectDescriptionContainer>
                 <h1 className="project-description-title">{projectsInfo[index].project_name}</h1>
-                {projectsInfo[index].project_description.split("\n").map((paragraph: string, index: number) => {
+                {projectsInfo[index].project_desc.split("\n").map((paragraph: string, index: number) => {
                     return <p key={index * Math.random()} className="project-description-content">{paragraph}</p>
                 })}
                 <div className="front-end-link-container">
