@@ -1,7 +1,6 @@
 import axios from "axios"
 
-const formsubmitUrlApi = "https://formsubmit.co/ajax/"
-const serverUrl = "https://oterofficia-backend-api.cyclic.app"
+const serverUrl = "https://oterofficia-api.herokuapp.com/"
 
 export const api = axios.create({ 
     baseURL: serverUrl,
