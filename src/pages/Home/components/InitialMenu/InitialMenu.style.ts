@@ -50,6 +50,38 @@ export const InitialMenuContainer = styled(Box)`
         backdrop-filter: blur(10px);
     }
 
+    .initial-menu-auth,
+    .initial-menu-session {
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        padding: 0.2rem 0 1rem;
+    }
+
+    .auth-title,
+    .session-user {
+        font-family: "IBM Plex Mono", monospace;
+        text-transform: uppercase;
+    }
+
+    .auth-title {
+        color: rgba(var(--scene-accent-soft-rgb), 0.62);
+        font-size: 0.98rem;
+        letter-spacing: 0.16em;
+    }
+
+    .session-user {
+        color: rgba(var(--scene-title-rgb), 0.94);
+        font-size: 1.22rem;
+        letter-spacing: 0.08em;
+    }
+
+    .auth-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
     .initial-menu-main::before {
         content: "";
         position: absolute;
@@ -74,6 +106,15 @@ export const InitialMenuContainer = styled(Box)`
         font-size: 1.2rem;
     }
 
+    .auth-button {
+        height: 4.2rem;
+        font-size: 1.02rem;
+    }
+
+    .auth-button.secondary {
+        background: rgba(var(--scene-accent-rgb), 0.06);
+    }
+
     @media (max-width: 900px) {
         width: min(38rem, 90vw);
 
@@ -85,6 +126,15 @@ export const InitialMenuContainer = styled(Box)`
         button {
             height: 4.6rem;
             font-size: 1.08rem;
+        }
+
+        .auth-actions {
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+        }
+
+        .auth-button {
+            height: 4.4rem;
         }
     }
 `;

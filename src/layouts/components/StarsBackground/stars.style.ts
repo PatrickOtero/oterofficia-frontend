@@ -28,11 +28,11 @@ export const SpaceContainer = styled(Box)`
         position: absolute;
         inset: 0;
         background-repeat: no-repeat;
-        animation: starsGlow 8s ease-in-out infinite;
     }
 
     &::before {
         opacity: 0.76;
+        animation: starsGlow 14s ease-in-out infinite;
         background-image:
             radial-gradient(circle at 8% 12%, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.8px),
             radial-gradient(circle at 16% 30%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.6px),
@@ -51,7 +51,6 @@ export const SpaceContainer = styled(Box)`
 
     &::after {
         opacity: 0.34;
-        animation-delay: -3.4s;
         background-image:
             radial-gradient(circle at 6% 44%, rgba(var(--scene-accent-soft-rgb), 0.7) 0 1px, transparent 2px),
             radial-gradient(circle at 20% 72%, rgba(var(--scene-accent-soft-rgb), 0.58) 0 1px, transparent 2px),

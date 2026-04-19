@@ -1,7 +1,7 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { StudySummary } from "../../../types/study";
-import { orbitalPanelCss, subtleButtonCss, surfaceCardCss } from "../../../utils/styleMixins";
-import { Link } from "react-router-dom";
+import { orbitalPanelCss, surfaceCardCss } from "../../../utils/styleMixins";
 
 type StudiesHeroProps = {
   featuredPost?: StudySummary | null;
@@ -53,8 +53,37 @@ const StudiesHeroContainer = styled.section`
 
     .hero-side {
         ${surfaceCardCss};
-        padding: 2.2rem;
         min-height: 28rem;
+        display: grid;
+        grid-template-rows: minmax(15rem, 18rem) auto;
+        overflow: hidden;
+        text-decoration: none;
+        transition: transform 220ms ease, border-color 220ms ease;
+    }
+
+    .hero-side:hover {
+        transform: translate3d(0, -0.35rem, 0);
+        border-color: rgba(var(--scene-accent-rgb), 0.22);
+    }
+
+    .hero-side-cover {
+        position: relative;
+        background:
+            linear-gradient(180deg, rgba(8, 14, 22, 0.12) 0%, rgba(8, 14, 22, 0.62) 100%);
+        background-position: center;
+        background-size: cover;
+    }
+
+    .hero-side-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(180deg, rgba(10, 18, 28, 0.02) 0%, rgba(10, 18, 28, 0.7) 100%);
+    }
+
+    .hero-side-content {
+        padding: 2.2rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -95,8 +124,12 @@ const StudiesHeroContainer = styled.section`
         text-transform: uppercase;
     }
 
-    .hero-action {
-        ${subtleButtonCss};
+    .hero-featured-hint {
+        color: rgba(var(--scene-title-rgb), 0.92);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
     }
 
     @media (max-width: 960px) {
@@ -117,9 +150,17 @@ export const StudiesHero = ({ featuredPost, summary }: StudiesHeroProps) => (
       </div>
     </div>
 
-    <div className="hero-side">
-      {featuredPost ? (
-        <>
+    {featuredPost ? (
+      <Link className="hero-side" to={`/studies/${featuredPost.slug}`}>
+        <div
+          className="hero-side-cover"
+          style={
+            featuredPost.coverImage
+              ? { backgroundImage: `url(${featuredPost.coverImage})` }
+              : undefined
+          }
+        />
+        <div className="hero-side-content">
           <div>
             <span className="hero-featured-label">Em destaque</span>
             <h3 className="hero-featured-title">{featuredPost.title}</h3>
@@ -129,21 +170,19 @@ export const StudiesHero = ({ featuredPost, summary }: StudiesHeroProps) => (
             <span className="hero-featured-pill">{featuredPost.readingTime} min</span>
             <span className="hero-featured-pill">{featuredPost.likesCount} curtidas</span>
           </div>
-          <Link to={`/studies/${featuredPost.slug}`}>
-            <button className="hero-action" type="button">
-              Abrir
-            </button>
-          </Link>
-        </>
-      ) : (
-        <>
+          <span className="hero-featured-hint">Clique para ler</span>
+        </div>
+      </Link>
+    ) : (
+      <div className="hero-side">
+        <div className="hero-side-content">
           <span className="hero-featured-label">Status</span>
           <h3 className="hero-featured-title">Arquivo vazio</h3>
           <div className="hero-featured-meta">
             <span className="hero-featured-pill">0 itens</span>
           </div>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    )}
   </StudiesHeroContainer>
 );

@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
+import { authApi } from "../../../features/auth/api/authApi";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
+import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
 
 const RegisterPageContainer = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    min-height: 100%;
     overflow: auto;
 `;
 
@@ -16,6 +18,7 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { isAuthenticated, register } = useAuth();
+  const redirectPath = useMemo(() => searchParams.get("redirect") || "/studies", [searchParams]);
   const [form, setForm] = useState({
     email: "",
     name: "",
@@ -23,8 +26,9 @@ export const RegisterPage = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const redirectPath = searchParams.get("redirect") || "/studies";
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [showVerificationAction, setShowVerificationAction] = useState<boolean>(false);
+  const [isResendingVerification, setIsResendingVerification] = useState<boolean>(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -35,14 +39,31 @@ export const RegisterPage = () => {
   const handleSubmit = async () => {
     setIsSubmitting(true);
     setErrorMessage("");
+    setSuccessMessage("");
+    setShowVerificationAction(false);
 
     try {
-      await register(form);
-      navigate(redirectPath, { replace: true });
+      const response = await register(form);
+      setSuccessMessage(response.message);
+      setShowVerificationAction(response.requiresEmailVerification);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível concluir o cadastro.");
+      setErrorMessage(error.response?.data?.message || "Nao foi possivel concluir o cadastro.");
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setIsResendingVerification(true);
+    setErrorMessage("");
+
+    try {
+      const response = await authApi.resendVerificationEmail(form.email);
+      setSuccessMessage(response.message);
+    } catch (error: any) {
+      setErrorMessage(error.response?.data?.message || "Nao foi possivel reenviar a confirmacao.");
+    } finally {
+      setIsResendingVerification(false);
     }
   };
 
@@ -52,6 +73,13 @@ export const RegisterPage = () => {
         errorMessage={errorMessage}
         fields={
           <>
+            {successMessage ? (
+              <FeedbackState
+                description={successMessage}
+                title="Cadastro concluido"
+                variant="success"
+              />
+            ) : null}
             <input
               onChange={(event) => setForm({ ...form, name: event.target.value })}
               placeholder="Nome"
@@ -68,17 +96,29 @@ export const RegisterPage = () => {
               type="password"
               value={form.password}
             />
+            {showVerificationAction ? (
+              <button onClick={() => void handleResendVerification()} type="button">
+                {isResendingVerification ? "Reenviando confirmacao" : "Reenviar confirmacao"}
+              </button>
+            ) : null}
           </>
         }
         footer={
           <>
-            Já possui acesso? <Link to={`/login?redirect=${encodeURIComponent(redirectPath)}`}>Entrar</Link>
+            <div>
+              Ja tem acesso?{" "}
+              <Link to={`/login?redirect=${encodeURIComponent(redirectPath)}`}>Entrar</Link>
+            </div>
+            <div>
+              Depois da confirmacao, voce pode voltar para{" "}
+              <Link to={redirectPath}>continuar navegando</Link>.
+            </div>
           </>
         }
         isSubmitting={isSubmitting}
         onSubmit={() => void handleSubmit()}
         submitLabel="Criar conta"
-        subtitle="Seu cadastro habilita curtidas, comentários persistidos e as áreas protegidas compatíveis com o seu perfil."
+        subtitle="Crie sua conta."
         title="Cadastro"
       />
     </RegisterPageContainer>

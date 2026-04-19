@@ -1,5 +1,6 @@
 import { api } from "../../../services/axios";
 import {
+  CommentLikeResponse,
   CreateCommentResponse,
   LikeResponse,
   PublicStudiesResponse,
@@ -41,8 +42,11 @@ const sanitizeStudyPayload = (payload: StudyFormValues) => ({
 });
 
 export const studiesApi = {
-  async createComment(postId: string, content: string) {
-    const response = await api.post<CreateCommentResponse>(`/studies/${postId}/comments`, { content });
+  async createComment(postId: string, content: string, parentCommentId?: string | null) {
+    const response = await api.post<CreateCommentResponse>(`/studies/${postId}/comments`, {
+      content,
+      parentCommentId: parentCommentId || null,
+    });
     return response.data;
   },
 
@@ -110,6 +114,11 @@ export const studiesApi = {
     return response.data;
   },
 
+  async likeComment(commentId: string) {
+    const response = await api.post<CommentLikeResponse>(`/comments/${commentId}/likes`);
+    return response.data;
+  },
+
   async setStudyStatus(postId: string, status: StudyStatus) {
     const response = await api.patch<StudyDetail>(`/admin/studies/${postId}/status`, { status });
     return response.data;
@@ -117,6 +126,11 @@ export const studiesApi = {
 
   async unlikeStudy(postId: string) {
     const response = await api.delete<LikeResponse>(`/studies/${postId}/likes`);
+    return response.data;
+  },
+
+  async unlikeComment(commentId: string) {
+    const response = await api.delete<CommentLikeResponse>(`/comments/${commentId}/likes`);
     return response.data;
   },
 

@@ -40,10 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const register = useCallback(async (payload: { name: string; email: string; password: string }) => {
     const response = await authApi.register(payload);
 
-    authStorage.setToken(response.token);
-    setUser(response.user);
-
-    return response.user;
+    return response;
   }, []);
 
   const login = useCallback(async (payload: { email: string; password: string }) => {

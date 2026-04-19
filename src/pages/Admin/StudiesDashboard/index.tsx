@@ -47,36 +47,67 @@ export const AdminStudiesDashboardPage = () => {
     search: "",
     status: "all" as "all" | "draft" | "published",
   });
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isStudiesLoading, setIsStudiesLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [pendingStatusId, setPendingStatusId] = useState<string | null>(null);
   const [deletingCommentId, setDeletingCommentId] = useState<string | null>(null);
+  const { category, status } = filters;
 
-  const loadDashboardData = useCallback(async () => {
+  const loadOverview = useCallback(async () => {
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-      const [dashboardResponse, studiesResponse, commentsResponse] = await Promise.all([
+      const [dashboardResponse, commentsResponse] = await Promise.all([
         studiesApi.fetchAdminDashboard(),
-        studiesApi.fetchAdminStudies(filters),
         studiesApi.fetchAdminComments(),
       ]);
 
       setDashboard(dashboardResponse);
-      setStudies(studiesResponse);
       setComments(commentsResponse);
     } catch (error: any) {
       setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar o painel de estudos.");
     } finally {
       setIsLoading(false);
     }
-  }, [filters]);
+  }, []);
 
   useEffect(() => {
-    void loadDashboardData();
-  }, [loadDashboardData]);
+    const timeout = window.setTimeout(() => {
+      setDebouncedSearch(filters.search);
+    }, 140);
+
+    return () => window.clearTimeout(timeout);
+  }, [filters.search]);
+
+  const loadStudies = useCallback(async () => {
+    setIsStudiesLoading(true);
+    setErrorMessage("");
+
+    try {
+      const studiesResponse = await studiesApi.fetchAdminStudies({
+        category,
+        search: debouncedSearch,
+        status,
+      });
+      setStudies(studiesResponse);
+    } catch (error: any) {
+      setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar a lista de estudos.");
+    } finally {
+      setIsStudiesLoading(false);
+    }
+  }, [category, debouncedSearch, status]);
+
+  useEffect(() => {
+    void loadOverview();
+  }, [loadOverview]);
+
+  useEffect(() => {
+    void loadStudies();
+  }, [loadStudies]);
 
   const categories = useMemo(
     () =>
@@ -93,7 +124,7 @@ export const AdminStudiesDashboardPage = () => {
 
     try {
       await studiesApi.deleteStudy(postId);
-      await loadDashboardData();
+      await Promise.all([loadStudies(), loadOverview()]);
     } finally {
       setPendingDeleteId(null);
     }
@@ -107,7 +138,7 @@ export const AdminStudiesDashboardPage = () => {
         study.id,
         study.status === "published" ? "draft" : "published"
       );
-      await loadDashboardData();
+      await Promise.all([loadStudies(), loadOverview()]);
     } finally {
       setPendingStatusId(null);
     }
@@ -122,7 +153,7 @@ export const AdminStudiesDashboardPage = () => {
 
     try {
       await studiesApi.deleteComment(commentId, true);
-      await loadDashboardData();
+      await loadOverview();
     } finally {
       setDeletingCommentId(null);
     }
@@ -132,15 +163,15 @@ export const AdminStudiesDashboardPage = () => {
     <AdminStudiesDashboardContainer>
       <AdminSectionTabs />
 
-      {isLoading ? (
+      {(isLoading || isStudiesLoading) ? (
         <FeedbackState description="Os dados do painel estao sendo agregados." title="Carregando painel" />
       ) : null}
 
-      {!isLoading && errorMessage ? (
+      {!isLoading && !isStudiesLoading && errorMessage ? (
         <FeedbackState description={errorMessage} title="Falha ao carregar o painel" variant="error" />
       ) : null}
 
-      {!isLoading && !errorMessage ? (
+      {!isLoading && !isStudiesLoading && !errorMessage ? (
         <>
           <AdminMetricsStrip metrics={dashboard.metrics} />
           <AdminFiltersBar

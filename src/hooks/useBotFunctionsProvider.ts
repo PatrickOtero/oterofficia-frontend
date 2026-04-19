@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export const useBotFunctionsContextProvider = () => {
+    const [sceneTransition, setSceneTransition] = useState<"idle" | "content-to-home" | "home-to-content">("idle");
     const [visorPosition, setVisorPosition] = useState<string>("visor-to-top");
     const [earthPosition, setEarthPosition] = useState<string>("");
     const [eyeState, setEyeState] = useState<string>("");
@@ -14,6 +15,8 @@ export const useBotFunctionsContextProvider = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     return {
+        sceneTransition,
+        setSceneTransition,
         visorPosition,
         setVisorPosition,
         earthPosition,

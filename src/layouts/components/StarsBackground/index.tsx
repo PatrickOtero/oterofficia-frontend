@@ -1,7 +1,4 @@
+import { memo } from "react";
 import { SpaceContainer } from "./stars.style";
 
-export const StarsBackground = () => {
-    return (
-        <SpaceContainer aria-hidden="true" />
-    );
-}
+export const StarsBackground = memo(() => <SpaceContainer aria-hidden="true" />);

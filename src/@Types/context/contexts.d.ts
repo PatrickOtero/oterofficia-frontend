@@ -5,6 +5,8 @@ export type ICompProps = {
 };
 
 export interface IBotContext {
+    sceneTransition: "idle" | "content-to-home" | "home-to-content";
+    setSceneTransition: Dispatch<SetStateAction<"idle" | "content-to-home" | "home-to-content">>;
     homePage: boolean;
     setHomePage: Dispatch<SetStateAction<boolean>>;
     aboutMePage: boolean;

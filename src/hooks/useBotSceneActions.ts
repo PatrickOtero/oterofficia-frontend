@@ -10,10 +10,12 @@ export const useBotSceneActions = () => {
         setInfoTextHolo,
         setIsShowingMenu,
         setPortfolioPage,
+        setSceneTransition,
         setVisorPosition,
     } = useBotFunctionsContext();
 
     const centerBotOnHome = () => {
+        setSceneTransition("idle");
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(false);
@@ -25,7 +27,8 @@ export const useBotSceneActions = () => {
         setEyeState("");
     };
 
-    const showHomeMenu = () => {
+    const showHomeMenu = (origin: "default" | "content" = "default") => {
+        setSceneTransition(origin === "content" ? "content-to-home" : "idle");
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(true);
@@ -38,6 +41,7 @@ export const useBotSceneActions = () => {
     };
 
     const openAboutMeScene = () => {
+        setSceneTransition("idle");
         setPortfolioPage(false);
         setHomePage(false);
         setAboutMePage(true);
@@ -50,6 +54,7 @@ export const useBotSceneActions = () => {
     };
 
     const openPortfolioScene = () => {
+        setSceneTransition("idle");
         setAboutMePage(false);
         setHomePage(false);
         setPortfolioPage(true);
@@ -61,8 +66,21 @@ export const useBotSceneActions = () => {
         setEyeState("emitting-holo");
     };
 
+    const openContentScene = () => {
+        setSceneTransition("home-to-content");
+        setAboutMePage(false);
+        setPortfolioPage(false);
+        setHomePage(false);
+        setHologramActivated(true);
+        setIsShowingMenu(false);
+        setInfoTextHolo(false);
+        setVisorPosition("visor-to-left");
+        setEyeState("emitting-holo");
+    };
+
     return {
         centerBotOnHome,
+        openContentScene,
         openAboutMeScene,
         openPortfolioScene,
         showHomeMenu,

@@ -6,6 +6,20 @@ import { botPoseBaseCss } from "./styles/botPoseBase";
 import { botPoseFrontCss } from "./styles/botPoseFront";
 
 export const GreetBotContainer = styled.div`
+    @keyframes botReturnFromContent {
+        from {
+            left: calc(100vw - var(--bot-width) - clamp(2.25rem, 4vw, 4rem));
+            top: calc(100vh - var(--bot-height) - clamp(0.9rem, 3vh, 2rem));
+            transform: translate3d(0, 0, 0) scale(0.98);
+        }
+
+        to {
+            left: calc(100vw - var(--bot-width) - clamp(3rem, 4.8vw, 4.8rem));
+            top: calc(100vh - var(--bot-height) - clamp(2.2rem, 4.8vh, 3.6rem));
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
+
     --bot-height: 26.5rem;
     --bot-width: 14rem;
     --bot-float-distance: 0.82rem;
@@ -29,10 +43,10 @@ export const GreetBotContainer = styled.div`
         pointer-events: none;
         will-change: left, top, transform;
         transition:
-            left 760ms cubic-bezier(0.18, 1, 0.22, 1),
-            top 760ms cubic-bezier(0.18, 1, 0.22, 1),
-            transform 760ms cubic-bezier(0.18, 1, 0.22, 1),
-            opacity 240ms ease;
+            left 840ms cubic-bezier(0.16, 1, 0.22, 1),
+            top 840ms cubic-bezier(0.16, 1, 0.22, 1),
+            transform 840ms cubic-bezier(0.16, 1, 0.22, 1),
+            opacity 260ms ease;
     }
 
     .bot-roamer.position-home-center {
@@ -42,9 +56,16 @@ export const GreetBotContainer = styled.div`
     }
 
     .bot-roamer.position-home-docked {
-        left: calc(100vw - var(--bot-width) - clamp(3.75rem, 5vw, 5.5rem));
-        top: calc(100vh - var(--bot-height) - clamp(4rem, 7vh, 5.5rem));
+        left: calc(100vw - var(--bot-width) - clamp(3rem, 4.8vw, 4.8rem));
+        top: calc(100vh - var(--bot-height) - clamp(2.2rem, 4.8vh, 3.6rem));
         transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    .bot-roamer.position-home-returning {
+        left: calc(100vw - var(--bot-width) - clamp(3rem, 4.8vw, 4.8rem));
+        top: calc(100vh - var(--bot-height) - clamp(2.2rem, 4.8vh, 3.6rem));
+        transform: translate3d(0, 0, 0) scale(1);
+        animation: botReturnFromContent 980ms cubic-bezier(0.16, 1, 0.22, 1);
     }
 
     .bot-roamer.position-content-docked {
@@ -60,21 +81,16 @@ export const GreetBotContainer = styled.div`
         pointer-events: none;
         cursor: default;
         will-change: transform;
-        animation: greetBotFloating 5.6s ease-in-out infinite;
+        animation: greetBotFloating 6.4s ease-in-out infinite;
         overflow: visible;
         transition:
-            transform 360ms ease,
-            opacity 240ms ease,
-            filter 240ms ease;
+            transform 520ms ease,
+            opacity 260ms ease;
     }
 
     .greetbot-body.is-interactive {
         pointer-events: auto;
         cursor: pointer;
-    }
-
-    .greetbot-body:hover {
-        filter: brightness(1.05);
     }
 
     .bot-frame {
@@ -99,8 +115,13 @@ export const GreetBotContainer = styled.div`
         }
 
         .bot-roamer.position-home-docked {
-            left: calc(100vw - var(--bot-width) - 1.4rem);
-            top: calc(100vh - var(--bot-height) - 2.2rem);
+            left: calc(100vw - var(--bot-width) - 1.1rem);
+            top: calc(100vh - var(--bot-height) - 1.5rem);
+        }
+
+        .bot-roamer.position-home-returning {
+            left: calc(100vw - var(--bot-width) - 1.1rem);
+            top: calc(100vh - var(--bot-height) - 1.5rem);
         }
 
         .bot-roamer.position-content-docked {

@@ -1,3 +1,4 @@
+import { memo, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { GreetBotContainer } from "./GreetBot.style";
 import { GreetText } from "../GreetText";
@@ -5,14 +6,14 @@ import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
 import { FrontPose } from "./poses/FrontPose";
 
-type BeamTarget = "content-menu" | null;
+type BeamTarget = "auth-panel" | "content-menu" | null;
 
 type GreetBotProps = {
     interactive?: boolean;
     beamTarget?: BeamTarget;
 };
 
-export const GreetBot = ({ interactive = true, beamTarget = null }: GreetBotProps) => {
+export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBotProps) => {
     const location = useLocation();
     const isHomeRoute = location.pathname === "/";
     const isAboutRoute = location.pathname === "/aboutme";
@@ -27,6 +28,8 @@ export const GreetBot = ({ interactive = true, beamTarget = null }: GreetBotProp
         homePage,
         aboutMePage,
         portfolioPage,
+        sceneTransition,
+        setSceneTransition,
         visorPosition,
     } = useBotFunctionsContext();
     const { showHomeMenu } = useBotSceneActions();
@@ -52,18 +55,35 @@ export const GreetBot = ({ interactive = true, beamTarget = null }: GreetBotProp
           ? "visor-to-left"
           : "visor-to-top";
     const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && infoTextHolo;
+    const isReturningFromContent = isHomeMenuScene && sceneTransition === "content-to-home";
+
+    useEffect(() => {
+        if (!isReturningFromContent) {
+            return;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setSceneTransition("idle");
+        }, 1080);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [isReturningFromContent, setSceneTransition]);
 
     const positionClass = interactive
-        ? shouldDockInDefaultScene
+        ? isReturningFromContent
+            ? "position-home-returning"
+            : shouldDockInDefaultScene
             ? "position-home-docked"
             : "position-home-center"
         : "position-content-docked";
 
     const beamTargetClass = resolvedHologramState
         ? !interactive
-            ? beamTarget === "content-menu"
-                ? "beam-target-content"
-                : ""
+            ? beamTarget === "auth-panel"
+                ? "beam-target-auth"
+                : beamTarget === "content-menu"
+                  ? "beam-target-content"
+                  : ""
             : isAboutScene
               ? "beam-target-about"
               : isPortfolioScene
@@ -115,4 +135,4 @@ export const GreetBot = ({ interactive = true, beamTarget = null }: GreetBotProp
             </div>
         </GreetBotContainer>
     );
-};
+});

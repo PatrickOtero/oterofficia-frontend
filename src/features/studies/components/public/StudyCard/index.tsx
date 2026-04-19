@@ -7,20 +7,65 @@ type StudyCardProps = {
   study: StudySummary;
 };
 
-const StudyCardContainer = styled.article`
+const StudyCardLink = styled(Link)`
     ${surfaceCardCss};
 
     display: flex;
     flex-direction: column;
     min-height: 100%;
     overflow: hidden;
+    text-decoration: none;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+
+    &:hover {
+        transform: translate3d(0, -0.4rem, 0);
+        border-color: rgba(var(--scene-accent-rgb), 0.22);
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+            0 1.2rem 2rem rgba(0, 0, 0, 0.16);
+    }
 
     .card-cover {
+        position: relative;
         aspect-ratio: 16 / 9;
         background:
             linear-gradient(180deg, rgba(var(--scene-accent-rgb), 0.18) 0%, rgba(6, 16, 24, 0.2) 100%);
         background-size: cover;
         background-position: center;
+        overflow: hidden;
+    }
+
+    .card-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(180deg, rgba(4, 12, 18, 0.04) 0%, rgba(4, 12, 18, 0.5) 100%);
+        transition: opacity 220ms ease;
+    }
+
+    &:hover .card-cover::after {
+        opacity: 0.8;
+    }
+
+    .card-hover-label {
+        position: absolute;
+        right: 1.4rem;
+        bottom: 1.4rem;
+        z-index: 1;
+        color: rgba(var(--scene-title-rgb), 0.94);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translate3d(0, 0.4rem, 0);
+        transition: opacity 220ms ease, transform 220ms ease;
+    }
+
+    &:hover .card-hover-label {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
     }
 
     .card-body {
@@ -67,33 +112,27 @@ const StudyCardContainer = styled.article`
         gap: 1rem;
         margin-top: auto;
     }
-
-    .card-link {
-        color: rgba(var(--scene-title-rgb), 0.96);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 1.15rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-    }
 `;
 
 export const StudyCard = ({ study }: StudyCardProps) => (
-  <StudyCardContainer>
+  <StudyCardLink to={`/studies/${study.slug}`}>
     <div
       className="card-cover"
       style={
         study.coverImage
           ? {
-              backgroundImage: `linear-gradient(180deg, rgba(6, 13, 22, 0.1), rgba(6, 13, 22, 0.6)), url(${study.coverImage})`,
+              backgroundImage: `linear-gradient(180deg, rgba(6, 13, 22, 0.08), rgba(6, 13, 22, 0.54)), url(${study.coverImage})`,
             }
           : undefined
       }
-    />
+    >
+      <span className="card-hover-label">Ler publicacao</span>
+    </div>
     <div className="card-body">
       <div className="card-meta">
         <span className="card-pill">{study.category}</span>
         <span className="card-pill">{study.readingTime} min</span>
-        <span className="card-pill">{study.commentsCount} comentários</span>
+        <span className="card-pill">{study.commentsCount} comentarios</span>
       </div>
       <h3>{study.title}</h3>
       <p>{study.excerpt}</p>
@@ -105,10 +144,7 @@ export const StudyCard = ({ study }: StudyCardProps) => (
             </span>
           ))}
         </div>
-        <Link className="card-link" to={`/studies/${study.slug}`}>
-          Abrir
-        </Link>
       </div>
     </div>
-  </StudyCardContainer>
+  </StudyCardLink>
 );

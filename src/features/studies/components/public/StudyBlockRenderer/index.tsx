@@ -4,6 +4,7 @@ import { surfaceCardCss } from "../../../utils/styleMixins";
 
 type StudyBlockRendererProps = {
   blocks: StudyBlock[];
+  onImageOpen?: (image: { src: string; alt?: string; caption?: string }) => void;
 };
 
 const BlockRendererContainer = styled.div`
@@ -48,12 +49,26 @@ const BlockRendererContainer = styled.div`
     .block-image {
         ${surfaceCardCss};
         overflow: hidden;
+        cursor: zoom-in;
+    }
+
+    .block-image-media {
+        display: block;
+        width: 100%;
     }
 
     .block-image img {
+        display: block;
         width: 100%;
         max-height: 52rem;
         object-fit: cover;
+        transition: transform 240ms ease, opacity 240ms ease;
+    }
+
+    .block-image:hover img,
+    .block-image-media:hover img {
+        transform: scale(1.015);
+        opacity: 0.96;
     }
 
     .block-image figcaption {
@@ -188,11 +203,7 @@ const renderHeading = (block: StudyBlock) => {
   const level = String(block.data.level || "2");
   const text = String(block.data.text || "");
 
-  return (
-    <div className={`block-heading level-${level}`}>
-      {text}
-    </div>
-  );
+  return <div className={`block-heading level-${level}`}>{text}</div>;
 };
 
 const renderList = (block: StudyBlock) => {
@@ -209,7 +220,7 @@ const renderList = (block: StudyBlock) => {
   );
 };
 
-export const StudyBlockRenderer = ({ blocks }: StudyBlockRendererProps) => (
+export const StudyBlockRenderer = ({ blocks, onImageOpen }: StudyBlockRendererProps) => (
   <BlockRendererContainer>
     {blocks.map((block, index) => {
       const blockKey = block.id || `${block.type}-${index}`;
@@ -223,13 +234,35 @@ export const StudyBlockRenderer = ({ blocks }: StudyBlockRendererProps) => (
               {String(block.data.text || "")}
             </p>
           );
-        case "image":
+        case "image": {
+          const alt = String(block.data.alt || "");
+          const caption = block.data.caption ? String(block.data.caption) : undefined;
+          const src = String(block.data.url || "");
+
           return (
             <figure className="block-image" key={blockKey}>
-              <img alt={String(block.data.alt || "")} src={String(block.data.url || "")} />
-              {block.data.caption ? <figcaption>{String(block.data.caption)}</figcaption> : null}
+              {onImageOpen ? (
+                <div
+                  className="block-image-media"
+                  onClick={() => onImageOpen({ alt, caption, src })}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      onImageOpen({ alt, caption, src });
+                    }
+                  }}
+                >
+                  <img alt={alt} decoding="async" loading="lazy" src={src} />
+                </div>
+              ) : (
+                <img alt={alt} decoding="async" loading="lazy" src={src} />
+              )}
+              {caption ? <figcaption>{caption}</figcaption> : null}
             </figure>
           );
+        }
         case "code":
           return (
             <div className="block-code" key={blockKey}>
@@ -288,7 +321,7 @@ export const StudyBlockRenderer = ({ blocks }: StudyBlockRendererProps) => (
                           rel="noreferrer"
                           target="_blank"
                         >
-                          Abrir referência
+                          Abrir referencia
                         </a>
                       </div>
                     );

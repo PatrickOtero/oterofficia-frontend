@@ -1,13 +1,8 @@
+import { memo } from "react";
 import { EarthContainer } from "./earth.style";
 
-export const PlanetEarth = ({earthPosition}: {earthPosition: string}) => {
-    return (
-        <>
-        <EarthContainer>
-            <div className={`earth-main ${earthPosition}`}>
-                
-            </div>
-        </EarthContainer>
-        </>
-    );
-}
+export const PlanetEarth = memo(({ earthPosition }: { earthPosition: string }) => (
+    <EarthContainer>
+        <div className={`earth-main ${earthPosition}`} />
+    </EarthContainer>
+));

@@ -6,9 +6,11 @@ type CommentComposerProps = {
   value: string;
   onChange: (nextValue: string) => void;
   onSubmit: () => void;
+  onCancelReply?: () => void;
   isSubmitting?: boolean;
   isAuthenticated: boolean;
   redirectPath: string;
+  replyTargetName?: string | null;
 };
 
 const CommentComposerContainer = styled.div`
@@ -25,6 +27,29 @@ const CommentComposerContainer = styled.div`
         font-size: 1.4rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
+    }
+
+    .reply-badge {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1rem 1.2rem;
+        border: 1px solid rgba(var(--scene-accent-rgb), 0.14);
+        border-radius: 1.4rem;
+        background: rgba(var(--scene-accent-rgb), 0.06);
+        color: rgba(var(--scene-accent-soft-rgb), 0.8);
+        font-size: 1.28rem;
+    }
+
+    .reply-badge button,
+    .composer-action {
+        width: auto;
+        min-width: 0;
+        height: 4.2rem;
+        padding: 0 1.8rem;
+        font-size: 1.08rem;
     }
 
     textarea {
@@ -54,45 +79,58 @@ const CommentComposerContainer = styled.div`
         gap: 1rem;
         flex-wrap: wrap;
     }
-
-    .composer-action {
-        width: auto;
-        min-width: 0;
-        height: 4.2rem;
-        padding: 0 1.8rem;
-        font-size: 1.08rem;
-    }
 `;
 
 export const CommentComposer = ({
   isAuthenticated,
   isSubmitting,
+  onCancelReply,
   onChange,
   onSubmit,
   redirectPath,
+  replyTargetName,
   value,
 }: CommentComposerProps) => (
   <CommentComposerContainer>
-    <div className="composer-title">Comentários</div>
+    <div className="composer-title">Comentarios</div>
 
     {isAuthenticated ? (
       <>
+        {replyTargetName ? (
+          <div className="reply-badge">
+            <span>Respondendo {replyTargetName}</span>
+            {onCancelReply ? (
+              <button onClick={onCancelReply} type="button">
+                Cancelar resposta
+              </button>
+            ) : null}
+          </div>
+        ) : null}
+
         <textarea
           onChange={(event) => onChange(event.target.value)}
-          placeholder="Compartilhe uma observação, uma dúvida ou uma leitura complementar."
+          placeholder={
+            replyTargetName
+              ? "Escreva sua resposta para continuar a conversa."
+              : "Compartilhe uma observacao, uma duvida ou uma leitura complementar."
+          }
           value={value}
         />
         <div className="composer-footer">
-          <span className="composer-auth-text">Seu comentário fica vinculado ao seu perfil.</span>
+          <span className="composer-auth-text">Seu comentario fica vinculado ao seu perfil.</span>
           <button className="composer-action" onClick={onSubmit} type="button">
-            {isSubmitting ? "Enviando" : "Publicar comentário"}
+            {isSubmitting
+              ? "Enviando"
+              : replyTargetName
+                ? "Publicar resposta"
+                : "Publicar comentario"}
           </button>
         </div>
       </>
     ) : (
       <div className="composer-footer">
         <span className="composer-auth-text">
-          Entre com sua conta para curtir e participar da discussão desta publicação.
+          Entre com sua conta para curtir e participar da discussao desta publicacao.
         </span>
         <div className="composer-auth-links">
           <Link to={`/login?redirect=${encodeURIComponent(redirectPath)}`}>Entrar</Link>

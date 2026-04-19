@@ -50,29 +50,46 @@ export const StudiesPage = () => {
     search: "",
     tag: "",
   });
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { category, tag } = filters;
 
   useEffect(() => {
-    const timeout = window.setTimeout(async () => {
+    const timeout = window.setTimeout(() => {
+      setDebouncedSearch(filters.search);
+    }, 140);
+
+    return () => window.clearTimeout(timeout);
+  }, [filters.search]);
+
+  useEffect(() => {
+    const loadStudies = async () => {
       setIsLoading(true);
       setErrorMessage("");
 
       try {
-        const response = await studiesApi.fetchPublicStudies(filters);
+        const response = await studiesApi.fetchPublicStudies({
+          category,
+          search: debouncedSearch,
+          tag,
+        });
         setData(response);
       } catch (error: any) {
         setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar os estudos.");
       } finally {
         setIsLoading(false);
       }
-    }, 250);
+    };
 
-    return () => window.clearTimeout(timeout);
-  }, [filters]);
+    void loadStudies();
+  }, [category, debouncedSearch, tag]);
 
   const featuredPost = data.posts[0] || null;
-  const listPosts = useMemo(() => data.posts.slice(1), [data.posts]);
+  const listPosts = useMemo(
+    () => (data.posts.length <= 1 ? data.posts : data.posts.slice(1)),
+    [data.posts]
+  );
   const summary = useMemo(
     () => ({
       totalCategories: data.filters.categories.length,

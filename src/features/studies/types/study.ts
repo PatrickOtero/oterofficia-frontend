@@ -60,17 +60,28 @@ export interface StudyComment {
   createdAt: string;
   updatedAt: string;
   postId: string;
+  parentCommentId: string | null;
   author: {
     id: string;
     name: string;
+    avatarUrl: string | null;
   };
   canDelete: boolean;
+  likesCount: number;
+  likedByCurrentUser: boolean;
+  replies: StudyComment[];
   postTitle?: string;
 }
 
 export interface CreateCommentResponse {
   comment: StudyComment;
   commentsCount: number;
+}
+
+export interface CommentLikeResponse {
+  commentId: string;
+  likedByCurrentUser: boolean;
+  likesCount: number;
 }
 
 export interface LikeResponse {

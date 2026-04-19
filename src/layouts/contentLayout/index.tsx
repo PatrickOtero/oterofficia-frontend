@@ -7,14 +7,25 @@ import { StarsBackground } from "../components/StarsBackground";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { ContentLayoutContainer } from "./styles";
 import { GreetBot } from "../components/greetbot";
+import { useBotSceneActions } from "../../hooks/useBotSceneActions";
 
 export const ContentLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout, user, isAdmin, isLoading } = useAuth();
   const { earthPosition } = useBotFunctionsContext();
-  const shouldShowAmbientBot =
-    location.pathname.startsWith("/studies") || location.pathname.startsWith("/admin");
+  const { openContentScene, showHomeMenu } = useBotSceneActions();
+  const shouldShowAmbientBot = true;
+  const beamTarget = location.pathname.startsWith("/login") ||
+    location.pathname.startsWith("/register") ||
+    location.pathname.startsWith("/forgot-password") ||
+    location.pathname.startsWith("/reset-password") ||
+    location.pathname.startsWith("/verify-email") ||
+    location.pathname.startsWith("/confirm-email-change") ||
+    location.pathname.startsWith("/confirm-account-deletion") ||
+    location.pathname.startsWith("/profile")
+    ? "auth-panel"
+    : "content-menu";
 
   const handleLogout = async () => {
     await logout();
@@ -22,6 +33,11 @@ export const ContentLayout = () => {
     if (location.pathname.startsWith("/admin")) {
       navigate("/studies");
     }
+  };
+
+  const handleGoHome = () => {
+    showHomeMenu("content");
+    navigate("/");
   };
 
   return (
@@ -33,29 +49,32 @@ export const ContentLayout = () => {
       </div>
 
       <SiteSign forceVisible />
-      {shouldShowAmbientBot ? <GreetBot beamTarget="content-menu" interactive={false} /> : null}
+      {shouldShowAmbientBot ? <GreetBot beamTarget={beamTarget} interactive={false} /> : null}
 
       <div className="content-topbar">
-        <NavLink
-          className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
-          to="/"
+        <button
+          className={`content-nav-button-link ${location.pathname === "/" ? "active" : ""}`}
+          onClick={handleGoHome}
+          type="button"
         >
           Inicio
-        </NavLink>
+        </button>
         <NavLink
           className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
           to="/studies"
+          onClick={() => openContentScene()}
         >
           Estudos
         </NavLink>
         {isAdmin ? (
           <NavLink
-            className={() =>
-              `content-nav-link ${location.pathname.startsWith("/admin") ? "active" : ""}`
-            }
-            to="/admin/studies"
-          >
-            Painel
+              className={() =>
+                `content-nav-link ${location.pathname.startsWith("/admin") ? "active" : ""}`
+              }
+              onClick={() => openContentScene()}
+              to="/admin/studies"
+            >
+              Painel
           </NavLink>
         ) : null}
         {!isLoading && !user ? (
@@ -63,18 +82,30 @@ export const ContentLayout = () => {
             <NavLink
               className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
               to="/login"
+              onClick={() => openContentScene()}
             >
               Entrar
             </NavLink>
             <NavLink
               className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
               to="/register"
+              onClick={() => openContentScene()}
             >
               Cadastro
             </NavLink>
           </>
         ) : null}
-        {user ? <span className="content-session-chip">{user.name}</span> : null}
+        {user ? (
+          <NavLink
+            className={({ isActive }) =>
+              `content-nav-link content-session-chip ${isActive ? "active" : ""}`
+            }
+            onClick={() => openContentScene()}
+            to="/profile"
+          >
+            {user.name}
+          </NavLink>
+        ) : null}
         {user ? (
           <button className="content-nav-button" onClick={() => void handleLogout()} type="button">
             Sair
@@ -83,7 +114,9 @@ export const ContentLayout = () => {
       </div>
 
       <main className="content-main">
-        <Outlet />
+        <div className={`content-stage ${location.pathname.startsWith("/admin") ? "panel-stage" : "study-stage"}`}>
+          <Outlet />
+        </div>
       </main>
     </ContentLayoutContainer>
   );

@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 export const ContentLayoutContainer = styled.div`
+    @keyframes contentStageReveal {
+        from {
+            opacity: 0;
+            transform: translate3d(2.2rem, 0.4rem, 0) scale(0.985);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
+
     position: relative;
 
     display: flex;
@@ -33,6 +45,7 @@ export const ContentLayoutContainer = styled.div`
     }
 
     .content-nav-link,
+    .content-nav-button-link,
     .content-session-chip {
         display: inline-flex;
         align-items: center;
@@ -47,10 +60,20 @@ export const ContentLayoutContainer = styled.div`
         font-size: 1.1rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(4px);
+    }
+
+    .content-nav-button-link {
+        cursor: pointer;
     }
 
     .content-nav-link.active {
+        border-color: rgba(var(--scene-accent-rgb), 0.32);
+        color: rgba(var(--scene-title-rgb), 0.96);
+        box-shadow: inset 0 0 0 1px rgba(var(--scene-accent-rgb), 0.08);
+    }
+
+    .content-nav-button-link.active {
         border-color: rgba(var(--scene-accent-rgb), 0.32);
         color: rgba(var(--scene-title-rgb), 0.96);
         box-shadow: inset 0 0 0 1px rgba(var(--scene-accent-rgb), 0.08);
@@ -72,6 +95,18 @@ export const ContentLayoutContainer = styled.div`
         pointer-events: auto;
     }
 
+    .content-stage {
+        width: 100%;
+        height: 100%;
+        transform-origin: right center;
+        animation: contentStageReveal 460ms cubic-bezier(0.16, 1, 0.22, 1);
+        will-change: transform, opacity;
+    }
+
+    .content-stage.panel-stage {
+        animation-duration: 520ms;
+    }
+
     @media (max-width: 900px) {
         padding: 10rem 1.6rem 1.6rem;
 
@@ -83,6 +118,7 @@ export const ContentLayoutContainer = styled.div`
         }
 
         .content-nav-link,
+        .content-nav-button-link,
         .content-session-chip,
         .content-nav-button {
             min-height: 3.8rem;

@@ -219,6 +219,16 @@ export const botHelmetCss = css`
         --beam-length: 23rem;
     }
 
+    .greetbot-body.beam-target-auth .eyeLeft.beam-active {
+        --beam-angle: 56deg;
+        --beam-length: 42rem;
+    }
+
+    .greetbot-body.beam-target-auth .eyeRight.beam-active {
+        --beam-angle: 54deg;
+        --beam-length: 40rem;
+    }
+
     .greetbot-body.beam-target-about .eyeLeft.beam-active {
         --beam-angle: 33deg;
         --beam-length: 47rem;
@@ -314,6 +324,16 @@ export const botHelmetCss = css`
         .greetbot-body.beam-target-content .eyeRight.beam-active {
             --beam-angle: 67deg;
             --beam-length: 19rem;
+        }
+
+        .greetbot-body.beam-target-auth .eyeLeft.beam-active {
+            --beam-angle: 58deg;
+            --beam-length: 28rem;
+        }
+
+        .greetbot-body.beam-target-auth .eyeRight.beam-active {
+            --beam-angle: 56deg;
+            --beam-length: 26rem;
         }
 
         .greetbot-body.beam-target-about .eyeLeft.beam-active {
