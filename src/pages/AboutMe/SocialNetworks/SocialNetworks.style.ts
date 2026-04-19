@@ -5,15 +5,19 @@ export const DirectMessageContainer = styled(Box)`
     display: flex;
     flex-direction: column;
 
-    padding: 2rem;
+    padding: 2.4rem;
     gap: 2rem;
         
-    border-radius: 3rem;
+    border-radius: 2.8rem;
+    border: 1px solid rgba(var(--scene-accent-rgb), 0.12);
+    background: rgba(7, 17, 31, 0.38);
 
     .section-title {
-        font-size: 3rem;
-        color: #88c4c9;
-        text-shadow: 0 0 10px #88c4c9;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 2.2rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(var(--scene-accent-soft-rgb), 0.88);
     }
 
     .section-info-main {
@@ -29,36 +33,52 @@ export const DirectMessageContainer = styled(Box)`
 
     .img-container {
         position: relative;
+        width: 9.6rem;
+        height: 9.6rem;
+        border-radius: 2.4rem;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(var(--scene-accent-rgb), 0.14);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+
+        a {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+        }
     }
 
     .section-info-main img {
-        width: 10rem;
-        height: 10rem;
-
-        border-radius: 50%;
-
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         z-index: 0;
     }   
 
     .img-filter {
         position: absolute;
-        width: 10rem;
-        height: 10rem;
+        inset: 0;
 
-        border-radius: 50%;
+        border-radius: inherit;
 
-        background-color: #88c4c98f;
-        animation: imgHologramEffect 10ms linear infinite;
-        
-        transition: 400ms;
+        background:
+            linear-gradient(180deg, rgba(var(--scene-accent-soft-rgb), 0.2), rgba(var(--scene-accent-rgb), 0.06)),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
+        opacity: 0.34;
+        transition: opacity 220ms ease, transform 220ms ease;
 
         z-index: 1;
+        pointer-events: none;
+    }
 
-        &:hover {
-            animation: imgHologramEffect 10ms linear infinite;
-            background-color: #88c4c900;
-            
-            cursor: pointer;
+    .img-container:hover .img-filter {
+        opacity: 0.08;
+        transform: translateY(-0.15rem);
+    }
+
+    @media (max-width: 900px) {
+        .section-info-main {
+            gap: 1.6rem;
         }
     }
-`
+`;

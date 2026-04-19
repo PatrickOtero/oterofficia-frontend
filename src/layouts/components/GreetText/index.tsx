@@ -1,4 +1,3 @@
-// import { Dispatch, SetStateAction} from "react"
 import { GreetTextContainer } from "./greetText.style";
 
 export const GreetText = () => {

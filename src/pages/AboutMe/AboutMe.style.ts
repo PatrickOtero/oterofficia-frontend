@@ -2,60 +2,31 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 
 export const AboutMeContainer = styled(Box)`
-    @keyframes hologramExpandToAboutMe {
-        0% {
-            height: 60rem;
-            width: 40rem;         
+    @keyframes aboutPanelReveal {
+        from {
+            opacity: 0;
+            transform: translateY(1.6rem) scale(0.98);
         }
 
-        100% {
-            height: 90rem;
-            width: 80rem;
-        }
-    }
-
-    @keyframes hologramCollapseToInitialMenu {
-        0% {
-            height: 90rem;
-            width: 80rem;
-        }
-        100% {
-            height: 60rem;
-            width: 40rem;         
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
     }
 
-    @keyframes imgHologramEffect {
-        0% {
-            box-shadow: 0 0 10px 20px #288a91 inset;
-        }
+    position: relative;
+    z-index: 4;
 
-        50% {
-            box-shadow: 0 0 60px -20px #288a91 inset;
-        }
+    width: min(80rem, 92vw);
+    height: min(90rem, calc(100vh - 4rem));
+    max-height: 90rem;
 
-        100% {
-            box-shadow: 0 0 10px 20px #288a91 inset;
-        }
-    }
+    animation: aboutPanelReveal 500ms ease;
+    transition: transform 400ms ease, opacity 400ms ease;
 
-    position: absolute;
+    color: rgba(var(--scene-accent-soft-rgb), 0.9);
 
-    height: 90rem;
-    width: 80rem;
-
-    transform-style: preserve-3d;
-
-    transform: translateZ(-140);
-
-    animation: hologramExpandToAboutMe 500ms;
-    
-    transition: 1000ms;
-
-    color: #88c4c9;
-    text-shadow: 0 0 10px #88c4c9;
-
-    line-height: 4rem;
+    line-height: 1.7;
     
     .aboutme-page-main {
         position: relative;
@@ -65,35 +36,75 @@ export const AboutMeContainer = styled(Box)`
 
         overflow: auto;
 
-        padding: 5rem 5rem 0 5rem;
+        padding: 4.8rem 4.8rem 4rem;
 
-        gap: 5rem;
+        gap: 3.6rem;
         
         width: 100%;
         height: 100%;
 
-        border-radius: 1rem;
-        background-color: #288a9128;
-        box-shadow: 0px 0px 50px 10px #288a91 inset;
+        border: 1px solid rgba(var(--scene-accent-rgb), var(--scene-panel-border-opacity));
+        border-radius: 3rem;
+        background:
+            linear-gradient(180deg, rgba(var(--scene-panel-rgb), calc(var(--scene-panel-opacity) + 0.08)) 0%, rgba(8, 19, 35, 0.78) 100%);
+        box-shadow:
+            0 2.4rem 5rem rgba(0, 0, 0, 0.24),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 
         &::-webkit-scrollbar {          
             background-color: #ffffff00; 
-            width: 1rem;
+            width: 0.8rem;
         }
 
         &::-webkit-scrollbar-thumb {
-            border-radius: 3rem; 
-            background-color: #26a0a8;
+            border-radius: 3rem;
+            background-color: rgba(var(--scene-accent-rgb), 0.5);
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 1.4rem;
+            border-radius: 2.2rem;
+            border: 1px solid rgba(var(--scene-accent-rgb), 0.08);
+            pointer-events: none;
         }
     }
 
     .aboutme-close-button {
         position: absolute;
 
-        font-size: 3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.6rem;
+        height: 3.6rem;
+        border-radius: 999px;
+
+        font-size: 1.6rem;
         cursor: pointer;
 
-        right: 5rem;
-        top: 2rem;
+        right: 2.4rem;
+        top: 2.4rem;
+
+        color: rgba(var(--scene-accent-soft-rgb), 0.76);
+        background: rgba(var(--scene-accent-rgb), 0.08);
+        border: 1px solid rgba(var(--scene-accent-rgb), 0.18);
+        transition: transform 200ms ease, background-color 200ms ease, color 200ms ease;
+
+        &:hover {
+            transform: translateY(-0.2rem);
+            background: rgba(var(--scene-accent-rgb), 0.14);
+            color: rgba(var(--scene-accent-soft-rgb), 0.96);
+        }
     }
-`
+
+    @media (max-width: 900px) {
+        height: min(90rem, calc(100vh - 2rem));
+
+        .aboutme-page-main {
+            padding: 4.8rem 2.2rem 3.2rem;
+            gap: 3rem;
+        }
+    }
+`;

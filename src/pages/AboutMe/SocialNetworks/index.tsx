@@ -10,24 +10,24 @@ export const DirectMessageSection = () => {
             <b className="section-title">Redes sociais</b>
             <div className="section-info-main">
                 <div className="img-container">
-                        <a href="https://telegram.me/PatrickOtero" target="blank"><div className="img-filter">
+                        <a href="https://telegram.me/PatrickOtero" target="_blank" rel="noreferrer"><div className="img-filter">
                         </div></a>
-                        <img src={telegramImage} alt="section-image"/>
+                        <img src={telegramImage} alt="Telegram"/>
                     </div>
                     <div className="img-container">
-                        <a href="https://wa.me/5521983036378" target="blank"><div className="img-filter">
+                        <a href="https://wa.me/5521983036378" target="_blank" rel="noreferrer"><div className="img-filter">
                         </div></a>
-                        <img src={whatsappImage} alt="section-image"/>
+                        <img src={whatsappImage} alt="WhatsApp"/>
                     </div>
                     <div className="img-container">
-                        <a href="https://www.linkedin.com/in/patrick-da-rocha-otero/" target="blank"><div className="img-filter">
+                        <a href="https://www.linkedin.com/in/patrick-da-rocha-otero/" target="_blank" rel="noreferrer"><div className="img-filter">
                         </div></a>
-                        <img src={linkedinIcon} alt="section-image"/>
+                        <img src={linkedinIcon} alt="LinkedIn"/>
                     </div>
                     <div className="img-container">
-                        <a href="https://github.com/PatrickOtero" target="blank"><div className="img-filter">
+                        <a href="https://github.com/PatrickOtero" target="_blank" rel="noreferrer"><div className="img-filter">
                         </div></a>
-                        <img src={githubIcon} alt="section-image"/>
+                        <img src={githubIcon} alt="GitHub"/>
                     </div>                 
             </div>            
         </DirectMessageContainer>

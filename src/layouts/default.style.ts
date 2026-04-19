@@ -8,11 +8,12 @@ export const DefaultContainer = styled(Box)`
         justify-content: center;
         align-items: center;
 
-        perspective: 1000rem;
-        transform-style: preserve-3d;
-
         min-width: 100vw;
         min-height: 100vh;
+        padding: 4rem;
+
+        overflow: hidden;
+        isolation: isolate;
 
     .layout-clickable-container {
         position: absolute;
@@ -21,8 +22,17 @@ export const DefaultContainer = styled(Box)`
         bottom: 0;
         left: 0;
 
-        z-index: -1;
+        z-index: 1;
+    }
 
-        transform-style: preserve-3d;
+    .planet-system {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+        padding: 2rem;
     }
 `

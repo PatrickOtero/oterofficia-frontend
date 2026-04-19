@@ -2,63 +2,68 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 
 export const ProjectDescriptionContainer = styled(Box)`
-
-    color: #88c4c9;
-    text-shadow: 0 0 10px #88c4c9;
-
-    line-height: 4rem;
+    width: 100%;
+    color: rgba(var(--scene-accent-soft-rgb), 0.78);
+    line-height: 1.8;
 
     overflow: auto;
+    padding-top: 2.2rem;
 
     &::-webkit-scrollbar {          
         background-color: #ffffff00; 
-        width: 1rem;
+        width: 0.8rem;
     }
 
     &::-webkit-scrollbar-thumb {
-        border-radius: 3rem; 
-        background-color: #26a0a8;
+        border-radius: 3rem;
+        background-color: rgba(var(--scene-accent-rgb), 0.5);
     }
 
 .project-description-title {
-    margin-top: 5rem;
-    font-size: 4rem;
+    margin-top: 0;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 3.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(var(--scene-title-rgb), 0.9);
 }
 
 .project-description-content {
-    margin-top: 5rem;
-    font-size: 2rem;
+    margin-top: 2.4rem;
+    font-size: 1.8rem;
 }
 
 .front-end-link-container {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 2rem;
 
     b {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
     }
 
     a {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
-    margin-top: 4rem;
+    margin-top: 3rem;
     margin-bottom: 2rem;
 }
 
 .back-end-link-container {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 2rem;
     
     b {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
     }
 
     a {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 }
    
-`
+`;

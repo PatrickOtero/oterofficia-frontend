@@ -1,61 +1,118 @@
+import { useLocation } from "react-router-dom";
 import { GreetBotContainer } from "./GreetBot.style";
-import { GreetBotTurbine } from "./turbines";
-import { HologramBeam } from "./hologramBeam";
 import { GreetText } from "../GreetText";
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
+import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
+import { FrontPose } from "./poses/FrontPose";
 
-export const GreetBot = () => {
+type BeamTarget = "content-menu" | null;
 
-    const { setInfoTextHolo, infoTextHolo, setHologramActivated, setBotPosition, setVisorPosition, setEyeState, eyeState, hologramActivated, setIsShowingMenu, isShowingMenu, visorPosition, botPosition, aboutMePage, setHomePage, holoPosition } = useBotFunctionsContext()
+type GreetBotProps = {
+    interactive?: boolean;
+    beamTarget?: BeamTarget;
+};
+
+export const GreetBot = ({ interactive = true, beamTarget = null }: GreetBotProps) => {
+    const location = useLocation();
+    const isHomeRoute = location.pathname === "/";
+    const isAboutRoute = location.pathname === "/aboutme";
+    const isPortfolioRoute = location.pathname === "/portfolio";
+    const {
+        setInfoTextHolo,
+        infoTextHolo,
+        setEyeState,
+        eyeState,
+        hologramActivated,
+        isShowingMenu,
+        homePage,
+        aboutMePage,
+        portfolioPage,
+        visorPosition,
+    } = useBotFunctionsContext();
+    const { showHomeMenu } = useBotSceneActions();
+
+    const isInteractiveAtHome = interactive && isHomeRoute;
+    const isAboutScene = interactive && isAboutRoute && aboutMePage;
+    const isPortfolioScene = interactive && isPortfolioRoute && portfolioPage;
+    const isHomeMenuScene = interactive && isHomeRoute && homePage && isShowingMenu;
+    const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isHomeMenuScene;
+    const resolvedHologramState = interactive
+        ? hologramActivated || shouldDockInDefaultScene
+        : Boolean(beamTarget);
+    const resolvedEyeState = interactive
+        ? resolvedHologramState
+            ? eyeState || "emitting-holo"
+            : eyeState
+        : beamTarget
+          ? "emitting-holo"
+          : "";
+    const resolvedVisorPosition = interactive
+        ? visorPosition
+        : beamTarget
+          ? "visor-to-left"
+          : "visor-to-top";
+    const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && infoTextHolo;
+
+    const positionClass = interactive
+        ? shouldDockInDefaultScene
+            ? "position-home-docked"
+            : "position-home-center"
+        : "position-content-docked";
+
+    const beamTargetClass = resolvedHologramState
+        ? !interactive
+            ? beamTarget === "content-menu"
+                ? "beam-target-content"
+                : ""
+            : isAboutScene
+              ? "beam-target-about"
+              : isPortfolioScene
+                ? "beam-target-portfolio"
+                : isHomeMenuScene
+                  ? "beam-target-home"
+                  : ""
+        : "";
 
     return (
         <GreetBotContainer>
-            <div
-             className={`greetbot-body ${botPosition}`}
-             onMouseEnter={() =>
-                 {
-                    setEyeState("emitting-holo")
-                    setInfoTextHolo(true);
-                }}
-              onClick={() =>
-                {
-                    setInfoTextHolo(false);
-                    setVisorPosition("visor-to-left");
-                    setBotPosition( !aboutMePage ? "bot-showing-menu" : botPosition);
-                    setEyeState("emitting-holo")
-                    setHomePage(true);
-                    setHologramActivated(true);
-                    setIsShowingMenu(true);
-                }}>
-                    <div className="greetbot01-inner-form">
-                        
-                </div>
-                    <div className={`greetBot01-visor ${visorPosition}`}>
-                        <div className="gb-visor-horizontal">
-                            <div className={`gb-eyes eyeLeft ${eyeState}`}></div>
-                            <div className={`gb-eyes eyeRight ${eyeState}`}></div>
-                        </div>
-                        <div className="gb-visor-vertical">
-                        <div className="gb-mouth"></div>
-                        </div>
+            <div className={`bot-roamer ${positionClass}`}>
+                <div
+                    className={`greetbot-body ${interactive ? "is-interactive" : "is-ambient"} ${beamTargetClass} pose-front`}
+                    onClick={() => {
+                        if (!isInteractiveAtHome) {
+                            return;
+                        }
+
+                        setInfoTextHolo(false);
+                        showHomeMenu();
+                    }}
+                    onMouseEnter={() => {
+                        if (!isInteractiveAtHome || isShowingMenu) {
+                            return;
+                        }
+
+                        setEyeState("emitting-holo");
+                        setInfoTextHolo(true);
+                    }}
+                    onMouseLeave={() => {
+                        if (!isInteractiveAtHome || isShowingMenu) {
+                            return;
+                        }
+
+                        setInfoTextHolo(false);
+                        setEyeState("");
+                    }}
+                >
+                    <div className="bot-frame">
+                        <FrontPose
+                            eyeState={resolvedEyeState}
+                            hologramActivated={resolvedHologramState}
+                            visorPosition={resolvedVisorPosition}
+                        />
                     </div>
-                <div className="turbines-container">
-                    <GreetBotTurbine animDelay="1s"/>
-                    <GreetBotTurbine animDelay="2s"/>
-                    <GreetBotTurbine animDelay="3s"/>
+                    {shouldShowGreetText ? <GreetText /> : null}
                 </div>
-                { hologramActivated &&
-                    <>
-                        <HologramBeam eyeBeamPosition={holoPosition}/>
-                        <HologramBeam eyeBeamPosition={holoPosition}/>
-                    </>
-                }
-                { !isShowingMenu && infoTextHolo &&
-                    <>
-                        <GreetText/>
-                    </>
-                }
             </div>
         </GreetBotContainer>
     );
-}
+};

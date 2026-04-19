@@ -1,67 +1,63 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box"
+import Box from "@mui/material/Box";
 
 export const SpaceContainer = styled(Box)`
-
-position: absolute;
-
-transform: translateZ(-1000rem) scale(3);
-
-@keyframes starsGlow {
-        0% {
-            opacity: 0;
+    @keyframes starsGlow {
+        0%, 100% {
+            opacity: 0.52;
         }
 
-        100% {
-            opacity: 1;
+        50% {
+            opacity: 0.8;
         }
     }
 
-    @keyframes shootingStar {
-        0% {
-            opacity: 0;
-        }
+    position: absolute;
+    inset: 0;
 
-        100% {
-            margin-top: 100rem;
-            margin-right: -40rem;
-            opacity: 1;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 14%, rgba(var(--scene-accent-soft-rgb), 0.08), transparent 22%),
+        radial-gradient(circle at 82% 18%, rgba(var(--scene-accent-rgb), 0.06), transparent 18%);
 
-            font-size: 5rem;
-        }
-    }
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
+    &::before,
+    &::after {
+        content: "";
         position: absolute;
-        top: 5rem;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        inset: 0;
+        background-repeat: no-repeat;
+        animation: starsGlow 8s ease-in-out infinite;
+    }
 
-        z-index: -1;
+    &::before {
+        opacity: 0.76;
+        background-image:
+            radial-gradient(circle at 8% 12%, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.8px),
+            radial-gradient(circle at 16% 30%, rgba(255, 255, 255, 0.7) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 28% 8%, rgba(255, 255, 255, 0.78) 0 1.2px, transparent 1.8px),
+            radial-gradient(circle at 38% 24%, rgba(255, 255, 255, 0.62) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 52% 14%, rgba(255, 255, 255, 0.88) 0 1.3px, transparent 1.9px),
+            radial-gradient(circle at 62% 8%, rgba(255, 255, 255, 0.58) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.82) 0 1.2px, transparent 1.8px),
+            radial-gradient(circle at 91% 11%, rgba(255, 255, 255, 0.68) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 12% 58%, rgba(255, 255, 255, 0.66) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 34% 66%, rgba(255, 255, 255, 0.84) 0 1.2px, transparent 1.8px),
+            radial-gradient(circle at 56% 54%, rgba(255, 255, 255, 0.62) 0 1px, transparent 1.6px),
+            radial-gradient(circle at 74% 62%, rgba(255, 255, 255, 0.86) 0 1.2px, transparent 1.8px),
+            radial-gradient(circle at 88% 46%, rgba(255, 255, 255, 0.64) 0 1px, transparent 1.6px);
+    }
 
-        overflow: hidden;
-
-        .star-left {
-            position: absolute;
-            animation: starsGlow 1000ms infinite;
-
-            font-size: 3rem;
-            color: white;
-            text-shadow: 1px 1px 10px #ffffff;
-
-            border-radius: 50%;
-        }
-
-        .shooting-star {
-            position: absolute;
-            animation: shootingStar 2000ms infinite alternate-reverse;
-
-            font-size: 4rem;
-            color: white;
-            text-shadow: 1px 1px 20px #ffffff;
-        }
-`
+    &::after {
+        opacity: 0.34;
+        animation-delay: -3.4s;
+        background-image:
+            radial-gradient(circle at 6% 44%, rgba(var(--scene-accent-soft-rgb), 0.7) 0 1px, transparent 2px),
+            radial-gradient(circle at 20% 72%, rgba(var(--scene-accent-soft-rgb), 0.58) 0 1px, transparent 2px),
+            radial-gradient(circle at 42% 52%, rgba(var(--scene-accent-soft-rgb), 0.52) 0 1px, transparent 2px),
+            radial-gradient(circle at 58% 74%, rgba(var(--scene-accent-soft-rgb), 0.72) 0 1px, transparent 2px),
+            radial-gradient(circle at 76% 68%, rgba(var(--scene-accent-soft-rgb), 0.48) 0 1px, transparent 2px),
+            radial-gradient(circle at 93% 58%, rgba(var(--scene-accent-soft-rgb), 0.58) 0 1px, transparent 2px);
+    }
+`;

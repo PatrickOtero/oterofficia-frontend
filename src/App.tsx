@@ -1,9 +1,9 @@
 import { ThemeProvider } from "styled-components"
-import { BrowserRouter, useNavigate } from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import { GlobalStyle } from "./Styles/global";
 import { Router } from "./Router";
 import { blackTheme } from "./Styles/themes/blackTheme";
-import { useEffect } from "react";
+import { AuthProvider } from "./contexts/auth";
 
 function App() {
 
@@ -11,7 +11,9 @@ function App() {
     <div className="App">
         <ThemeProvider theme={blackTheme}>
           <BrowserRouter>
-            <Router />
+            <AuthProvider>
+              <Router />
+            </AuthProvider>
           </BrowserRouter>          
           <GlobalStyle/>
         </ThemeProvider>

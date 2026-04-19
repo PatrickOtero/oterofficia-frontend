@@ -2,9 +2,10 @@ import styled from "styled-components";
 import Box from "@mui/material/Box";
 
 export const PortfolioContainer = styled(Box)`
-    position: absolute;
-    /* top: 15%;
-    right: 35%; */
+    position: relative;
+    z-index: 4;
 
-    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `

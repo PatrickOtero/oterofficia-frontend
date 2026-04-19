@@ -1,265 +1,111 @@
 import styled from "styled-components";
+import { botAnimationsCss } from "./styles/botAnimations";
+import { botStatesCss } from "./styles/botStates";
+import { botHelmetCss } from "./styles/botHelmet";
+import { botPoseBaseCss } from "./styles/botPoseBase";
+import { botPoseFrontCss } from "./styles/botPoseFront";
 
-export const GreetBotContainer = styled("div")`
-    @keyframes rotateBotPart {
-        to{
-            background-position: 100%;
-        }
+export const GreetBotContainer = styled.div`
+    --bot-height: 26.5rem;
+    --bot-width: 14rem;
+    --bot-float-distance: 0.82rem;
+    --visor-glow-opacity: 0.48;
+
+    --bot-accent-rgb: 214, 95, 255;
+    --bot-shell-hi: #4e5b6d;
+    --bot-shell-mid: #25303f;
+    --bot-shell-low: #0a0f16;
+
+    position: fixed;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    overflow: visible;
+
+    .bot-roamer {
+        position: absolute;
+        width: var(--bot-width);
+        height: var(--bot-height);
+        pointer-events: none;
+        will-change: left, top, transform;
+        transition:
+            left 760ms cubic-bezier(0.18, 1, 0.22, 1),
+            top 760ms cubic-bezier(0.18, 1, 0.22, 1),
+            transform 760ms cubic-bezier(0.18, 1, 0.22, 1),
+            opacity 240ms ease;
     }
 
-    @keyframes greetBotArriving{
-        0% {
-            margin-right: 200rem;
-        }
-
-        100% {
-            margin-right: 0;
-        }
+    .bot-roamer.position-home-center {
+        left: calc(50vw - (var(--bot-width) / 2));
+        top: calc(50vh - (var(--bot-height) / 2) - 2rem);
+        transform: translate3d(0, 0, 0) scale(1.03);
     }
 
-    @keyframes greetBotFloating {
-        0% {
-            margin-bottom: 10rem;
-        }
-
-        50% {
-            margin-top: 10rem;
-        }
-
-        100% {
-            margin-top: -10rem;
-        }
+    .bot-roamer.position-home-docked {
+        left: calc(100vw - var(--bot-width) - clamp(3.75rem, 5vw, 5.5rem));
+        top: calc(100vh - var(--bot-height) - clamp(4rem, 7vh, 5.5rem));
+        transform: translate3d(0, 0, 0) scale(1);
     }
 
-    @keyframes eyeEmittingHolo {
-        0% {
-            box-shadow: 0 -1px 20px 20px #288a91ff;
-        }
-
-        50% {
-            box-shadow: 0 -1px 10px 5px #288a918e;
-        }
-
-        100% {
-            box-shadow: 0 -1px 20px 20px #288a91ff;
-        }
+    .bot-roamer.position-content-docked {
+        left: calc(100vw - var(--bot-width) - clamp(2.25rem, 4vw, 4rem));
+        top: calc(100vh - var(--bot-height) - clamp(0.9rem, 3vh, 2rem));
+        transform: translate3d(0, 0, 0) scale(1);
     }
 
-     position: absolute;
-
-     transform: translateY(0) translateX(0);
-
-     animation: greetBotArriving 1000ms linear;
-
-    transform-style: preserve-3d;
-
-     border-radius: 50%;
-
-     .greetbot-body {
-        transform-style: preserve-3d;
-        perspective: 1000px;
-
+    .greetbot-body {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: var(--bot-width);
+        height: var(--bot-height);
+        pointer-events: none;
+        cursor: default;
+        will-change: transform;
+        animation: greetBotFloating 5.6s ease-in-out infinite;
+        overflow: visible;
+        transition:
+            transform 360ms ease,
+            opacity 240ms ease,
+            filter 240ms ease;
+    }
 
-        animation: greetBotFloating 4000ms infinite;
+    .greetbot-body.is-interactive {
+        pointer-events: auto;
+        cursor: pointer;
+    }
 
-        background: linear-gradient(#222121ff 0%, #202020ff 10%, #0f0f0fff 50%, #000000ff 100%);
+    .greetbot-body:hover {
+        filter: brightness(1.05);
+    }
 
-        height: 25rem;
-        width: 25rem;
+    .bot-frame {
+        position: absolute;
+        inset: 0;
+        overflow: visible;
+    }
 
-        border-radius: 50%;
+    ${botAnimationsCss}
+    ${botStatesCss}
+    ${botHelmetCss}
+    ${botPoseBaseCss}
+    ${botPoseFrontCss}
 
-        transition: 1000ms;
-      }
+    @media (max-width: 900px) {
+        --bot-height: 21.4rem;
+        --bot-width: 11.3rem;
 
-        .turbines-container {
-            position: absolute;
-
-            top: 18rem;
-            left: 15rem;
-
-            transform-style: preserve-3d;
-      }
-
-      .greetbot01-inner-form {
-            position: absolute;
-
-            height: 22rem;
-            width: 22rem;
-
-            background: linear-gradient(#4d4c4cff 0%, #2e2d2dff 10%, #0f0f0fff 50%, #000000ff 100%);
-
-            border-radius: 50%;
-
-            filter: blur(1rem);
+        .bot-roamer.position-home-center {
+            left: calc(50vw - (var(--bot-width) / 2));
+            top: calc(50vh - (var(--bot-height) / 2) - 1rem);
         }
 
-      .bot-showing-menu {
-        transform: translateZ(-260rem) translateX(80rem);
-
-        animation: none;
-
-        transform-style: preserve-3d;
-      }
-
-      .bot-showing-aboutme {
-        transform: translateZ(-350rem) translateX(120rem);
-
-        animation: none;
-
-        transform-style: preserve-3d;
-      }
-
-      .bot-showing-portfolio {
-        transform: translateZ(-400rem) translateX(90rem);
-
-        animation: none;
-
-        transform-style: preserve-3d;
-      }
-
-      .bot-showing-portfolio-video {
-        transform: translateZ(-400rem) translateX(140rem);
-
-        animation: none;
-
-        transform-style: preserve-3d;
-      }
-
-      .bot-showing-studies {
-        transform: translateZ(-260rem) translateX(90rem);
-
-        animation: none;
-
-        transform-style: preserve-3d;
-      }
-
-        .greetBot01-visor {
-            display: flex;
-
-            transform-style: preserve-3d;
-
-            justify-content: center;
-            align-items: center;
-
-            position: absolute;
-
-            left: 5.2rem;
-            top: 4rem;
-
-            width: 15rem;
-            height: 10rem;
-
-            transition: 1000ms;
-
-            transform: translateZ(1rem) 
+        .bot-roamer.position-home-docked {
+            left: calc(100vw - var(--bot-width) - 1.4rem);
+            top: calc(100vh - var(--bot-height) - 2.2rem);
         }
 
-        .visor-to-left {
-            transform-style: preserve-3d;
-
-            transform: translateX(-10rem) translateZ(2rem) rotateY(-31deg);
+        .bot-roamer.position-content-docked {
+            left: calc(100vw - var(--bot-width) - 1rem);
+            top: calc(100vh - var(--bot-height) - 0.55rem);
         }
-
-        .visor-to-diagonal-left {
-            transform-style: preserve-3d;
-
-            transform: translateX(-6rem) translateZ(2rem) rotateY(-20deg);
-        }
-
-        .visor-to-right {
-            transform-style: preserve-3d;
-            
-            transform: translateX(10rem) translateZ(2rem) rotateY(31deg);
-        }
-
-        .gb-visor-horizontal {
-            position: absolute;
-
-            background-color: #000000;
-            border-radius: 2rem;
-
-            width: 15rem;
-            height: 4rem;
-
-            top: 0;
-
-            z-index: 1;
-
-            .gb-eyes {
-                position: absolute;
-
-                border-radius: 50%;
-                background-color: #f0c44aff;
-                box-shadow: 0.5px -1px 15px 12px #dbb240;
-
-                width: 0.3rem;
-                height: 0.3rem;
-            }
-
-            .eyeLeft {
-                top: 2rem;
-                left: 4rem;
-            }
-
-            .eyeRight {
-                top: 2rem;
-                right: 4rem;
-            }
-
-            .emitting-holo {
-                animation: eyeEmittingHolo 10ms infinite;
-
-                background-color: #288a91;
-                box-shadow: 0.5px -1px 15px 12px #288a91;                
-            }
-        }
-
-        .gb-visor-vertical {
-            position: absolute;
-
-            background-color: #000000;
-            border-radius: 1rem;
-
-            width: 4rem;
-            height: 6rem;
-
-            bottom: 1rem;
-
-            .gb-mouth {
-                border-radius: 1rem;
-
-                background-color: #f0c44aff;
-                box-shadow: 0.5px -1px 10px 5px #dbb240;
-
-                width: 0.1rem;
-                height: 2rem;
-
-                margin-left: 2rem;
-                margin-top: 2rem;
-            }
-        }
-
-        .bot-text {
-            position: absolute;
-            top: 1rem;
-
-            font-family: 'IBM Plex Mono', monospace;
-
-            color: #f0c44aff;
-            text-shadow: 1px 1px 10px #f0c44aff;
-            font-size: 1.2rem;
-        }
-
-        .property-text {
-            z-index: 1;
-        }
-
-        .robot-name-text {
-            z-index: -1;
-        }
-`
+    }
+`;

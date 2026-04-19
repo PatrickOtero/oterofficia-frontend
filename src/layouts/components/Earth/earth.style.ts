@@ -1,47 +1,77 @@
 import styled from "styled-components";
-import earthMap from "../../../assets/world-map.png"
+import earthMap from "../../../assets/world-map.png";
 
 export const EarthContainer = styled("div")`
     @keyframes celestialBodyRotation {
-        0% {
-            background-position: 0 0;
+        from {
+            background-position: 14% 42%;
         }
 
-        100% {
-            background-position: 120%;
+        to {
+            background-position: 118% 42%;
         }
-        
     }
 
     position: absolute;
+    left: 50%;
+    bottom: -58rem;
 
-    width: 50rem;
-    height: 150rem;
+    width: min(96rem, 118vw);
+    height: min(96rem, 118vw);
 
-    transform-style: preserve-3d;
+    transform: translateX(-50%);
+    z-index: 4;
+    pointer-events: none;
 
-    .earth-main {       
-        width: 100%;
-        height: 100%;
-        
-        border-radius: 45%;
-
-        transition: 1000ms;
-        transform: translateZ(-10rem) translateY(45rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
+    .earth-main {
+        position: absolute;
+        inset: 0;
 
         overflow: hidden;
+        border-radius: 50%;
+        transition: transform 520ms ease;
+        transform: translateY(0) scale(1.08);
+        background:
+            radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.26), transparent 20%),
+            radial-gradient(circle at 68% 74%, rgba(2, 10, 20, 0.82), transparent 38%),
+            linear-gradient(145deg, #4bb7df 0%, #1b5f93 44%, #0b213d 100%);
+        box-shadow:
+            inset -7rem -2rem 8rem rgba(0, 8, 20, 0.34),
+            0 0 4.8rem rgba(77, 155, 217, 0.16);
+    }
+
+    .earth-main::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+
+        border-radius: 50%;
+        opacity: 0.26;
         background-image: url(${earthMap});
-        background-position: 0 0;
-        background-size: cover;
+        background-size: 130% 130%;
+        background-position: 14% 42%;
+        background-repeat: repeat-x;
+        animation: celestialBodyRotation 220s linear infinite;
+    }
 
-        box-shadow: 0 0 100px 45px #5ea6e0;
+    .earth-main::after {
+        content: "";
+        position: absolute;
+        inset: -1.6rem;
 
-        animation: celestialBodyRotation 1000s linear infinite;
+        border-radius: 50%;
+        box-shadow:
+            0 0 0 1px rgba(170, 223, 250, 0.16),
+            0 0 3.4rem rgba(83, 160, 228, 0.16);
     }
 
     .earth-hidden {
-        transform: translateZ(-10rem) translateY(65rem) translateX(0rem) rotateZ(-90deg) rotateY(-100deg) scale(2.4);
+        transform: translateY(10rem) scale(1.05);
     }
-`
 
-// background: radial-gradient(100% 125% at 40% 50%, rgba(0, 0, 0, 0) 40%, black 50%), radial-gradient(100% 100% at center, rgba(40, 120, 240, 0) 47%, rgba(40, 120, 240, 0.5) 48.5%, #c2e4fa 50%);
+    @media (max-width: 900px) {
+        bottom: -44rem;
+        width: 72rem;
+        height: 72rem;
+    }
+`;

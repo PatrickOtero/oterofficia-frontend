@@ -3,42 +3,39 @@ import Box from "@mui/material/Box";
 
 export const GreetTextContainer = styled(Box)`
     @keyframes hologramTextShowing {
-        0% {
+        from {
             opacity: 0;
-            transform: translateZ(10rem) rotateX(-90deg);
+            transform: translate3d(0, 0.8rem, 0);
         }
 
-        100% {
+        to {
             opacity: 1;
-            transform: translateZ(10rem) rotateX(0);
+            transform: translate3d(0, 0, 0);
         }
     }
 
     position: absolute;
+    top: -4.8rem;
+    left: 50%;
 
-    width: 40rem;
-    /* height: 7rem; */
-
-    top: 4rem;
-
-    animation: hologramTextShowing 400ms;
-    transform: translateZ(10rem);
+    transform: translateX(-50%);
+    animation: hologramTextShowing 220ms ease;
+    pointer-events: none;
 
     .apparition-container {
-        padding: 2rem;
+        padding: 1rem 1.6rem;
 
-        transition: 1000ms;
-
-        border-radius: 3rem;
-        background-color: #288a9128;
-        box-shadow: 0 0 10px 5px #288a91 inset;
+        border-radius: 999px;
+        border: 1px solid rgba(var(--scene-accent-rgb), 0.18);
+        background: rgba(var(--scene-panel-rgb), 0.82);
+        box-shadow: 0 1rem 2.2rem rgba(0, 0, 0, 0.18);
+        white-space: nowrap;
     }
 
     b {
-        font-size: 2rem;
-        color: #288a91;
-        text-shadow: 0 0 10px #288a91;
-
-        margin-left: 4rem;
+        color: rgba(var(--scene-accent-soft-rgb), 0.9);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 1.35rem;
+        letter-spacing: 0.08em;
     }
-`
+`;
