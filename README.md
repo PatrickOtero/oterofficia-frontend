@@ -10,16 +10,17 @@
 ### OBS: Passe o mouse por cima do robô para acessar o menu principal.  
 
 ## Menu principal
-<img src="./mdAssets/oterofficia_mainmenu.jpg">
+<img src="./mdAssets/oterofficia_mainmenu.png">
 
 ## Página Sobre Mim
-<img src="./mdAssets/oterofficia_aboutme.jpg">
+<img src="./mdAssets/oterofficia_aboutme.png">
 
 ## Página Portfolio
-<img src="./mdAssets/oterofficia_portfolio.jpg">
+<img src="./mdAssets/oterofficia_portfolio.png">
 
 
 ## Página de Estudos
+<img src="./mdAssets/oterofficia_studies.png">
 
 ### Esta página ainda não está pronta e não tenho um prazo para terminá-la pois estou fazendo tudo do zero, como o serviço de e-mail que está na API que eu construí para este site e que pode ser usado na página 'Sobre Mim' (link do repositório do backend deste site: https://github.com/PatrickOtero/oterofficia-backend) e desejo fazer, para esta página, "Estudos", as funcionalidades de um sistema de postagens, com imagens, textos e comentários, sem a ajuda de nenhuma biblioteca.
 
