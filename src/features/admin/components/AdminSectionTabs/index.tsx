@@ -44,6 +44,9 @@ const AdminSectionTabsContainer = styled.nav`
 
 export const AdminSectionTabs = () => (
   <AdminSectionTabsContainer>
+    <NavLink className={({ isActive }) => `admin-tab-link ${isActive ? "active" : ""}`} to="/admin/about">
+      Sobre mim
+    </NavLink>
     <NavLink className={({ isActive }) => `admin-tab-link ${isActive ? "active" : ""}`} to="/admin/studies">
       Estudos
     </NavLink>

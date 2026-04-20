@@ -1,6 +1,6 @@
 import { api } from "../../../services/axios";
 
-export type UploadFolder = "projects" | "study-content" | "study-covers";
+export type UploadFolder = "about" | "projects" | "study-content" | "study-covers";
 
 type UploadResponse = {
   fallbackUsed: boolean;

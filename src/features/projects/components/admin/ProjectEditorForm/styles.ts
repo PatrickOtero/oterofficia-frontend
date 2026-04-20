@@ -58,7 +58,8 @@ export const ProjectEditorContainer = styled.section`
     }
 
     input,
-    textarea {
+    textarea,
+    select {
         width: 100%;
         min-height: 4.8rem;
         padding: 1.4rem 1.6rem;
@@ -118,6 +119,20 @@ export const ProjectEditorContainer = styled.section`
         gap: 1rem;
     }
 
+    .preview-copy strong {
+        color: rgba(var(--scene-title-rgb), 0.92);
+        font-size: 1.38rem;
+        line-height: 1.55;
+    }
+
+    .preview-copy span {
+        color: rgba(var(--scene-accent-soft-rgb), 0.66);
+        font-size: 1.22rem;
+        line-height: 1.5;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
     .preview-copy h2 {
         color: rgba(var(--scene-title-rgb), 0.98);
         font-family: "IBM Plex Mono", monospace;
@@ -138,6 +153,28 @@ export const ProjectEditorContainer = styled.section`
         display: flex;
         flex-wrap: wrap;
         gap: 0.8rem;
+    }
+
+    .preview-meta,
+    .preview-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .preview-badge,
+    .preview-tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 3.4rem;
+        padding: 0 1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(var(--scene-accent-rgb), 0.14);
+        background: rgba(var(--scene-accent-rgb), 0.08);
+        color: rgba(var(--scene-accent-soft-rgb), 0.84);
+        font-size: 0.96rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
     }
 
     .preview-link {

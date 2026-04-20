@@ -26,7 +26,11 @@ const AdminProjectsDashboardContainer = styled.section`
 export const AdminProjectsDashboardPage = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState<ProjectRecord[]>([]);
-  const [search, setSearch] = useState<string>("");
+  const [filters, setFilters] = useState({
+    search: "",
+    status: "all",
+    track: "all",
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
@@ -54,16 +58,26 @@ export const AdminProjectsDashboardPage = () => {
   }, [loadProjects]);
 
   const filteredProjects = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
+    const normalizedSearch = filters.search.trim().toLowerCase();
 
-    if (!normalizedSearch.length) {
-      return projects;
-    }
+    return projects.filter((project) => {
+      const matchesSearch =
+        !normalizedSearch.length ||
+        `${project.project_name} ${project.project_desc} ${project.project_highlight || ""} ${
+          project.organization_name || ""
+        } ${project.project_role || ""} ${project.project_tags.join(" ")}`
+          .toLowerCase()
+          .includes(normalizedSearch);
 
-    return projects.filter((project) =>
-      `${project.project_name} ${project.project_desc}`.toLowerCase().includes(normalizedSearch)
-    );
-  }, [projects, search]);
+      const matchesStatus =
+        filters.status === "all" || project.project_status === filters.status;
+
+      const matchesTrack =
+        filters.track === "all" || project.project_track === filters.track;
+
+      return matchesSearch && matchesStatus && matchesTrack;
+    });
+  }, [filters, projects]);
 
   const handleDeleteProject = async (projectId: string) => {
     if (!window.confirm("Excluir este projeto do portfolio?")) {
@@ -94,8 +108,12 @@ export const AdminProjectsDashboardPage = () => {
         <>
           <ProjectsToolbar
             onCreate={() => navigate("/admin/projects/new")}
-            onSearchChange={setSearch}
-            search={search}
+            onSearchChange={(value) => setFilters((current) => ({ ...current, search: value }))}
+            onStatusChange={(value) => setFilters((current) => ({ ...current, status: value }))}
+            onTrackChange={(value) => setFilters((current) => ({ ...current, track: value }))}
+            search={filters.search}
+            status={filters.status}
+            track={filters.track}
           />
           <ProjectsTable
             onDelete={(projectId) => void handleDeleteProject(projectId)}

@@ -17,9 +17,9 @@ export const AboutMeContainer = styled(Box)`
     position: relative;
     z-index: 4;
 
-    width: min(80rem, 92vw);
-    height: min(90rem, calc(100vh - 4rem));
-    max-height: 90rem;
+    width: min(112rem, 94vw);
+    height: min(92rem, calc(100vh - 4rem));
+    max-height: 92rem;
 
     animation: aboutPanelReveal 500ms ease;
     transition: transform 400ms ease, opacity 400ms ease;
@@ -38,7 +38,7 @@ export const AboutMeContainer = styled(Box)`
 
         padding: 4.8rem 4.8rem 4rem;
 
-        gap: 3.6rem;
+        gap: 2rem;
         
         width: 100%;
         height: 100%;
@@ -100,11 +100,12 @@ export const AboutMeContainer = styled(Box)`
     }
 
     @media (max-width: 900px) {
-        height: min(90rem, calc(100vh - 2rem));
+        width: min(112rem, 96vw);
+        height: min(92rem, calc(100vh - 2rem));
 
         .aboutme-page-main {
             padding: 4.8rem 2.2rem 3.2rem;
-            gap: 3rem;
+            gap: 2rem;
         }
     }
 `;

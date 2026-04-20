@@ -21,7 +21,7 @@ const ProjectsTableContainer = styled.section`
     .table-header,
     .table-row {
         display: grid;
-        grid-template-columns: 2.4fr 1fr 1fr auto;
+        grid-template-columns: 2.1fr 1.1fr 1.2fr 1fr auto;
         gap: 1rem;
         align-items: center;
     }
@@ -173,8 +173,9 @@ export const ProjectsTable = ({
     <ProjectsTableContainer>
       <div className="table-header">
         <span>Projeto</span>
+        <span>Status</span>
+        <span>Trilha</span>
         <span>Links</span>
-        <span>Video</span>
         <span>Acoes</span>
       </div>
 
@@ -193,13 +194,22 @@ export const ProjectsTable = ({
           </div>
 
           <div className="table-cell">
+            {project.project_status === "completed" ? "Concluído" : "Em progresso"}
+          </div>
+
+          <div className="table-cell">
+            {project.project_track === "soujunior"
+              ? project.organization_name || "SouJunior"
+              : "Autoral"}
+          </div>
+
+          <div className="table-cell">
             <div className="link-chip-list">
               {project.frontend_url ? <span className="link-chip">Front</span> : null}
               {project.backend_url ? <span className="link-chip">Back</span> : null}
+              {project.video_url ? <span className="link-chip">Vídeo</span> : null}
             </div>
           </div>
-
-          <div className="table-cell">{project.video_url ? "Disponivel" : "--"}</div>
 
           <div className="actions-cell">
             <Link className="edit-link" to={`/admin/projects/${project.id}/edit`}>

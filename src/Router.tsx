@@ -49,6 +49,11 @@ const AdminStudiesDashboardPage = lazy(() =>
     default: module.AdminStudiesDashboardPage,
   }))
 );
+const AdminAboutEditorPage = lazy(() =>
+  import("./pages/Admin/AboutEditor").then((module) => ({
+    default: module.AdminAboutEditorPage,
+  }))
+);
 const AdminStudyEditorPage = lazy(() =>
   import("./pages/Admin/StudyEditor").then((module) => ({ default: module.AdminStudyEditorPage }))
 );
@@ -111,6 +116,7 @@ export function Router() {
             </Route>
 
             <Route element={<ProtectedRoute requireAdmin />}>
+              <Route element={<AdminAboutEditorPage />} path="/admin/about" />
               <Route element={<AdminStudiesDashboardPage />} path="/admin/studies" />
               <Route element={<AdminStudyEditorPage />} path="/admin/studies/new" />
               <Route element={<AdminStudyEditorPage />} path="/admin/studies/:id/edit" />
