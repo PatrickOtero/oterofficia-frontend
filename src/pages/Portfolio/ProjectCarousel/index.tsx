@@ -10,32 +10,28 @@ import { ProjectCarouselContainer } from "./Carousel.style";
 const SOU_JUNIOR_OVERVIEW = {
   ctaLabel: "Conhecer a iniciativa",
   ctaUrl: "https://www.soujunior.tech/",
-  description:
-    "A SouJunior combina vivência prática, colaboração multidisciplinar e maturidade de produto em projetos reais. É um contexto valioso para mostrar responsabilidade, comunicação, constância e construção em equipe.",
+  description: "Vivência prática, colaboração multidisciplinar e construção em equipe em projetos reais.",
   highlights: ["Experiência prática", "Times multidisciplinares", "Mentoria", "Projetos reais"],
-  title: "Experiência colaborativa com impacto real",
+  title: "Experiência colaborativa real",
 };
 
 const sectionCopy = {
   completed: {
-    description:
-      "Projetos entregues com proposta fechada, direção visual consistente e execução completa.",
+    description: "Projetos autorais já fechados e publicados.",
     empty: "Ainda não há projetos concluídos publicados nesta seção.",
     id: "portfolio-concluidos",
     kicker: "Entregas finalizadas",
     title: "Concluídos",
   },
   inProgress: {
-    description:
-      "Frentes que continuam evoluindo por refinamento técnico, expansão funcional ou aprofundamento de produto.",
+    description: "Frentes em evolução e expansão.",
     empty: "Ainda não há projetos em progresso publicados aqui.",
     id: "portfolio-progresso",
     kicker: "Construção ativa",
     title: "Em progresso",
   },
   soujunior: {
-    description:
-      "Projetos construídos em contexto colaborativo na SouJunior, com atuação em equipe, alinhamento e entrega coletiva.",
+    description: "Projetos desenvolvidos dentro da iniciativa.",
     empty: "Ainda não há projetos da SouJunior exibidos aqui.",
     id: "portfolio-soujunior",
     kicker: "Experiência voluntária",
@@ -55,7 +51,7 @@ const normalizeParagraphs = (description: string) =>
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
 
-const summarizeDescription = (description: string, maxLength = 180) => {
+const summarizeDescription = (description: string, maxLength = 160) => {
   const normalized = description.replace(/\s+/g, " ").trim();
 
   if (normalized.length <= maxLength) {
@@ -101,10 +97,10 @@ const ProjectLinks = ({ project }: { project: ProjectRecord }) => {
 type SectionKey = keyof typeof sectionCopy;
 
 type PortfolioSectionProps = {
+  onSelectProject: (project: ProjectRecord) => void;
   projects: ProjectRecord[];
   section: SectionKey;
   selectedProjectId: number | null;
-  onSelectProject: (project: ProjectRecord) => void;
 };
 
 const PortfolioSection = ({
@@ -123,7 +119,7 @@ const PortfolioSection = ({
           <h2>{copy.title}</h2>
           <p>{copy.description}</p>
         </div>
-        <span className="section-count">{projects.length} projetos</span>
+        <span className="section-count">{projects.length}</span>
       </div>
 
       {projects.length ? (
@@ -306,14 +302,12 @@ export const ProjectCarousel = () => {
       {!isLoading && !errorMessage ? (
         <>
           <section className="portfolio-hero">
-            <div className="hero-copy">
-              <span className="hero-eyebrow">Portfólio</span>
-              <h1>Projetos com contexto, estética e leitura profissional.</h1>
-              <p className="hero-description">
-                Aqui eu organizo meus projetos por estágio de maturidade e por contexto de atuação.
-                A ideia é mostrar não só interface, mas também consistência de construção, direção
-                técnica e capacidade de colaborar em cenários diferentes.
-              </p>
+            <div className="hero-head">
+              <div className="hero-copy">
+                <span className="hero-eyebrow">Portfólio</span>
+                <h1>Projetos selecionados.</h1>
+                <p className="hero-description">Concluídos, em progresso e experiências SouJunior.</p>
+              </div>
 
               <div className="hero-metrics">
                 {metrics.map((metric) => (
@@ -323,59 +317,26 @@ export const ProjectCarousel = () => {
                   </span>
                 ))}
               </div>
-
-              <div className="hero-actions">
-                <a className="hero-action" href={`#${sectionCopy.completed.id}`}>
-                  Concluídos
-                </a>
-                <a className="hero-action" href={`#${sectionCopy.inProgress.id}`}>
-                  Em progresso
-                </a>
-                <a className="hero-action" href={`#${sectionCopy.soujunior.id}`}>
-                  SouJunior
-                </a>
-              </div>
             </div>
 
-            <div className="hero-side">
-              <div className="hero-panel">
-                <span className="section-kicker">Leitura rápida</span>
-                <div className="hero-panel-grid">
-                  {metrics.map((metric) => (
-                    <div className="hero-panel-stat" key={`panel-${metric.label}`}>
-                      <b>{metric.value}</b>
-                      <span>{metric.label}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="hero-note">
-                  Cada projeto pode ser lido pelo estágio atual, pelo contexto em que foi construído
-                  e pelo tipo de contribuição que ele representa.
-                </p>
-              </div>
-
-              <div className="initiative-card initiative-card-compact">
-                <div className="initiative-copy">
-                  <strong>SouJunior</strong>
-                  <h2>{SOU_JUNIOR_OVERVIEW.title}</h2>
-                  <p>{SOU_JUNIOR_OVERVIEW.description}</p>
-                  <div className="initiative-highlights">
-                    {SOU_JUNIOR_OVERVIEW.highlights.map((highlight) => (
-                      <span className="initiative-pill" key={highlight}>
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <a
-                  className="initiative-link"
-                  href={SOU_JUNIOR_OVERVIEW.ctaUrl}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {SOU_JUNIOR_OVERVIEW.ctaLabel}
-                </a>
-              </div>
+            <div className="hero-actions">
+              <a className="hero-action" href={`#${sectionCopy.completed.id}`}>
+                Concluídos
+              </a>
+              <a className="hero-action" href={`#${sectionCopy.inProgress.id}`}>
+                Em progresso
+              </a>
+              <a className="hero-action" href={`#${sectionCopy.soujunior.id}`}>
+                SouJunior
+              </a>
+              <a
+                className="hero-action hero-action-secondary"
+                href={SOU_JUNIOR_OVERVIEW.ctaUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Conhecer SouJunior
+              </a>
             </div>
           </section>
 
@@ -452,8 +413,7 @@ export const ProjectCarousel = () => {
 
             <div className="initiative-side">
               <p className="initiative-note">
-                Quando um projeto nasce nesse contexto, ele revela leitura de time, adaptação e
-                capacidade de construir junto.
+                Um contexto bom para mostrar colaboração, adaptação e responsabilidade de time.
               </p>
               <a
                 className="initiative-link"

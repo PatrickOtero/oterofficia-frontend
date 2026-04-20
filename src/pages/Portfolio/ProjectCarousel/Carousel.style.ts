@@ -14,11 +14,11 @@ export const ProjectCarouselContainer = styled.section`
 
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    gap: 1.6rem;
 
     width: min(124rem, 95vw);
     height: min(92rem, calc(100vh - 4rem));
-    padding: 2rem;
+    padding: 1.8rem;
 
     .portfolio-close-button {
         position: sticky;
@@ -58,17 +58,24 @@ export const ProjectCarouselContainer = styled.section`
     .portfolio-spotlight,
     .initiative-card,
     .portfolio-section {
-        padding: 2.2rem;
+        padding: 1.8rem;
     }
 
     .portfolio-hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.25fr) minmax(32rem, 0.75fr);
-        gap: 1.6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .hero-head,
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 1.2rem;
+        align-items: flex-start;
     }
 
     .hero-copy,
-    .hero-side,
     .initiative-copy,
     .spotlight-copy,
     .section-copy,
@@ -81,11 +88,11 @@ export const ProjectCarouselContainer = styled.section`
     .initiative-copy,
     .spotlight-copy,
     .project-card-copy {
-        gap: 1.2rem;
+        gap: 0.9rem;
     }
 
-    .hero-side {
-        gap: 1.2rem;
+    .hero-copy {
+        max-width: 56rem;
     }
 
     .hero-eyebrow,
@@ -94,7 +101,7 @@ export const ProjectCarouselContainer = styled.section`
     .project-card-role {
         color: rgba(var(--scene-accent-soft-rgb), 0.72);
         font-family: "IBM Plex Mono", monospace;
-        font-size: 1rem;
+        font-size: 0.98rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
     }
@@ -112,22 +119,21 @@ export const ProjectCarouselContainer = styled.section`
     }
 
     .hero-copy h1 {
-        font-size: clamp(3rem, 4.8vw, 5.2rem);
+        font-size: clamp(2.6rem, 4vw, 4rem);
     }
 
     .spotlight-copy h2,
     .section-copy h2,
     .initiative-copy h2 {
-        font-size: clamp(2rem, 2.8vw, 3.2rem);
+        font-size: clamp(1.9rem, 2.6vw, 3rem);
     }
 
     .project-card-copy h3 {
-        font-size: 2rem;
+        font-size: 1.9rem;
         line-height: 1.16;
     }
 
     .hero-description,
-    .hero-note,
     .initiative-copy p,
     .initiative-note,
     .section-copy p,
@@ -137,8 +143,8 @@ export const ProjectCarouselContainer = styled.section`
     .project-card-description,
     .project-link-muted {
         color: rgba(var(--scene-accent-soft-rgb), 0.8);
-        font-size: 1.55rem;
-        line-height: 1.74;
+        font-size: 1.42rem;
+        line-height: 1.7;
     }
 
     .hero-metrics,
@@ -153,6 +159,11 @@ export const ProjectCarouselContainer = styled.section`
         gap: 0.8rem;
     }
 
+    .hero-metrics {
+        justify-content: flex-end;
+        max-width: 46rem;
+    }
+
     .hero-metric,
     .project-badge,
     .project-tag,
@@ -160,21 +171,21 @@ export const ProjectCarouselContainer = styled.section`
     .section-count {
         display: inline-flex;
         align-items: center;
-        gap: 0.7rem;
-        min-height: 3.6rem;
-        padding: 0 1rem;
+        gap: 0.6rem;
+        min-height: 3.4rem;
+        padding: 0 0.95rem;
         border-radius: 999px;
         border: 1px solid rgba(var(--scene-accent-rgb), 0.14);
         background: rgba(var(--scene-accent-rgb), 0.08);
         color: rgba(var(--scene-accent-soft-rgb), 0.88);
-        font-size: 0.98rem;
+        font-size: 0.94rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
     }
 
     .hero-metric strong {
         color: rgba(var(--scene-title-rgb), 0.98);
-        font-size: 1.2rem;
+        font-size: 1.12rem;
         font-weight: 700;
     }
 
@@ -184,13 +195,13 @@ export const ProjectCarouselContainer = styled.section`
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 4.2rem;
-        padding: 0 1.4rem;
-        border-radius: 1.4rem;
+        min-height: 4rem;
+        padding: 0 1.3rem;
+        border-radius: 1.3rem;
         border: 1px solid rgba(var(--scene-accent-rgb), 0.16);
         background: rgba(10, 20, 32, 0.54);
         color: rgba(var(--scene-title-rgb), 0.92);
-        font-size: 1rem;
+        font-size: 0.98rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
@@ -204,75 +215,36 @@ export const ProjectCarouselContainer = styled.section`
         background: rgba(var(--scene-accent-rgb), 0.08);
     }
 
-    .hero-panel {
-        ${surfaceCardCss};
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.8rem;
-        background:
-            linear-gradient(180deg, rgba(10, 20, 32, 0.9) 0%, rgba(7, 16, 27, 0.78) 100%);
-    }
-
-    .hero-panel-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem;
-    }
-
-    .hero-panel-stat {
-        ${surfaceCardCss};
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-        padding: 1.4rem;
-        background: rgba(7, 16, 28, 0.7);
-    }
-
-    .hero-panel-stat b {
-        color: rgba(var(--scene-title-rgb), 0.97);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 2.4rem;
-        letter-spacing: 0.06em;
-    }
-
-    .hero-panel-stat span {
-        color: rgba(var(--scene-accent-soft-rgb), 0.72);
-        font-size: 1rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+    .hero-action-secondary {
+        margin-left: auto;
     }
 
     .initiative-card {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
-        gap: 1.4rem;
-        align-items: start;
-    }
-
-    .initiative-card-compact {
-        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        align-items: center;
     }
 
     .initiative-side {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
-        min-width: 22rem;
+        gap: 0.9rem;
+        min-width: 23rem;
     }
 
     .portfolio-spotlight {
         display: grid;
-        grid-template-columns: minmax(34rem, 0.95fr) minmax(0, 1.05fr);
-        gap: 1.6rem;
+        grid-template-columns: minmax(34rem, 0.9fr) minmax(0, 1.1fr);
+        gap: 1.5rem;
         scroll-margin-top: 2rem;
     }
 
     .spotlight-media {
         position: relative;
         overflow: hidden;
-        border-radius: 2.2rem;
-        min-height: 42rem;
+        border-radius: 2rem;
+        min-height: 36rem;
         background:
             radial-gradient(circle at 22% 20%, rgba(var(--scene-accent-rgb), 0.16), transparent 38%),
             rgba(6, 14, 23, 0.86);
@@ -302,31 +274,24 @@ export const ProjectCarouselContainer = styled.section`
     .spotlight-description {
         display: flex;
         flex-direction: column;
-        gap: 0.9rem;
+        gap: 0.8rem;
     }
 
     .portfolio-section {
         display: flex;
         flex-direction: column;
-        gap: 1.6rem;
-    }
-
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        gap: 1rem;
-        align-items: flex-start;
+        gap: 1.4rem;
     }
 
     .section-copy {
-        gap: 0.8rem;
-        max-width: 72rem;
+        gap: 0.5rem;
+        max-width: 52rem;
     }
 
     .projects-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(29rem, 1fr));
-        gap: 1.2rem;
+        gap: 1.1rem;
     }
 
     .project-card {
@@ -362,19 +327,19 @@ export const ProjectCarouselContainer = styled.section`
     }
 
     .project-card-copy {
-        gap: 1rem;
-        padding: 1.6rem;
+        gap: 0.9rem;
+        padding: 1.5rem;
     }
 
     .project-card-header {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.45rem;
     }
 
     .project-card-description {
         display: -webkit-box;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
@@ -382,31 +347,45 @@ export const ProjectCarouselContainer = styled.section`
     .project-card-footer {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.9rem;
         margin-top: auto;
     }
 
     .project-card-hint {
         color: rgba(var(--scene-title-rgb), 0.94);
-        font-size: 0.98rem;
+        font-size: 0.94rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
     }
 
     .project-link-muted {
-        font-size: 1.18rem;
+        font-size: 1.16rem;
     }
 
     .portfolio-empty {
-        padding: 2.2rem;
+        padding: 2rem;
         text-align: center;
     }
 
     @media (max-width: 1100px) {
-        .portfolio-hero,
+        .hero-head,
         .portfolio-spotlight,
         .initiative-card {
             grid-template-columns: 1fr;
+            flex-direction: column;
+        }
+
+        .hero-head {
+            align-items: flex-start;
+        }
+
+        .hero-metrics {
+            justify-content: flex-start;
+            max-width: none;
+        }
+
+        .hero-action-secondary {
+            margin-left: 0;
         }
 
         .initiative-side {
@@ -417,17 +396,13 @@ export const ProjectCarouselContainer = styled.section`
     @media (max-width: 760px) {
         width: min(124rem, 96vw);
         height: min(92rem, calc(100vh - 2rem));
-        padding: 1.4rem;
+        padding: 1.3rem;
 
         .portfolio-hero,
         .portfolio-spotlight,
         .portfolio-section,
         .initiative-card {
-            padding: 1.6rem;
-        }
-
-        .hero-panel-grid {
-            grid-template-columns: 1fr;
+            padding: 1.5rem;
         }
 
         .section-header {
