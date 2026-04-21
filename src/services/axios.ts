@@ -1,7 +1,9 @@
 import axios from "axios";
 import { authStorage } from "../features/auth/utils/authStorage";
 
-const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3002";
+const serverUrl = "https://p01--oterofficia-backend--rfp2dvf84z2n.code.run"
+
+const localServerUrl = "http://localhost:3002"
 
 export const api = axios.create({ 
     baseURL: serverUrl,
