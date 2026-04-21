@@ -8,7 +8,7 @@ import { HomeContainer } from "./Home.style";
 export const HomePage = () => {
     const navigate = useNavigate();
     const { isAuthenticated, user } = useAuth();
-    const { openContentScene } = useBotSceneActions();
+    const { openAuthScene, openContentScene } = useBotSceneActions();
     const { homePage } = useBotFunctionsContext();
 
     return (
@@ -46,7 +46,7 @@ export const HomePage = () => {
                             <>
                                 <button
                                     onClick={() => {
-                                        openContentScene();
+                                        openAuthScene();
                                         navigate("/login");
                                     }}
                                     type="button"
@@ -56,7 +56,7 @@ export const HomePage = () => {
                                 <button
                                     className="secondary"
                                     onClick={() => {
-                                        openContentScene();
+                                        openAuthScene();
                                         navigate("/register");
                                     }}
                                     type="button"

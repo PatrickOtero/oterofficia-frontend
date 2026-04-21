@@ -10,6 +10,7 @@ import { CommentList } from "../../features/studies/components/public/CommentLis
 import { StudyBlockRenderer } from "../../features/studies/components/public/StudyBlockRenderer";
 import { FeedbackState } from "../../features/studies/components/shared/FeedbackState";
 import { StudyComment, StudyDetail } from "../../features/studies/types/study";
+import { useBotSceneActions } from "../../hooks/useBotSceneActions";
 import {
   orbitalPanelCss,
   scrollableContentCss,
@@ -323,6 +324,7 @@ export const StudyPostPage = () => {
   const navigate = useNavigate();
   const { slug = "" } = useParams();
   const { isAuthenticated } = useAuth();
+  const { openAuthScene } = useBotSceneActions();
   const [study, setStudy] = useState<StudyDetail | null>(null);
   const [comments, setComments] = useState<StudyComment[]>([]);
   const [commentValue, setCommentValue] = useState<string>("");
@@ -339,9 +341,10 @@ export const StudyPostPage = () => {
 
   const redirectToAuth = useCallback(
     (targetSlug: string) => {
+      openAuthScene();
       navigate(`/login?redirect=${encodeURIComponent(`/studies/${targetSlug}`)}`);
     },
-    [navigate]
+    [navigate, openAuthScene]
   );
 
   const loadComments = useCallback(async (postId: string) => {

@@ -34,7 +34,7 @@ export const InitialMenu = () => {
         <button
           className="initial-menu-button studies"
           onClick={() => {
-            openContentScene();
+            openContentScene("menu");
             setEarthPosition("");
             navigate("/studies");
           }}

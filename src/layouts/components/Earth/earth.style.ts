@@ -4,11 +4,11 @@ import earthMap from "../../../assets/world-map.png";
 export const EarthContainer = styled("div")`
     @keyframes celestialBodyRotation {
         from {
-            background-position: 14% 42%;
+            transform: translate3d(0, 0, 0);
         }
 
         to {
-            background-position: 118% 42%;
+            transform: translate3d(-50%, 0, 0);
         }
     }
 
@@ -20,7 +20,7 @@ export const EarthContainer = styled("div")`
     height: min(96rem, 118vw);
 
     transform: translateX(-50%);
-    z-index: 4;
+    z-index: 2;
     pointer-events: none;
 
     .earth-main {
@@ -41,18 +41,7 @@ export const EarthContainer = styled("div")`
     }
 
     .earth-main::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-
-        border-radius: 50%;
-        opacity: 0.26;
-        background-image: url(${earthMap});
-        background-size: 130% 130%;
-        background-position: 14% 42%;
-        background-repeat: repeat-x;
-        animation: celestialBodyRotation 220s linear infinite;
-        will-change: background-position;
+        content: none;
     }
 
     .earth-main::after {
@@ -64,6 +53,28 @@ export const EarthContainer = styled("div")`
         box-shadow:
             0 0 0 1px rgba(170, 223, 250, 0.16),
             0 0 3.4rem rgba(83, 160, 228, 0.16);
+    }
+
+    .earth-map-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 400%;
+        height: 100%;
+        display: flex;
+        opacity: 0.26;
+        animation: celestialBodyRotation 220s linear infinite;
+        will-change: transform;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .earth-map-panel {
+        flex: 0 0 50%;
+        height: 100%;
+        background-image: url(${earthMap});
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
     }
 
     .earth-hidden {

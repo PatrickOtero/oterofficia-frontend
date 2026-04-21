@@ -1,22 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { authApi } from "../../../features/auth/api/authApi";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { authStorage } from "../../../features/auth/utils/authStorage";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const ConfirmAccountDeletionPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
-
-const ConfirmAccountDeletionPanel = styled.div`
-    width: min(56rem, 100%);
-`;
 
 export const ConfirmAccountDeletionPage = () => {
   const [searchParams] = useSearchParams();
@@ -49,8 +37,7 @@ export const ConfirmAccountDeletionPage = () => {
   }, [refreshUser, token]);
 
   return (
-    <ConfirmAccountDeletionPageContainer>
-      <ConfirmAccountDeletionPanel>
+    <AuthSceneShell>
         <FeedbackState
           description={message}
           title={status === "loading" ? "Excluindo conta" : status === "success" ? "Conta removida" : "Falha na exclusao"}
@@ -61,7 +48,6 @@ export const ConfirmAccountDeletionPage = () => {
             <Link to="/">Voltar ao inicio</Link>
           </div>
         ) : null}
-      </ConfirmAccountDeletionPanel>
-    </ConfirmAccountDeletionPageContainer>
+    </AuthSceneShell>
   );
 };

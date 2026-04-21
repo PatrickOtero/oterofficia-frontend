@@ -10,6 +10,7 @@ import { SiteSign } from "./components/SiteSign";
 
 export function DefaultLayout() {
     const {
+        authPage,
         homePage,
         aboutMePage,
         portfolioPage,
@@ -24,6 +25,12 @@ export function DefaultLayout() {
             <div
                 className="layout-clickable-container"
                 onClick={() => {
+                    if (authPage) {
+                        centerBotOnHome();
+                        navigate("/");
+                        return;
+                    }
+
                     if (aboutMePage || portfolioPage) {
                         showHomeMenu();
                         navigate("/");

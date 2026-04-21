@@ -3,6 +3,7 @@ import { useBotFunctionsContext } from "./useBotFunctionsContext";
 export const useBotSceneActions = () => {
     const {
         setAboutMePage,
+        setAuthPage,
         setEarthPosition,
         setEyeState,
         setHologramActivated,
@@ -16,6 +17,7 @@ export const useBotSceneActions = () => {
 
     const centerBotOnHome = () => {
         setSceneTransition("idle");
+        setAuthPage(false);
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(false);
@@ -29,6 +31,7 @@ export const useBotSceneActions = () => {
 
     const showHomeMenu = (origin: "default" | "content" = "default") => {
         setSceneTransition(origin === "content" ? "content-to-home" : "idle");
+        setAuthPage(false);
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(true);
@@ -42,6 +45,7 @@ export const useBotSceneActions = () => {
 
     const openAboutMeScene = () => {
         setSceneTransition("idle");
+        setAuthPage(false);
         setPortfolioPage(false);
         setHomePage(false);
         setAboutMePage(true);
@@ -55,6 +59,7 @@ export const useBotSceneActions = () => {
 
     const openPortfolioScene = () => {
         setSceneTransition("idle");
+        setAuthPage(false);
         setAboutMePage(false);
         setHomePage(false);
         setPortfolioPage(true);
@@ -66,8 +71,25 @@ export const useBotSceneActions = () => {
         setEyeState("emitting-holo");
     };
 
-    const openContentScene = () => {
-        setSceneTransition("home-to-content");
+    const openAuthScene = () => {
+        setSceneTransition("idle");
+        setAuthPage(true);
+        setAboutMePage(false);
+        setPortfolioPage(false);
+        setHomePage(false);
+        setEarthPosition("");
+        setHologramActivated(true);
+        setIsShowingMenu(false);
+        setInfoTextHolo(false);
+        setVisorPosition("visor-to-left");
+        setEyeState("emitting-holo");
+    };
+
+    const openContentScene = (origin: "home" | "menu" | "content" = "home") => {
+        setSceneTransition(
+            origin === "home" ? "home-to-content" : origin === "menu" ? "menu-to-content" : "idle"
+        );
+        setAuthPage(false);
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(false);
@@ -81,6 +103,7 @@ export const useBotSceneActions = () => {
     return {
         centerBotOnHome,
         openContentScene,
+        openAuthScene,
         openAboutMeScene,
         openPortfolioScene,
         showHomeMenu,

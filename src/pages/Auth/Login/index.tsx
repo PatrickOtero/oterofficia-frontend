@@ -1,18 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { authApi } from "../../../features/auth/api/authApi";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const LoginPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -76,7 +68,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <LoginPageContainer>
+    <AuthSceneShell>
       <AuthForm
         errorMessage={errorMessage}
         fields={
@@ -124,6 +116,6 @@ export const LoginPage = () => {
         subtitle="Entre para continuar."
         title="Login"
       />
-    </LoginPageContainer>
+    </AuthSceneShell>
   );
 };

@@ -18,7 +18,16 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
     const isHomeRoute = location.pathname === "/";
     const isAboutRoute = location.pathname === "/aboutme";
     const isPortfolioRoute = location.pathname === "/portfolio";
+    const isAuthRoute =
+        location.pathname === "/login" ||
+        location.pathname === "/register" ||
+        location.pathname === "/forgot-password" ||
+        location.pathname === "/reset-password" ||
+        location.pathname === "/verify-email" ||
+        location.pathname === "/confirm-email-change" ||
+        location.pathname === "/confirm-account-deletion";
     const {
+        authPage,
         setInfoTextHolo,
         infoTextHolo,
         setEyeState,
@@ -37,8 +46,9 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
     const isInteractiveAtHome = interactive && isHomeRoute;
     const isAboutScene = interactive && isAboutRoute && aboutMePage;
     const isPortfolioScene = interactive && isPortfolioRoute && portfolioPage;
+    const isAuthScene = interactive && isAuthRoute && authPage;
     const isHomeMenuScene = interactive && isHomeRoute && homePage && isShowingMenu;
-    const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isHomeMenuScene;
+    const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isAuthScene || isHomeMenuScene;
     const resolvedHologramState = interactive
         ? hologramActivated || shouldDockInDefaultScene
         : Boolean(beamTarget);
@@ -69,13 +79,27 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
         return () => window.clearTimeout(timeoutId);
     }, [isReturningFromContent, setSceneTransition]);
 
+    useEffect(() => {
+        if (interactive || (sceneTransition !== "home-to-content" && sceneTransition !== "menu-to-content")) {
+            return;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            setSceneTransition("idle");
+        }, sceneTransition === "home-to-content" ? 980 : 220);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [interactive, sceneTransition, setSceneTransition]);
+
     const positionClass = interactive
         ? isReturningFromContent
             ? "position-home-returning"
             : shouldDockInDefaultScene
             ? "position-home-docked"
             : "position-home-center"
-        : "position-content-docked";
+        : sceneTransition === "home-to-content"
+          ? "position-content-entering"
+          : "position-content-docked";
 
     const beamTargetClass = resolvedHologramState
         ? !interactive
@@ -84,7 +108,9 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
                 : beamTarget === "content-menu"
                   ? "beam-target-content"
                   : ""
-            : isAboutScene
+            : isAuthScene
+              ? "beam-target-auth"
+              : isAboutScene
               ? "beam-target-about"
               : isPortfolioScene
                 ? "beam-target-portfolio"

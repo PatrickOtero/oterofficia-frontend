@@ -56,22 +56,23 @@ export const SiteSignContainer = styled.div`
     }
 
     @media (max-width: 900px) {
-        left: 2rem;
-        top: 2.4rem;
-        max-width: calc(100vw - 4rem);
+        left: 1.6rem;
+        top: 1.4rem;
+        max-width: calc(100vw - 3.2rem);
+        gap: 0.45rem;
 
         .site-sign-kicker {
-            font-size: 0.82rem;
-            letter-spacing: 0.16em;
+            font-size: 0.68rem;
+            letter-spacing: 0.14em;
         }
 
         .site-sign-title {
-            font-size: clamp(2rem, 8vw, 3.1rem);
-            letter-spacing: 0.1em;
+            font-size: clamp(1.6rem, 8vw, 2.6rem);
+            letter-spacing: 0.08em;
         }
 
         .site-sign-rule {
-            width: 6rem;
+            width: 4.4rem;
         }
     }
 `;

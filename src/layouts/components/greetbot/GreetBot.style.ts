@@ -6,6 +6,20 @@ import { botPoseBaseCss } from "./styles/botPoseBase";
 import { botPoseFrontCss } from "./styles/botPoseFront";
 
 export const GreetBotContainer = styled.div`
+    @keyframes botEnterContent {
+        from {
+            left: calc(50vw - (var(--bot-width) / 2));
+            top: calc(50vh - (var(--bot-height) / 2) - 2rem);
+            transform: translate3d(0, 0, 0) scale(1.03);
+        }
+
+        to {
+            left: calc(100vw - var(--bot-width) - clamp(2.25rem, 4vw, 4rem));
+            top: calc(100vh - var(--bot-height) - clamp(0.9rem, 3vh, 2rem));
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    }
+
     @keyframes botReturnFromContent {
         from {
             left: calc(100vw - var(--bot-width) - clamp(2.25rem, 4vw, 4rem));
@@ -20,8 +34,11 @@ export const GreetBotContainer = styled.div`
         }
     }
 
-    --bot-height: 26.5rem;
-    --bot-width: 14rem;
+    --bot-base-height: 26.5rem;
+    --bot-base-width: 14rem;
+    --bot-art-scale: 1;
+    --bot-height: calc(var(--bot-base-height) * var(--bot-art-scale));
+    --bot-width: calc(var(--bot-base-width) * var(--bot-art-scale));
     --bot-float-distance: 0.82rem;
     --visor-glow-opacity: 0.48;
 
@@ -74,6 +91,13 @@ export const GreetBotContainer = styled.div`
         transform: translate3d(0, 0, 0) scale(1);
     }
 
+    .bot-roamer.position-content-entering {
+        left: calc(100vw - var(--bot-width) - clamp(2.25rem, 4vw, 4rem));
+        top: calc(100vh - var(--bot-height) - clamp(0.9rem, 3vh, 2rem));
+        transform: translate3d(0, 0, 0) scale(1);
+        animation: botEnterContent 980ms cubic-bezier(0.16, 1, 0.22, 1);
+    }
+
     .greetbot-body {
         position: relative;
         width: var(--bot-width);
@@ -95,8 +119,13 @@ export const GreetBotContainer = styled.div`
 
     .bot-frame {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: var(--bot-base-width);
+        height: var(--bot-base-height);
         overflow: visible;
+        transform: scale(var(--bot-art-scale));
+        transform-origin: top left;
     }
 
     ${botAnimationsCss}
@@ -106,27 +135,53 @@ export const GreetBotContainer = styled.div`
     ${botPoseFrontCss}
 
     @media (max-width: 900px) {
-        --bot-height: 21.4rem;
-        --bot-width: 11.3rem;
+        --bot-art-scale: 0.64;
+        --bot-float-distance: 0.42rem;
+        z-index: 3;
 
         .bot-roamer.position-home-center {
             left: calc(50vw - (var(--bot-width) / 2));
-            top: calc(50vh - (var(--bot-height) / 2) - 1rem);
+            top: calc(50vh - (var(--bot-height) / 2) - 2rem);
         }
 
         .bot-roamer.position-home-docked {
-            left: calc(100vw - var(--bot-width) - 1.1rem);
-            top: calc(100vh - var(--bot-height) - 1.5rem);
+            left: calc(100vw - var(--bot-width) + 1rem);
+            top: calc(100vh - var(--bot-height) + 0.4rem);
         }
 
         .bot-roamer.position-home-returning {
-            left: calc(100vw - var(--bot-width) - 1.1rem);
-            top: calc(100vh - var(--bot-height) - 1.5rem);
+            left: calc(100vw - var(--bot-width) + 1rem);
+            top: calc(100vh - var(--bot-height) + 0.4rem);
         }
 
         .bot-roamer.position-content-docked {
-            left: calc(100vw - var(--bot-width) - 1rem);
-            top: calc(100vh - var(--bot-height) - 0.55rem);
+            left: calc(100vw - var(--bot-width) + 1rem);
+            top: calc(100vh - var(--bot-height) + 0.4rem);
+        }
+
+        .bot-roamer.position-content-entering {
+            left: calc(100vw - var(--bot-width) + 1rem);
+            top: calc(100vh - var(--bot-height) + 0.4rem);
+        }
+
+        .greetbot-body.is-ambient {
+            opacity: 0.92;
+        }
+    }
+
+    @media (max-width: 640px) {
+        --bot-art-scale: 0.58;
+
+        .bot-roamer.position-home-docked,
+        .bot-roamer.position-home-returning,
+        .bot-roamer.position-content-docked,
+        .bot-roamer.position-content-entering {
+            left: calc(100vw - var(--bot-width) + 1.4rem);
+            top: calc(100vh - var(--bot-height) + 0.7rem);
+        }
+
+        .bot-roamer.position-home-center {
+            top: calc(50vh - (var(--bot-height) / 2) - 2.6rem);
         }
     }
 `;

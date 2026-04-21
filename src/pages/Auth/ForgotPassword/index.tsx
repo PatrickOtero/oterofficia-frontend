@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { authApi } from "../../../features/auth/api/authApi";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const ForgotPasswordPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
 
 export const ForgotPasswordPage = () => {
   const [searchParams] = useSearchParams();
@@ -37,7 +29,7 @@ export const ForgotPasswordPage = () => {
   };
 
   return (
-    <ForgotPasswordPageContainer>
+    <AuthSceneShell>
       <AuthForm
         errorMessage={errorMessage}
         fields={
@@ -61,6 +53,6 @@ export const ForgotPasswordPage = () => {
         subtitle="Receba um link por e-mail."
         title="Recuperar acesso"
       />
-    </ForgotPasswordPageContainer>
+    </AuthSceneShell>
   );
 };

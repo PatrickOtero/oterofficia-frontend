@@ -220,12 +220,12 @@ export const botHelmetCss = css`
     }
 
     .greetbot-body.beam-target-auth .eyeLeft.beam-active {
-        --beam-angle: 56deg;
+        --beam-angle: 39deg;
         --beam-length: 42rem;
     }
 
     .greetbot-body.beam-target-auth .eyeRight.beam-active {
-        --beam-angle: 54deg;
+        --beam-angle: 37deg;
         --beam-length: 40rem;
     }
 
@@ -307,53 +307,82 @@ export const botHelmetCss = css`
 
     @media (max-width: 900px) {
         .greetbot-body.beam-target-home .eyeLeft.beam-active {
-            --beam-angle: 19deg;
-            --beam-length: 36rem;
+            --beam-angle: 14deg;
+            --beam-length: 22rem;
         }
 
         .greetbot-body.beam-target-home .eyeRight.beam-active {
-            --beam-angle: 18deg;
-            --beam-length: 34rem;
+            --beam-angle: 13deg;
+            --beam-length: 20rem;
         }
 
         .greetbot-body.beam-target-content .eyeLeft.beam-active {
-            --beam-angle: 69deg;
-            --beam-length: 21rem;
+            --beam-angle: 33deg;
+            --beam-length: 16rem;
         }
 
         .greetbot-body.beam-target-content .eyeRight.beam-active {
-            --beam-angle: 67deg;
-            --beam-length: 19rem;
+            --beam-angle: 31deg;
+            --beam-length: 14rem;
         }
 
         .greetbot-body.beam-target-auth .eyeLeft.beam-active {
-            --beam-angle: 58deg;
-            --beam-length: 28rem;
+            --beam-angle: 28deg;
+            --beam-length: 15rem;
         }
 
         .greetbot-body.beam-target-auth .eyeRight.beam-active {
-            --beam-angle: 56deg;
-            --beam-length: 26rem;
+            --beam-angle: 26deg;
+            --beam-length: 13rem;
         }
 
         .greetbot-body.beam-target-about .eyeLeft.beam-active {
-            --beam-angle: 36deg;
-            --beam-length: 27rem;
+            --beam-angle: 30deg;
+            --beam-length: 16rem;
         }
 
         .greetbot-body.beam-target-about .eyeRight.beam-active {
-            --beam-angle: 34deg;
-            --beam-length: 25rem;
+            --beam-angle: 28deg;
+            --beam-length: 14rem;
         }
 
         .greetbot-body.beam-target-portfolio .eyeLeft.beam-active {
-            --beam-angle: 39deg;
-            --beam-length: 26rem;
+            --beam-angle: 30deg;
+            --beam-length: 15rem;
         }
 
         .greetbot-body.beam-target-portfolio .eyeRight.beam-active {
-            --beam-angle: 37deg;
-            --beam-length: 24rem;
+            --beam-angle: 28deg;
+            --beam-length: 13rem;
+        }
+
+        .gb-eyes.beam-active::before {
+            opacity: 0.26;
+        }
+
+        .gb-eyes.beam-active::after {
+            opacity: 0.66;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .greetbot-body.beam-target-home .eyeLeft.beam-active,
+        .greetbot-body.beam-target-home .eyeRight.beam-active {
+            --beam-length: 18rem;
+        }
+
+        .greetbot-body.beam-target-content .eyeLeft.beam-active,
+        .greetbot-body.beam-target-auth .eyeLeft.beam-active,
+        .greetbot-body.beam-target-about .eyeLeft.beam-active,
+        .greetbot-body.beam-target-portfolio .eyeLeft.beam-active {
+            --beam-length: 13rem;
+        }
+
+        .greetbot-body.beam-target-content .eyeRight.beam-active,
+        .greetbot-body.beam-target-auth .eyeRight.beam-active,
+        .greetbot-body.beam-target-about .eyeRight.beam-active,
+        .greetbot-body.beam-target-portfolio .eyeRight.beam-active {
+            --beam-length: 11rem;
         }
     }
 `;

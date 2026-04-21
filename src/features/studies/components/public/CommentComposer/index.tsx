@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useBotSceneActions } from "../../../../../hooks/useBotSceneActions";
 import { surfaceCardCss } from "../../../utils/styleMixins";
 
 type CommentComposerProps = {
@@ -90,53 +91,67 @@ export const CommentComposer = ({
   redirectPath,
   replyTargetName,
   value,
-}: CommentComposerProps) => (
-  <CommentComposerContainer>
-    <div className="composer-title">Comentarios</div>
+}: CommentComposerProps) => {
+  const { openAuthScene } = useBotSceneActions();
 
-    {isAuthenticated ? (
-      <>
-        {replyTargetName ? (
-          <div className="reply-badge">
-            <span>Respondendo {replyTargetName}</span>
-            {onCancelReply ? (
-              <button onClick={onCancelReply} type="button">
-                Cancelar resposta
-              </button>
-            ) : null}
+  return (
+    <CommentComposerContainer>
+      <div className="composer-title">Comentarios</div>
+
+      {isAuthenticated ? (
+        <>
+          {replyTargetName ? (
+            <div className="reply-badge">
+              <span>Respondendo {replyTargetName}</span>
+              {onCancelReply ? (
+                <button onClick={onCancelReply} type="button">
+                  Cancelar resposta
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+
+          <textarea
+            onChange={(event) => onChange(event.target.value)}
+            placeholder={
+              replyTargetName
+                ? "Escreva sua resposta para continuar a conversa."
+                : "Compartilhe uma observacao, uma duvida ou uma leitura complementar."
+            }
+            value={value}
+          />
+          <div className="composer-footer">
+            <span className="composer-auth-text">Seu comentario fica vinculado ao seu perfil.</span>
+            <button className="composer-action" onClick={onSubmit} type="button">
+              {isSubmitting
+                ? "Enviando"
+                : replyTargetName
+                  ? "Publicar resposta"
+                  : "Publicar comentario"}
+            </button>
           </div>
-        ) : null}
-
-        <textarea
-          onChange={(event) => onChange(event.target.value)}
-          placeholder={
-            replyTargetName
-              ? "Escreva sua resposta para continuar a conversa."
-              : "Compartilhe uma observacao, uma duvida ou uma leitura complementar."
-          }
-          value={value}
-        />
+        </>
+      ) : (
         <div className="composer-footer">
-          <span className="composer-auth-text">Seu comentario fica vinculado ao seu perfil.</span>
-          <button className="composer-action" onClick={onSubmit} type="button">
-            {isSubmitting
-              ? "Enviando"
-              : replyTargetName
-                ? "Publicar resposta"
-                : "Publicar comentario"}
-          </button>
+          <span className="composer-auth-text">
+            Entre com sua conta para curtir e participar da discussao desta publicacao.
+          </span>
+          <div className="composer-auth-links">
+            <Link
+              onClick={() => openAuthScene()}
+              to={`/login?redirect=${encodeURIComponent(redirectPath)}`}
+            >
+              Entrar
+            </Link>
+            <Link
+              onClick={() => openAuthScene()}
+              to={`/register?redirect=${encodeURIComponent(redirectPath)}`}
+            >
+              Criar conta
+            </Link>
+          </div>
         </div>
-      </>
-    ) : (
-      <div className="composer-footer">
-        <span className="composer-auth-text">
-          Entre com sua conta para curtir e participar da discussao desta publicacao.
-        </span>
-        <div className="composer-auth-links">
-          <Link to={`/login?redirect=${encodeURIComponent(redirectPath)}`}>Entrar</Link>
-          <Link to={`/register?redirect=${encodeURIComponent(redirectPath)}`}>Criar conta</Link>
-        </div>
-      </div>
-    )}
-  </CommentComposerContainer>
-);
+      )}
+    </CommentComposerContainer>
+  );
+};

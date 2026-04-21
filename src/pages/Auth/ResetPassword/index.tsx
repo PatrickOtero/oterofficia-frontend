@@ -1,17 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { authApi } from "../../../features/auth/api/authApi";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const ResetPasswordPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
 
 export const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
@@ -50,7 +42,7 @@ export const ResetPasswordPage = () => {
   };
 
   return (
-    <ResetPasswordPageContainer>
+    <AuthSceneShell>
       <AuthForm
         errorMessage={errorMessage}
         fields={
@@ -85,6 +77,6 @@ export const ResetPasswordPage = () => {
         subtitle="Defina sua nova senha."
         title="Nova senha"
       />
-    </ResetPasswordPageContainer>
+    </AuthSceneShell>
   );
 };

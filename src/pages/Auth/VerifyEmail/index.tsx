@@ -1,20 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { authApi } from "../../../features/auth/api/authApi";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const VerifyEmailPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
-
-const VerifyEmailPanel = styled.div`
-    width: min(56rem, 100%);
-`;
 
 export const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
@@ -44,8 +32,7 @@ export const VerifyEmailPage = () => {
   }, [token]);
 
   return (
-    <VerifyEmailPageContainer>
-      <VerifyEmailPanel>
+    <AuthSceneShell>
         <FeedbackState
           description={message}
           title={status === "loading" ? "Confirmando e-mail" : status === "success" ? "E-mail confirmado" : "Falha na confirmacao"}
@@ -56,7 +43,6 @@ export const VerifyEmailPage = () => {
             <Link to="/login">Ir para o login</Link>
           </div>
         ) : null}
-      </VerifyEmailPanel>
-    </VerifyEmailPageContainer>
+    </AuthSceneShell>
   );
 };

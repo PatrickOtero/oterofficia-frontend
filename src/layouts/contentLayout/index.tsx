@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
 import { PlanetEarth } from "../components/Earth";
@@ -12,20 +13,26 @@ import { useBotSceneActions } from "../../hooks/useBotSceneActions";
 export const ContentLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const hasInitializedScene = useRef(false);
   const { logout, user, isAdmin, isLoading } = useAuth();
-  const { earthPosition } = useBotFunctionsContext();
-  const { openContentScene, showHomeMenu } = useBotSceneActions();
+  const { earthPosition, sceneTransition } = useBotFunctionsContext();
+  const { openAuthScene, openContentScene, showHomeMenu } = useBotSceneActions();
   const shouldShowAmbientBot = true;
-  const beamTarget = location.pathname.startsWith("/login") ||
-    location.pathname.startsWith("/register") ||
-    location.pathname.startsWith("/forgot-password") ||
-    location.pathname.startsWith("/reset-password") ||
-    location.pathname.startsWith("/verify-email") ||
-    location.pathname.startsWith("/confirm-email-change") ||
-    location.pathname.startsWith("/confirm-account-deletion") ||
-    location.pathname.startsWith("/profile")
+  const beamTarget = location.pathname.startsWith("/profile")
     ? "auth-panel"
     : "content-menu";
+
+  useEffect(() => {
+    if (hasInitializedScene.current) {
+      return;
+    }
+
+    hasInitializedScene.current = true;
+
+    if (sceneTransition !== "home-to-content" && sceneTransition !== "menu-to-content") {
+      openContentScene("content");
+    }
+  }, [openContentScene, sceneTransition]);
 
   const handleLogout = async () => {
     await logout();
@@ -62,7 +69,7 @@ export const ContentLayout = () => {
         <NavLink
           className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
           to="/studies"
-          onClick={() => openContentScene()}
+          onClick={() => openContentScene("content")}
         >
           Estudos
         </NavLink>
@@ -71,7 +78,7 @@ export const ContentLayout = () => {
               className={() =>
                 `content-nav-link ${location.pathname.startsWith("/admin") ? "active" : ""}`
               }
-              onClick={() => openContentScene()}
+              onClick={() => openContentScene("content")}
               to="/admin/studies"
             >
               Painel
@@ -82,14 +89,14 @@ export const ContentLayout = () => {
             <NavLink
               className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
               to="/login"
-              onClick={() => openContentScene()}
+              onClick={() => openAuthScene()}
             >
               Entrar
             </NavLink>
             <NavLink
               className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
               to="/register"
-              onClick={() => openContentScene()}
+              onClick={() => openAuthScene()}
             >
               Cadastro
             </NavLink>
@@ -100,7 +107,7 @@ export const ContentLayout = () => {
             className={({ isActive }) =>
               `content-nav-link content-session-chip ${isActive ? "active" : ""}`
             }
-            onClick={() => openContentScene()}
+            onClick={() => openContentScene("content")}
             to="/profile"
           >
             {user.name}

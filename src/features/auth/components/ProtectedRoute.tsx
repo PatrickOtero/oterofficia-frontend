@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
 import { useAuth } from "../hooks/useAuth";
 import { FeedbackState } from "../../studies/components/shared/FeedbackState";
 
@@ -17,6 +19,13 @@ type ProtectedRouteProps = {
 export const ProtectedRoute = ({ requireAdmin = false }: ProtectedRouteProps) => {
   const location = useLocation();
   const { isAdmin, isAuthenticated, isLoading } = useAuth();
+  const { openAuthScene } = useBotSceneActions();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      openAuthScene();
+    }
+  }, [isAuthenticated, isLoading, openAuthScene]);
 
   if (isLoading) {
     return null;

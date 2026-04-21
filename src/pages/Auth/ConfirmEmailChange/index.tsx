@@ -1,21 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { authApi } from "../../../features/auth/api/authApi";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-
-const ConfirmEmailChangePageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
-
-const ConfirmEmailChangePanel = styled.div`
-    width: min(56rem, 100%);
-`;
 
 export const ConfirmEmailChangePage = () => {
   const [searchParams] = useSearchParams();
@@ -47,8 +35,7 @@ export const ConfirmEmailChangePage = () => {
   }, [refreshUser, token]);
 
   return (
-    <ConfirmEmailChangePageContainer>
-      <ConfirmEmailChangePanel>
+    <AuthSceneShell>
         <FeedbackState
           description={message}
           title={status === "loading" ? "Atualizando e-mail" : status === "success" ? "E-mail atualizado" : "Falha na confirmacao"}
@@ -59,7 +46,6 @@ export const ConfirmEmailChangePage = () => {
             <Link to="/profile">Voltar ao perfil</Link>
           </div>
         ) : null}
-      </ConfirmEmailChangePanel>
-    </ConfirmEmailChangePageContainer>
+    </AuthSceneShell>
   );
 };

@@ -98,11 +98,6 @@ export function Router() {
             <Route element={<HomePage />} path="/" />
             <Route element={<AboutMePage />} path="/aboutme" />
             <Route element={<PortfolioPage />} path="/portfolio" />
-          </Route>
-
-          <Route element={<ContentLayout />}>
-            <Route element={<StudiesPage />} path="/studies" />
-            <Route element={<StudyPostPage />} path="/studies/:slug" />
             <Route element={<LoginPage />} path="/login" />
             <Route element={<RegisterPage />} path="/register" />
             <Route element={<ForgotPasswordPage />} path="/forgot-password" />
@@ -110,6 +105,11 @@ export function Router() {
             <Route element={<VerifyEmailPage />} path="/verify-email" />
             <Route element={<ConfirmEmailChangePage />} path="/confirm-email-change" />
             <Route element={<ConfirmAccountDeletionPage />} path="/confirm-account-deletion" />
+          </Route>
+
+          <Route element={<ContentLayout />}>
+            <Route element={<StudiesPage />} path="/studies" />
+            <Route element={<StudyPostPage />} path="/studies/:slug" />
 
             <Route element={<ProtectedRoute />}>
               <Route element={<ProfilePage />} path="/profile" />

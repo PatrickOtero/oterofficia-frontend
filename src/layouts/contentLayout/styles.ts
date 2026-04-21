@@ -108,26 +108,52 @@ export const ContentLayoutContainer = styled.div`
     }
 
     @media (max-width: 900px) {
-        padding: 10rem 1.6rem 1.6rem;
+        padding: 13.2rem 1.2rem 1.2rem;
 
         .content-topbar {
-            top: 2rem;
+            top: 6.2rem;
             right: 1.6rem;
             left: 1.6rem;
-            justify-content: flex-end;
+            gap: 0.8rem;
+            justify-content: flex-start;
         }
 
         .content-nav-link,
         .content-nav-button-link,
         .content-session-chip,
         .content-nav-button {
-            min-height: 3.8rem;
-            padding: 0 1.2rem;
-            font-size: 0.98rem;
+            min-height: 3.5rem;
+            padding: 0 1rem;
+            font-size: 0.9rem;
         }
 
         .content-main {
-            height: calc(100vh - 12rem);
+            height: calc(100vh - 14.4rem);
+        }
+    }
+
+    @media (max-width: 640px) {
+        padding: 12.4rem 0.8rem 0.8rem;
+
+        .content-topbar {
+            top: 5.6rem;
+            right: 0.8rem;
+            left: 0.8rem;
+            gap: 0.6rem;
+        }
+
+        .content-nav-link,
+        .content-nav-button-link,
+        .content-session-chip,
+        .content-nav-button {
+            min-height: 3.3rem;
+            padding: 0 0.9rem;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+        }
+
+        .content-main {
+            height: calc(100vh - 13.2rem);
         }
     }
 `;

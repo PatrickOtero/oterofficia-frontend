@@ -1,19 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import styled from "styled-components";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
 import { authApi } from "../../../features/auth/api/authApi";
+import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
 import { getApiErrorInfo } from "../../../services/apiError";
-
-const RegisterPageContainer = styled.section`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    overflow: auto;
-`;
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -71,7 +63,7 @@ export const RegisterPage = () => {
   };
 
   return (
-    <RegisterPageContainer>
+    <AuthSceneShell>
       <AuthForm
         fields={
           <>
@@ -130,6 +122,6 @@ export const RegisterPage = () => {
         subtitle="Crie sua conta."
         title="Cadastro"
       />
-    </RegisterPageContainer>
+    </AuthSceneShell>
   );
 };
