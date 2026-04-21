@@ -1,7 +1,6 @@
 import styled from "styled-components"
-import Box from "@mui/material/Box"
 
-export const DefaultContainer = styled(Box)`
+export const DefaultContainer = styled.div`
         position: relative;
 
         display: flex;

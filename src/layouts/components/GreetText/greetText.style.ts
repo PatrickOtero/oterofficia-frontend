@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box";
 
-export const GreetTextContainer = styled(Box)`
+export const GreetTextContainer = styled.div`
     @keyframes hologramTextShowing {
         from {
             opacity: 0;

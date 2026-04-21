@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box";
 
-export const AboutMeContainer = styled(Box)`
+export const AboutMeContainer = styled.div`
     @keyframes aboutPanelReveal {
         from {
             opacity: 0;

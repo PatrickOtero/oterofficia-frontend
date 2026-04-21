@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box";
 
-export const InitialMenuContainer = styled(Box)`
+export const InitialMenuContainer = styled.div`
     --panel-glow-opacity: 0.14;
     --panel-opacity: 0.84;
 

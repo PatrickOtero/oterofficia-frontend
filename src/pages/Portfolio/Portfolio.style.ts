@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box";
 
-export const PortfolioContainer = styled(Box)`
+export const PortfolioContainer = styled.div`
     position: relative;
     z-index: 4;
 

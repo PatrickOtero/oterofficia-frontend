@@ -1,24 +1,15 @@
 import axios from "axios";
 import { authStorage } from "../features/auth/utils/authStorage";
 import { logApiErrorToConsole } from "./apiError";
-
-const serverUrl = "https://p01--oterofficia-backend--rfp2dvf84z2n.code.run"
+import { apiBaseUrl, createRequestId } from "./httpConfig";
 
 export const api = axios.create({ 
-    baseURL: serverUrl,
+    baseURL: apiBaseUrl,
 });
 
 export const formsubmitApi = axios.create({ 
-    baseURL: serverUrl,
+    baseURL: apiBaseUrl,
 });
-
-const createRequestId = () => {
-    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
-        return crypto.randomUUID();
-    }
-
-    return `req-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-};
 
 const attachInterceptors = (client: typeof api, includeAuthToken: boolean) => {
     client.interceptors.request.use((config) => {

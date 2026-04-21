@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import Box from "@mui/material/Box";
 
-export const SpaceContainer = styled(Box)`
+export const SpaceContainer = styled.div`
     @keyframes starsGlow {
         0%, 100% {
             opacity: 0.52;
