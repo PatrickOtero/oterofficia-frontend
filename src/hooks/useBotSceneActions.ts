@@ -5,14 +5,10 @@ export const useBotSceneActions = () => {
         setAboutMePage,
         setAuthPage,
         setEarthPosition,
-        setEyeState,
-        setHologramActivated,
         setHomePage,
-        setInfoTextHolo,
         setIsShowingMenu,
         setPortfolioPage,
         setSceneTransition,
-        setVisorPosition,
     } = useBotFunctionsContext();
 
     const centerBotOnHome = () => {
@@ -22,11 +18,7 @@ export const useBotSceneActions = () => {
         setPortfolioPage(false);
         setHomePage(false);
         setEarthPosition("");
-        setHologramActivated(false);
         setIsShowingMenu(false);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-top");
-        setEyeState("");
     };
 
     const showHomeMenu = (origin: "default" | "content" = "default") => {
@@ -36,11 +28,7 @@ export const useBotSceneActions = () => {
         setPortfolioPage(false);
         setHomePage(true);
         setEarthPosition("");
-        setHologramActivated(true);
         setIsShowingMenu(true);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-left");
-        setEyeState("emitting-holo");
     };
 
     const openAboutMeScene = () => {
@@ -50,11 +38,7 @@ export const useBotSceneActions = () => {
         setHomePage(false);
         setAboutMePage(true);
         setEarthPosition("earth-hidden");
-        setHologramActivated(true);
         setIsShowingMenu(true);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-left");
-        setEyeState("emitting-holo");
     };
 
     const openPortfolioScene = () => {
@@ -64,11 +48,7 @@ export const useBotSceneActions = () => {
         setHomePage(false);
         setPortfolioPage(true);
         setEarthPosition("");
-        setHologramActivated(true);
         setIsShowingMenu(true);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-diagonal-left");
-        setEyeState("emitting-holo");
     };
 
     const openAuthScene = () => {
@@ -78,11 +58,7 @@ export const useBotSceneActions = () => {
         setPortfolioPage(false);
         setHomePage(false);
         setEarthPosition("");
-        setHologramActivated(true);
         setIsShowingMenu(false);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-left");
-        setEyeState("emitting-holo");
     };
 
     const openContentScene = (origin: "home" | "menu" | "content" = "home") => {
@@ -93,11 +69,7 @@ export const useBotSceneActions = () => {
         setAboutMePage(false);
         setPortfolioPage(false);
         setHomePage(false);
-        setHologramActivated(true);
         setIsShowingMenu(false);
-        setInfoTextHolo(false);
-        setVisorPosition("visor-to-left");
-        setEyeState("emitting-holo");
     };
 
     return {

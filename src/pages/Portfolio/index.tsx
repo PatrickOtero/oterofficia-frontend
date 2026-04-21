@@ -2,7 +2,7 @@ import { PortfolioContainer } from "./Portfolio.style";
 import { ProjectCarousel } from "./ProjectCarousel";
 
 export const PortfolioPage = () => (
-  <PortfolioContainer>
+  <PortfolioContainer className="portfolio-page-main">
     <ProjectCarousel />
   </PortfolioContainer>
 );

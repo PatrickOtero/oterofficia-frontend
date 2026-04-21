@@ -4,12 +4,7 @@ export const useBotFunctionsContextProvider = () => {
     const [sceneTransition, setSceneTransition] = useState<
         "idle" | "content-to-home" | "home-to-content" | "menu-to-content"
     >("idle");
-    const [visorPosition, setVisorPosition] = useState<string>("visor-to-top");
     const [earthPosition, setEarthPosition] = useState<string>("");
-    const [eyeState, setEyeState] = useState<string>("");
-
-    const [hologramActivated, setHologramActivated] = useState<boolean>(false);
-    const [infoTextHolo, setInfoTextHolo] = useState<boolean>(false);
     const [isShowingMenu, setIsShowingMenu] = useState<boolean>(false);
     const [homePage, setHomePage] = useState<boolean>(false);
     const [authPage, setAuthPage] = useState<boolean>(false);
@@ -20,12 +15,8 @@ export const useBotFunctionsContextProvider = () => {
     return {
         sceneTransition,
         setSceneTransition,
-        visorPosition,
-        setVisorPosition,
         earthPosition,
         setEarthPosition,
-        eyeState,
-        setEyeState,
         authPage,
         setAuthPage,
         aboutMePage,
@@ -36,10 +27,6 @@ export const useBotFunctionsContextProvider = () => {
         setPortfolioPage,
         isShowingMenu,
         setIsShowingMenu,
-        hologramActivated,
-        setHologramActivated,
-        infoTextHolo,
-        setInfoTextHolo,
         isLoading,
         setIsLoading,
     };

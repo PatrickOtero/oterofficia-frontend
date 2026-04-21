@@ -1,10 +1,15 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { GreetBotContainer } from "./GreetBot.style";
 import { GreetText } from "../GreetText";
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
-import { FrontPose } from "./poses/FrontPose";
+import { RoundRobotScene } from "./RoundRobotScene";
+import type {
+    RobotAttentionTarget,
+    RobotMotionIntent,
+    RobotProjectionTarget,
+    RobotSceneSlot,
+} from "./types";
 
 type BeamTarget = "auth-panel" | "content-menu" | null;
 
@@ -15,6 +20,7 @@ type GreetBotProps = {
 
 export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBotProps) => {
     const location = useLocation();
+    const [isHintVisible, setIsHintVisible] = useState(false);
     const isHomeRoute = location.pathname === "/";
     const isAboutRoute = location.pathname === "/aboutme";
     const isPortfolioRoute = location.pathname === "/portfolio";
@@ -27,45 +33,20 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
         location.pathname === "/confirm-email-change" ||
         location.pathname === "/confirm-account-deletion";
     const {
-        authPage,
-        setInfoTextHolo,
-        infoTextHolo,
-        setEyeState,
-        eyeState,
-        hologramActivated,
         isShowingMenu,
-        homePage,
-        aboutMePage,
-        portfolioPage,
         sceneTransition,
         setSceneTransition,
-        visorPosition,
     } = useBotFunctionsContext();
     const { showHomeMenu } = useBotSceneActions();
 
     const isInteractiveAtHome = interactive && isHomeRoute;
-    const isAboutScene = interactive && isAboutRoute && aboutMePage;
-    const isPortfolioScene = interactive && isPortfolioRoute && portfolioPage;
-    const isAuthScene = interactive && isAuthRoute && authPage;
-    const isHomeMenuScene = interactive && isHomeRoute && homePage && isShowingMenu;
+    const isAboutScene = interactive && isAboutRoute;
+    const isPortfolioScene = interactive && isPortfolioRoute;
+    const isAuthScene = interactive && isAuthRoute;
+    const isHomeMenuScene = interactive && isHomeRoute && isShowingMenu;
     const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isAuthScene || isHomeMenuScene;
-    const resolvedHologramState = interactive
-        ? hologramActivated || shouldDockInDefaultScene
-        : Boolean(beamTarget);
-    const resolvedEyeState = interactive
-        ? resolvedHologramState
-            ? eyeState || "emitting-holo"
-            : eyeState
-        : beamTarget
-          ? "emitting-holo"
-          : "";
-    const resolvedVisorPosition = interactive
-        ? visorPosition
-        : beamTarget
-          ? "visor-to-left"
-          : "visor-to-top";
-    const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && infoTextHolo;
     const isReturningFromContent = isHomeMenuScene && sceneTransition === "content-to-home";
+    const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && isHintVisible;
 
     useEffect(() => {
         if (!isReturningFromContent) {
@@ -91,74 +72,82 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
         return () => window.clearTimeout(timeoutId);
     }, [interactive, sceneTransition, setSceneTransition]);
 
-    const positionClass = interactive
-        ? isReturningFromContent
-            ? "position-home-returning"
-            : shouldDockInDefaultScene
-            ? "position-home-docked"
-            : "position-home-center"
-        : sceneTransition === "home-to-content"
-          ? "position-content-entering"
-          : "position-content-docked";
+    useEffect(() => {
+        if (isInteractiveAtHome && !isShowingMenu) {
+            return;
+        }
 
-    const beamTargetClass = resolvedHologramState
-        ? !interactive
-            ? beamTarget === "auth-panel"
-                ? "beam-target-auth"
-                : beamTarget === "content-menu"
-                  ? "beam-target-content"
-                  : ""
-            : isAuthScene
-              ? "beam-target-auth"
-              : isAboutScene
-              ? "beam-target-about"
-              : isPortfolioScene
-                ? "beam-target-portfolio"
-                : isHomeMenuScene
-                  ? "beam-target-home"
-                  : ""
-        : "";
+        setIsHintVisible(false);
+    }, [isInteractiveAtHome, isShowingMenu]);
+
+    const slot: RobotSceneSlot = interactive
+        ? isReturningFromContent
+            ? "home-returning"
+            : shouldDockInDefaultScene
+              ? "home-docked"
+              : "home-center"
+        : sceneTransition === "home-to-content"
+          ? "content-entering"
+          : "content-docked";
+
+    const attentionTarget: RobotAttentionTarget = !interactive
+        ? beamTarget
+            ? "left"
+            : "center"
+        : shouldDockInDefaultScene
+          ? "left"
+          : "center";
+
+    const projectionTarget: RobotProjectionTarget = !interactive
+        ? beamTarget === "auth-panel"
+            ? "auth"
+            : beamTarget === "content-menu"
+              ? "content"
+              : "none"
+        : isAuthScene
+          ? "auth"
+          : isAboutScene
+            ? "about"
+            : isPortfolioScene
+              ? "portfolio"
+              : isHomeMenuScene
+                ? "home"
+                : "none";
+
+    const motionIntent: RobotMotionIntent =
+        slot === "content-entering"
+            ? "strafe-right"
+            : slot === "home-returning"
+              ? "strafe-left"
+              : attentionTarget === "left"
+                ? "turn-left"
+                : "idle";
 
     return (
-        <GreetBotContainer>
-            <div className={`bot-roamer ${positionClass}`}>
-                <div
-                    className={`greetbot-body ${interactive ? "is-interactive" : "is-ambient"} ${beamTargetClass} pose-front`}
-                    onClick={() => {
-                        if (!isInteractiveAtHome) {
-                            return;
-                        }
+        <RoundRobotScene
+            attentionTarget={attentionTarget}
+            interactive={interactive}
+            motionIntent={motionIntent}
+            projectionTarget={projectionTarget}
+            onActivate={() => {
+                if (!isInteractiveAtHome) {
+                    return;
+                }
 
-                        setInfoTextHolo(false);
-                        showHomeMenu();
-                    }}
-                    onMouseEnter={() => {
-                        if (!isInteractiveAtHome || isShowingMenu) {
-                            return;
-                        }
+                setIsHintVisible(false);
+                showHomeMenu();
+            }}
+            onHoverChange={(hovered) => {
+                if (!isInteractiveAtHome || isShowingMenu) {
+                    setIsHintVisible(false);
+                    return;
+                }
 
-                        setEyeState("emitting-holo");
-                        setInfoTextHolo(true);
-                    }}
-                    onMouseLeave={() => {
-                        if (!isInteractiveAtHome || isShowingMenu) {
-                            return;
-                        }
-
-                        setInfoTextHolo(false);
-                        setEyeState("");
-                    }}
-                >
-                    <div className="bot-frame">
-                        <FrontPose
-                            eyeState={resolvedEyeState}
-                            hologramActivated={resolvedHologramState}
-                            visorPosition={resolvedVisorPosition}
-                        />
-                    </div>
-                    {shouldShowGreetText ? <GreetText /> : null}
-                </div>
-            </div>
-        </GreetBotContainer>
+                setIsHintVisible(hovered);
+            }}
+            slot={slot}
+        >
+            {shouldShowGreetText ? <GreetText /> : null}
+        </RoundRobotScene>
     );
 });
