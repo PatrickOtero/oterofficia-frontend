@@ -5,6 +5,7 @@ import { AuthForm } from "../../../features/auth/components/AuthForm";
 import { authApi } from "../../../features/auth/api/authApi";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorInfo } from "../../../services/apiError";
 
 const RegisterPageContainer = styled.section`
     display: flex;
@@ -47,7 +48,8 @@ export const RegisterPage = () => {
       setSuccessMessage(response.message);
       setShowVerificationAction(response.requiresEmailVerification);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel concluir o cadastro.");
+      const errorInfo = getApiErrorInfo(error, "Nao foi possivel concluir o cadastro.");
+      setErrorMessage(errorInfo.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -61,7 +63,8 @@ export const RegisterPage = () => {
       const response = await authApi.resendVerificationEmail(form.email);
       setSuccessMessage(response.message);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel reenviar a confirmacao.");
+      const errorInfo = getApiErrorInfo(error, "Nao foi possivel reenviar a confirmacao.");
+      setErrorMessage(errorInfo.message);
     } finally {
       setIsResendingVerification(false);
     }
@@ -70,7 +73,6 @@ export const RegisterPage = () => {
   return (
     <RegisterPageContainer>
       <AuthForm
-        errorMessage={errorMessage}
         fields={
           <>
             {successMessage ? (
@@ -78,6 +80,13 @@ export const RegisterPage = () => {
                 description={successMessage}
                 title="Cadastro concluido"
                 variant="success"
+              />
+            ) : null}
+            {errorMessage ? (
+              <FeedbackState
+                description={errorMessage}
+                title="Nao foi possivel concluir o cadastro"
+                variant="error"
               />
             ) : null}
             <input
