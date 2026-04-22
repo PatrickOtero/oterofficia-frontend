@@ -16,7 +16,10 @@ export const SiteSign = ({ forceVisible = false }: SiteSignProps) => {
 
     return (
         <SiteSignContainer>
-            <span className="site-sign-kicker">ORBITAL ARCHIVE</span>
+            <div className="site-sign-emblem" aria-hidden="true">
+                <span className="site-sign-emblem-core" />
+                <span className="site-sign-emblem-ring" />
+            </div>
             <h1 className="site-sign-title">OTEROFFICIA</h1>
             <div className="site-sign-rule" />
         </SiteSignContainer>

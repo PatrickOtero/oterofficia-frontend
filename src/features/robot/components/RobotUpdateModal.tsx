@@ -1,6 +1,7 @@
 import { X } from "phosphor-react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import { ROBOT_NAME } from "../robot.constants";
 import { SiteVisitorSummary } from "../types/robotInsights";
 
 type RobotUpdateModalProps = {
@@ -138,7 +139,7 @@ export const RobotUpdateModal = ({ isLoading, onClose, summary }: RobotUpdateMod
             <span>Radar rapido do movimento no seu site.</span>
           </div>
           <button
-            aria-label="Fechar atualizacao do robo"
+            aria-label={`Fechar atualizacao de ${ROBOT_NAME}`}
             className="robot-update-close"
             onClick={onClose}
             type="button"

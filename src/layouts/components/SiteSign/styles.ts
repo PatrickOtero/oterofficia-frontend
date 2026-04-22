@@ -10,18 +10,48 @@ export const SiteSignContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
+    gap: 0.72rem;
 
     pointer-events: none;
     user-select: none;
 
-    .site-sign-kicker {
-        color: rgba(var(--scene-accent-soft-rgb), 0.72);
-        font-family: "IBM Plex Mono", monospace;
-        font-size: 1rem;
-        font-weight: 500;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
+    .site-sign-emblem {
+        position: relative;
+        width: 3.2rem;
+        height: 3.2rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle, rgba(var(--scene-accent-rgb), 0.16) 0%, rgba(var(--scene-accent-rgb), 0.02) 62%, transparent 100%);
+        box-shadow:
+            0 0 1.6rem rgba(var(--scene-accent-rgb), 0.1),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .site-sign-emblem-core,
+    .site-sign-emblem-ring {
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    .site-sign-emblem-core {
+        width: 0.72rem;
+        height: 0.72rem;
+        background: radial-gradient(circle, rgba(var(--scene-title-rgb), 0.98) 0%, rgba(var(--scene-accent-soft-rgb), 0.82) 100%);
+        box-shadow:
+            0 0 0.8rem rgba(var(--scene-accent-soft-rgb), 0.28),
+            0 0 1.4rem rgba(var(--scene-accent-rgb), 0.16);
+    }
+
+    .site-sign-emblem-ring {
+        width: 2.1rem;
+        height: 2.1rem;
+        border: 1px solid rgba(var(--scene-accent-soft-rgb), 0.28);
+        box-shadow:
+            0 0 1rem rgba(var(--scene-accent-rgb), 0.08),
+            inset 0 0 0.8rem rgba(var(--scene-accent-rgb), 0.06);
     }
 
     .site-sign-title {
@@ -29,20 +59,29 @@ export const SiteSignContainer = styled.div`
 
         color: rgba(var(--scene-title-rgb), 0.97);
         font-family: "IBM Plex Mono", monospace;
-        font-size: clamp(2.6rem, 3.6vw, 4.6rem);
+        font-size: clamp(2.7rem, 3.9vw, 4.9rem);
         font-weight: 700;
         line-height: 0.95;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
+        background: linear-gradient(
+            180deg,
+            rgba(246, 252, 255, 0.98) 0%,
+            rgba(218, 239, 255, 0.92) 54%,
+            rgba(171, 224, 255, 0.8) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
 
         text-shadow:
-            0 0 1.2rem rgba(var(--scene-accent-soft-rgb), 0.12),
+            0 0 1rem rgba(var(--scene-accent-soft-rgb), 0.1),
             0 0 2.4rem rgba(var(--scene-accent-rgb), 0.08);
     }
 
     .site-sign-rule {
-        width: 8.5rem;
-        height: 0.14rem;
+        width: 7.8rem;
+        height: 0.18rem;
         border-radius: 999px;
 
         background: linear-gradient(
@@ -61,18 +100,28 @@ export const SiteSignContainer = styled.div`
         max-width: calc(100vw - 3.2rem);
         gap: 0.45rem;
 
-        .site-sign-kicker {
-            font-size: 0.68rem;
-            letter-spacing: 0.14em;
+        .site-sign-emblem {
+            width: 2.35rem;
+            height: 2.35rem;
+        }
+
+        .site-sign-emblem-ring {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+
+        .site-sign-emblem-core {
+            width: 0.58rem;
+            height: 0.58rem;
         }
 
         .site-sign-title {
-            font-size: clamp(1.6rem, 8vw, 2.6rem);
-            letter-spacing: 0.08em;
+            font-size: clamp(1.6rem, 8vw, 2.45rem);
+            letter-spacing: 0.1em;
         }
 
         .site-sign-rule {
-            width: 4.4rem;
+            width: 4.1rem;
         }
     }
 `;
