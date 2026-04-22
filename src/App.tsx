@@ -5,6 +5,8 @@ import { Router } from "./Router";
 import { blackTheme } from "./Styles/themes/blackTheme";
 import { AuthProvider } from "./contexts/auth";
 import { NotificationProvider } from "./contexts/notifications";
+import { AdminPresenceTracker } from "./features/robot/components/AdminPresenceTracker";
+import { SiteVisitorTracker } from "./features/robot/components/SiteVisitorTracker";
 
 function App() {
 
@@ -14,6 +16,8 @@ function App() {
           <BrowserRouter>
             <AuthProvider>
               <NotificationProvider>
+                <AdminPresenceTracker />
+                <SiteVisitorTracker />
                 <Router />
               </NotificationProvider>
             </AuthProvider>

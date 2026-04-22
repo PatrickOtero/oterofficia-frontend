@@ -7,6 +7,8 @@ export type ICompProps = {
 export interface IBotContext {
     sceneTransition: "idle" | "content-to-home" | "home-to-content" | "menu-to-content";
     setSceneTransition: Dispatch<SetStateAction<"idle" | "content-to-home" | "home-to-content" | "menu-to-content">>;
+    spaceTheme: "earth" | "mars";
+    setSpaceTheme: Dispatch<SetStateAction<"earth" | "mars">>;
     homePage: boolean;
     setHomePage: Dispatch<SetStateAction<boolean>>;
     authPage: boolean;

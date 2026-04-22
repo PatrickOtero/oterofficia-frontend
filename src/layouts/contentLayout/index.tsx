@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
-import { PlanetEarth } from "../components/Earth";
-import { Moon } from "../components/Moon";
+import { PlanetSystem } from "../components/PlanetSystem";
 import { SiteSign } from "../components/SiteSign";
 import { StarsBackground } from "../components/StarsBackground";
 import { useAuth } from "../../features/auth/hooks/useAuth";
@@ -51,8 +50,7 @@ export const ContentLayout = () => {
     <ContentLayoutContainer>
       <StarsBackground />
       <div className="planet-system">
-        <Moon />
-        <PlanetEarth earthPosition={earthPosition} />
+        <PlanetSystem planetPosition={earthPosition} />
       </div>
 
       <SiteSign forceVisible />

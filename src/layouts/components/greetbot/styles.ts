@@ -298,7 +298,7 @@ export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactiv
         height: 100%;
         outline: none;
         pointer-events: ${({ $hoverable, $interactive }) => ($interactive || $hoverable ? "auto" : "none")};
-        cursor: ${({ $interactive }) => ($interactive ? "pointer" : "default")};
+        cursor: ${({ $hoverable, $interactive }) => ($interactive || $hoverable ? "pointer" : "default")};
     }
 
     .robot-scene-shell::before {

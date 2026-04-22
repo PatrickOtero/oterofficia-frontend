@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import moonMap from "../../../assets/moon-map.jpg";
 
 export const MoonContainer = styled.div`
     --orbit-size: 110rem;
@@ -24,11 +25,11 @@ export const MoonContainer = styled.div`
 
     @keyframes moonSpin {
         from {
-            transform: rotate(0deg);
+            transform: translate3d(0, 0, 0);
         }
 
         to {
-            transform: rotate(360deg);
+            transform: translate3d(-50%, 0, 0);
         }
     }
 
@@ -57,10 +58,12 @@ export const MoonContainer = styled.div`
         transform: translateX(-50%);
         border-radius: 50%;
         overflow: hidden;
+        isolation: isolate;
 
         background:
-            radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.16), transparent 24%),
-            radial-gradient(circle at 50% 50%, #eef2f6 0%, #d8dde4 58%, #bcc4ce 100%);
+            radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.18), transparent 22%),
+            radial-gradient(circle at 68% 72%, rgba(68, 77, 93, 0.24), transparent 38%),
+            linear-gradient(160deg, #eef2f6 0%, #dce1e8 48%, #b9c1cb 100%);
         box-shadow:
             0 0 2.2rem rgba(255, 255, 255, 0.08),
             0 0 4rem rgba(255, 255, 255, 0.03);
@@ -70,8 +73,30 @@ export const MoonContainer = styled.div`
         position: absolute;
         inset: 0;
         border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .moon-map-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 400%;
+        height: 100%;
+        display: flex;
+        opacity: 0.92;
         animation: moonSpin var(--moon-spin-duration) linear infinite;
         will-change: transform;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .moon-map-panel {
+        flex: 0 0 50%;
+        height: 100%;
+        background-image: url(${moonMap});
+        background-size: 100% 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        filter: saturate(0.88) contrast(1.06) brightness(0.98);
     }
 
     .moon-surface::before,
@@ -80,24 +105,24 @@ export const MoonContainer = styled.div`
         position: absolute;
         inset: 0;
         border-radius: 50%;
+        pointer-events: none;
     }
 
     .moon-surface::before {
         background:
-            radial-gradient(circle at 24% 30%, rgba(145, 156, 170, 0.24) 0 8%, transparent 9%),
-            radial-gradient(circle at 62% 27%, rgba(145, 156, 170, 0.2) 0 6%, transparent 7%),
-            radial-gradient(circle at 56% 56%, rgba(145, 156, 170, 0.24) 0 11%, transparent 12%),
-            radial-gradient(circle at 34% 68%, rgba(145, 156, 170, 0.18) 0 7%, transparent 8%),
-            radial-gradient(circle at 74% 70%, rgba(145, 156, 170, 0.16) 0 5%, transparent 6%);
-        opacity: 0.86;
+            radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.12), transparent 22%),
+            radial-gradient(circle at 58% 46%, rgba(255, 255, 255, 0.08), transparent 34%),
+            linear-gradient(110deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02) 34%, rgba(0, 0, 0, 0.18) 78%);
+        mix-blend-mode: screen;
+        opacity: 0.74;
     }
 
     .moon-surface::after {
         background:
-            radial-gradient(circle at 38% 40%, rgba(255, 255, 255, 0.08), transparent 42%),
-            linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.08));
-        mix-blend-mode: screen;
-        opacity: 0.72;
+            radial-gradient(circle at 72% 72%, rgba(0, 0, 0, 0.2), transparent 36%),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.14));
+        mix-blend-mode: multiply;
+        opacity: 0.66;
     }
 
     @media (max-width: 900px) {
