@@ -111,6 +111,63 @@ export interface StudyDashboardData {
   }>;
 }
 
+export interface InteractionAnalyticsOverview {
+  totalEvents: number;
+  trackedUsers: number;
+  totalReads: number;
+  totalStudyLikes: number;
+  totalComments: number;
+  totalReplies: number;
+  totalCommentLikes: number;
+}
+
+export interface InteractionAnalyticsUserRow {
+  userId: string;
+  name: string;
+  role: "admin" | "user";
+  avatarUrl: string | null;
+  reads: number;
+  comments: number;
+  replies: number;
+  studyLikes: number;
+  commentLikes: number;
+  totalInteractions: number;
+  lastInteractionAt: string | null;
+}
+
+export interface InteractionAnalyticsMixItem {
+  kind: "study_view" | "study_like" | "comment_created" | "comment_reply" | "comment_like";
+  label: string;
+  count: number;
+}
+
+export interface InteractionAnalyticsSeriesPoint {
+  label: string;
+  reads: number;
+  comments: number;
+  likes: number;
+}
+
+export interface InteractionAnalyticsRecentActivityItem {
+  id: string;
+  kind: "study_view" | "study_like" | "comment_created" | "comment_reply" | "comment_like";
+  actorName: string;
+  actorRole: "admin" | "user";
+  postTitle: string | null;
+  createdAt: string;
+}
+
+export interface AdminInteractionAnalyticsData {
+  overview: InteractionAnalyticsOverview;
+  topUsers: InteractionAnalyticsUserRow[];
+  topReaders: InteractionAnalyticsUserRow[];
+  topCommenters: InteractionAnalyticsUserRow[];
+  topLikers: InteractionAnalyticsUserRow[];
+  interactionMix: InteractionAnalyticsMixItem[];
+  activitySeries: InteractionAnalyticsSeriesPoint[];
+  recentActivity: InteractionAnalyticsRecentActivityItem[];
+}
+
 export interface StudyFormValues {
   title: string;
   slug: string;

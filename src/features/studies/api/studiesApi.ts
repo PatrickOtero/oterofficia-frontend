@@ -1,5 +1,6 @@
 import { api } from "../../../services/axios";
 import {
+  AdminInteractionAnalyticsData,
   CommentLikeResponse,
   CreateCommentResponse,
   LikeResponse,
@@ -75,6 +76,11 @@ export const studiesApi = {
 
   async fetchAdminDashboard() {
     const response = await api.get<StudyDashboardData>("/admin/studies/dashboard");
+    return response.data;
+  },
+
+  async fetchAdminInteractionAnalytics() {
+    const response = await api.get<AdminInteractionAnalyticsData>("/admin/studies/analytics");
     return response.data;
   },
 

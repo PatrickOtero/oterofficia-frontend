@@ -50,6 +50,9 @@ export const AdminSectionTabs = () => (
     <NavLink className={({ isActive }) => `admin-tab-link ${isActive ? "active" : ""}`} to="/admin/studies">
       Estudos
     </NavLink>
+    <NavLink className={({ isActive }) => `admin-tab-link ${isActive ? "active" : ""}`} to="/admin/analytics">
+      Interacoes
+    </NavLink>
     <NavLink className={({ isActive }) => `admin-tab-link ${isActive ? "active" : ""}`} to="/admin/projects">
       Projetos
     </NavLink>

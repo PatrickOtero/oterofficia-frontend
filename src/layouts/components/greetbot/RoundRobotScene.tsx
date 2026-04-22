@@ -7,6 +7,7 @@ export const RoundRobotScene = ({
     activationKey = 0,
     attentionTarget = "center",
     children,
+    hoverable = false,
     interactive = true,
     motionIntent = "idle",
     projectionTarget = "none",
@@ -17,6 +18,7 @@ export const RoundRobotScene = ({
     const [hovered, setHovered] = useState(false);
     const [activated, setActivated] = useState(false);
     const activationTimeoutRef = useRef<number | null>(null);
+    const canHover = interactive || hoverable;
 
     const triggerActivation = () => {
         setActivated(true);
@@ -32,12 +34,12 @@ export const RoundRobotScene = ({
     };
 
     useEffect(() => {
-        if (interactive) {
+        if (canHover) {
             return;
         }
 
         setHovered(false);
-    }, [interactive]);
+    }, [canHover]);
 
     useEffect(() => {
         if (activationKey < 1) {
@@ -66,7 +68,7 @@ export const RoundRobotScene = ({
     };
 
     const handleHoverChange = (nextHovered: boolean) => {
-        if (!interactive) {
+        if (!canHover) {
             return;
         }
 
@@ -75,7 +77,7 @@ export const RoundRobotScene = ({
     };
 
     return (
-        <RobotSceneContainer $interactive={interactive} $slot={slot}>
+        <RobotSceneContainer $hoverable={hoverable} $interactive={interactive} $slot={slot}>
             <div className="robot-scene-roamer">
                 <div
                     className="robot-scene-shell"

@@ -21,6 +21,7 @@ export type RobotMotionIntent =
 export type RoundRobotSceneProps = {
     slot: RobotSceneSlot;
     interactive?: boolean;
+    hoverable?: boolean;
     attentionTarget?: RobotAttentionTarget;
     motionIntent?: RobotMotionIntent;
     projectionTarget?: RobotProjectionTarget;

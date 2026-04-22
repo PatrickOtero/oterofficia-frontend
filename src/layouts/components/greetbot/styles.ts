@@ -41,90 +41,125 @@ const robotFloat = keyframes`
 
 const robotPulse = keyframes`
     0% {
-        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(1);
+        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(var(--body-scale));
     }
 
     40% {
-        transform: translate3d(var(--body-shift), -0.16rem, 0) rotate(var(--body-tilt)) scale(1.045);
+        transform: translate3d(var(--body-shift), -0.16rem, 0) rotate(var(--body-tilt))
+            scale(calc(var(--body-scale) * 1.045));
     }
 
     100% {
-        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(1);
+        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(var(--body-scale));
     }
 `;
 
-const orbitSpin = keyframes`
-    from {
-        transform: rotate(0deg);
+const orbitDepthSweep = keyframes`
+    0% {
+        transform: translate3d(
+                calc(-50% - var(--orbit-lateral-range)),
+                -50%,
+                0
+            )
+            scale(0.74);
     }
 
-    to {
-        transform: rotate(360deg);
-    }
-`;
-
-const orbitCounterSpin = keyframes`
-    from {
-        transform: rotate(0deg) scaleY(1.48);
-    }
-
-    to {
-        transform: rotate(-360deg) scaleY(1.48);
-    }
-`;
-
-const turbineFrontPhase = keyframes`
-    0%,
-    16%,
-    100% {
-        opacity: 0;
-        filter: blur(1.2px);
-        transform: scale(0.72);
+    12.5% {
+        transform: translate3d(
+                calc(-50% - calc(var(--orbit-lateral-range) * 0.72)),
+                calc(-50% - calc(var(--orbit-vertical-range) * 0.72)),
+                0
+            )
+            scale(0.82);
     }
 
-    28% {
-        opacity: 0.34;
-        filter: blur(0.9px);
-        transform: scale(0.82);
+    25% {
+        transform: translate3d(
+                -50%,
+                calc(-50% - var(--orbit-vertical-range)),
+                0
+            )
+            scale(0.92);
+    }
+
+    37.5% {
+        transform: translate3d(
+                calc(-50% + calc(var(--orbit-lateral-range) * 0.72)),
+                calc(-50% - calc(var(--orbit-vertical-range) * 0.72)),
+                0
+            )
+            scale(0.82);
     }
 
     50% {
+        transform: translate3d(
+                calc(-50% + var(--orbit-lateral-range)),
+                -50%,
+                0
+            )
+            scale(0.74);
+    }
+
+    62.5% {
+        transform: translate3d(
+                calc(-50% + calc(var(--orbit-lateral-range) * 0.72)),
+                calc(-50% + calc(var(--orbit-vertical-range) * 0.84)),
+                0
+            )
+            scale(1.01);
+    }
+
+    75% {
+        transform: translate3d(
+                -50%,
+                calc(-50% + var(--orbit-vertical-range)),
+                0
+            )
+            scale(1.12);
+    }
+
+    87.5% {
+        transform: translate3d(
+                calc(-50% - calc(var(--orbit-lateral-range) * 0.72)),
+                calc(-50% + calc(var(--orbit-vertical-range) * 0.84)),
+                0
+            )
+            scale(1.01);
+    }
+
+    100% {
+        transform: translate3d(
+                calc(-50% - var(--orbit-lateral-range)),
+                -50%,
+                0
+            )
+            scale(0.74);
+    }
+`;
+
+const orbitFrontVisibility = keyframes`
+    0%,
+    49.99%,
+    100% {
+        opacity: 0;
+    }
+
+    50%,
+    99.99% {
         opacity: 1;
-        filter: blur(0);
-        transform: scale(1.14);
-    }
-
-    72% {
-        opacity: 0.34;
-        filter: blur(0.9px);
-        transform: scale(0.84);
     }
 `;
 
-const turbineBackPhase = keyframes`
+const orbitBackVisibility = keyframes`
     0%,
+    49.99%,
     100% {
-        opacity: 0.72;
-        filter: blur(0.85px);
-        transform: scale(0.92);
+        opacity: 1;
     }
 
-    24% {
-        opacity: 0.28;
-        filter: blur(1.35px);
-        transform: scale(0.7);
-    }
-
-    50% {
+    50%,
+    99.99% {
         opacity: 0;
-        filter: blur(1.8px);
-        transform: scale(0.58);
-    }
-
-    76% {
-        opacity: 0.3;
-        filter: blur(1.3px);
-        transform: scale(0.72);
     }
 `;
 
@@ -235,7 +270,7 @@ const slotStyles: Record<RobotSceneSlot, ReturnType<typeof css>> = {
 
 const visorGlow = "0 0 1.8rem rgba(185, 105, 255, 0.2)";
 
-export const RobotSceneContainer = styled.div<{ $interactive: boolean; $slot: RobotSceneSlot }>`
+export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactive: boolean; $slot: RobotSceneSlot }>`
     --robot-scene-width: 24rem;
     --robot-scene-height: 24rem;
 
@@ -262,7 +297,7 @@ export const RobotSceneContainer = styled.div<{ $interactive: boolean; $slot: Ro
         width: 100%;
         height: 100%;
         outline: none;
-        pointer-events: ${({ $interactive }) => ($interactive ? "auto" : "none")};
+        pointer-events: ${({ $hoverable, $interactive }) => ($interactive || $hoverable ? "auto" : "none")};
         cursor: ${({ $interactive }) => ($interactive ? "pointer" : "default")};
     }
 
@@ -285,6 +320,10 @@ export const RobotSceneContainer = styled.div<{ $interactive: boolean; $slot: Ro
 
     .robot-scene-overlay {
         pointer-events: none;
+    }
+
+    .robot-scene-overlay > * {
+        pointer-events: auto;
     }
 
     @media (max-width: 900px) {
@@ -330,8 +369,12 @@ export const RobotFigure = styled.div<{
     $projecting: boolean;
 }>`
     --robot-size: 12.8rem;
+    --body-scale: 1.25;
+    --orbit-scale: 2;
     --orbit-duration: 7.2s;
     --orbit-radius: 5.8rem;
+    --orbit-lateral-range: 4.45rem;
+    --orbit-vertical-range: 1.88rem;
     --face-offset: 0%;
     --body-tilt: 0deg;
     --body-shift: 0rem;
@@ -367,11 +410,11 @@ export const RobotFigure = styled.div<{
         top: 50%;
         width: 9.5rem;
         height: 3rem;
-        transform: translate3d(-50%, calc(-50% + 7.1rem), 0);
+        transform: translate3d(-50%, calc(-50% + 7.1rem), 0) scale(var(--body-scale));
         border-radius: 50%;
         background: radial-gradient(circle, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.08) 58%, transparent 74%);
-        filter: blur(10px);
-        opacity: ${({ $hovered }) => ($hovered ? 0.48 : 0.34)};
+        filter: blur(8px);
+        opacity: ${({ $hovered }) => ($hovered ? 0.54 : 0.4)};
         transition: opacity 220ms ease;
         pointer-events: none;
     }
@@ -389,9 +432,9 @@ export const RobotFigure = styled.div<{
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 162%;
-        height: 146%;
-        transform: translate3d(-50%, -50%, 0) scaleY(0.68);
+        width: 184%;
+        height: 132%;
+        transform: translate3d(-50%, -50%, 0) scale(var(--orbit-scale));
         transform-origin: center;
         pointer-events: none;
     }
@@ -401,28 +444,27 @@ export const RobotFigure = styled.div<{
     }
 
     .orbit-layer-front {
-        z-index: 4;
+        z-index: 5;
     }
 
     .orbit-item {
         position: absolute;
-        inset: 0;
-        animation: ${orbitSpin} var(--orbit-duration) linear infinite;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+        animation: ${orbitDepthSweep} var(--orbit-duration) linear infinite;
         animation-delay: var(--orbit-delay);
         will-change: transform;
     }
 
     .orbit-node {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate3d(-50%, calc(-50% - var(--orbit-radius)), 0);
+        position: relative;
+        will-change: opacity;
+        opacity: 1;
     }
 
     .orbit-counter-spin {
-        animation: ${orbitCounterSpin} var(--orbit-duration) linear infinite;
-        animation-delay: var(--orbit-delay);
-        will-change: transform;
+        transform: translateZ(0);
     }
 
     .turbine-shell {
@@ -438,16 +480,22 @@ export const RobotFigure = styled.div<{
             inset 0 0.14rem 0.24rem rgba(255, 255, 255, 0.12),
             0 0.2rem 0.6rem rgba(0, 0, 0, 0.26);
         transform-origin: center;
-        will-change: transform, opacity, filter;
+        backface-visibility: hidden;
+        will-change: transform, opacity;
     }
 
-    .orbit-layer-front .turbine-shell {
-        animation: ${turbineFrontPhase} var(--orbit-duration) linear infinite;
+    .orbit-layer-front .turbine-shell,
+    .orbit-layer-back .turbine-shell {
+        animation: none;
+    }
+
+    .orbit-layer-front .orbit-node {
+        animation: ${orbitFrontVisibility} var(--orbit-duration) linear infinite;
         animation-delay: var(--orbit-delay);
     }
 
-    .orbit-layer-back .turbine-shell {
-        animation: ${turbineBackPhase} var(--orbit-duration) linear infinite;
+    .orbit-layer-back .orbit-node {
+        animation: ${orbitBackVisibility} var(--orbit-duration) linear infinite;
         animation-delay: var(--orbit-delay);
     }
 
@@ -492,7 +540,7 @@ export const RobotFigure = styled.div<{
         box-shadow:
             0 0 0.8rem rgba(214, 95, 255, 0.28),
             0 0 1.4rem rgba(214, 95, 255, 0.18);
-        filter: blur(1.45px);
+        filter: blur(0.9px);
         opacity: 0.92;
         animation: ${turbineExhaustPulse} 1.46s ease-in-out infinite;
         animation-delay: var(--orbit-delay);
@@ -514,7 +562,7 @@ export const RobotFigure = styled.div<{
             rgba(214, 95, 255, 0.18) 68%,
             rgba(214, 95, 255, 0) 100%
         );
-        filter: blur(1.2px);
+        filter: blur(0.7px);
         animation: ${turbineExhaustMist} 1.46s ease-in-out infinite;
         animation-delay: var(--orbit-delay);
     }
@@ -534,7 +582,7 @@ export const RobotFigure = styled.div<{
             rgba(214, 95, 255, 0.12) 44%,
             rgba(214, 95, 255, 0) 100%
         );
-        filter: blur(5px);
+        filter: blur(3px);
         opacity: 0.88;
         animation: ${turbineExhaustMist} 1.46s ease-in-out infinite reverse;
         animation-delay: var(--orbit-delay);
@@ -543,8 +591,8 @@ export const RobotFigure = styled.div<{
     .robot-body {
         position: absolute;
         inset: 0;
-        z-index: 3;
-        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt));
+        z-index: 4;
+        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(var(--body-scale));
         transition:
             transform 260ms ease,
             filter 260ms ease;
@@ -563,10 +611,10 @@ export const RobotFigure = styled.div<{
         z-index: 0;
         border-radius: 50%;
         background:
-            radial-gradient(circle, rgba(130, 200, 255, 0.14) 0%, rgba(130, 200, 255, 0.05) 42%, transparent 72%),
-            radial-gradient(circle, rgba(184, 90, 255, 0.12) 0%, transparent 62%);
-        filter: blur(16px);
-        opacity: ${({ $hovered }) => ($hovered ? 1 : 0.74)};
+            radial-gradient(circle, rgba(130, 200, 255, 0.12) 0%, rgba(130, 200, 255, 0.03) 42%, transparent 72%),
+            radial-gradient(circle, rgba(184, 90, 255, 0.08) 0%, transparent 62%);
+        filter: blur(10px);
+        opacity: ${({ $hovered }) => ($hovered ? 0.82 : 0.54)};
         transition: opacity 220ms ease;
     }
 
@@ -643,23 +691,23 @@ export const RobotFigure = styled.div<{
         border-radius: 50%;
         overflow: visible;
         background:
-            radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.22), transparent 18%),
-            radial-gradient(circle at 65% 68%, rgba(24, 10, 44, 0.72), transparent 38%),
-            linear-gradient(180deg, #253144 0%, #121927 54%, #09111d 100%);
-        border: 1px solid rgba(131, 160, 206, 0.18);
+            radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.28), transparent 16%),
+            radial-gradient(circle at 65% 68%, rgba(32, 14, 58, 0.96), transparent 40%),
+            linear-gradient(180deg, #344257 0%, #1a2436 48%, #0c1523 100%);
+        border: 1px solid rgba(158, 186, 228, 0.28);
         box-shadow:
-            inset 0 0.5rem 1.1rem rgba(255, 255, 255, 0.08),
-            inset 0 -1rem 1.6rem rgba(2, 4, 8, 0.4),
-            0 1.4rem 2.6rem rgba(0, 0, 0, 0.26),
-            ${({ $hovered }) => ($hovered ? "0 0 2.2rem rgba(118, 197, 255, 0.14)" : "0 0 1.4rem rgba(118, 197, 255, 0.08)")};
+            inset 0 0.5rem 1.2rem rgba(255, 255, 255, 0.14),
+            inset 0 -1.1rem 1.7rem rgba(2, 4, 8, 0.56),
+            0 1.4rem 2.8rem rgba(0, 0, 0, 0.4),
+            ${({ $hovered }) => ($hovered ? "0 0 2.4rem rgba(118, 197, 255, 0.18)" : "0 0 1.6rem rgba(118, 197, 255, 0.12)")};
     }
 
     .robot-body-rim {
         position: absolute;
         inset: 0.55rem;
         border-radius: 50%;
-        border: 1px solid rgba(122, 145, 188, 0.14);
-        box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.16);
+        border: 1px solid rgba(145, 171, 215, 0.24);
+        box-shadow: inset 0 0 1rem rgba(0, 0, 0, 0.24);
     }
 
     .robot-body-core {
@@ -667,8 +715,8 @@ export const RobotFigure = styled.div<{
         inset: 18%;
         border-radius: 50%;
         background:
-            radial-gradient(circle at 50% 45%, rgba(10, 18, 30, 0) 0%, rgba(10, 18, 30, 0.08) 52%, rgba(3, 7, 14, 0.38) 100%),
-            radial-gradient(circle at 50% 50%, rgba(155, 94, 255, 0.12), rgba(6, 12, 22, 0) 64%);
+            radial-gradient(circle at 50% 45%, rgba(10, 18, 30, 0.22) 0%, rgba(10, 18, 30, 0.28) 52%, rgba(3, 7, 14, 0.68) 100%),
+            radial-gradient(circle at 50% 50%, rgba(155, 94, 255, 0.18), rgba(6, 12, 22, 0.12) 64%);
     }
 
     .robot-body-highlight {
@@ -676,7 +724,7 @@ export const RobotFigure = styled.div<{
         inset: 9% 18% 52%;
         border-radius: 50%;
         background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 72%);
-        filter: blur(8px);
+        filter: blur(6px);
         opacity: ${({ $hovered }) => ($hovered ? 0.94 : 0.72)};
         transition: opacity 220ms ease;
     }
@@ -690,7 +738,7 @@ export const RobotFigure = styled.div<{
         transform: translateX(-50%);
         border-radius: 50%;
         background: radial-gradient(circle, rgba(196, 105, 255, 0.46) 0%, rgba(94, 34, 145, 0.08) 72%, transparent 100%);
-        filter: blur(10px);
+        filter: blur(8px);
         opacity: ${({ $activated, $hovered }) => ($activated ? 1 : $hovered ? 0.78 : 0.58)};
         transition: opacity 220ms ease;
     }
@@ -839,7 +887,7 @@ export const RobotFigure = styled.div<{
                       filter: saturate(1.08);
                   }
 
-                  .orbit-layer-front .turbine-shell {
+                  .turbine-shell {
                       filter: blur(0) brightness(1.04);
                   }
               `
@@ -856,23 +904,31 @@ export const RobotFigure = styled.div<{
 
     @media (max-width: 900px) {
         --robot-size: 10.4rem;
+        --body-scale: 1.25;
+        --orbit-scale: 2;
         --orbit-radius: 4.8rem;
+        --orbit-lateral-range: 3.7rem;
+        --orbit-vertical-range: 1.54rem;
 
         .robot-shadow {
             width: 7.8rem;
-            transform: translate3d(-50%, calc(-50% + 5.8rem), 0);
+            transform: translate3d(-50%, calc(-50% + 5.8rem), 0) scale(var(--body-scale));
         }
     }
 
     @media (max-width: 640px) {
         --robot-size: 8.8rem;
+        --body-scale: 1.06;
+        --orbit-scale: 1.7;
         --orbit-radius: 4.05rem;
+        --orbit-lateral-range: 3rem;
+        --orbit-vertical-range: 1.2rem;
         --orbit-duration: 6.6s;
 
         .robot-shadow {
             width: 6.8rem;
             height: 2.2rem;
-            transform: translate3d(-50%, calc(-50% + 5rem), 0);
+            transform: translate3d(-50%, calc(-50% + 5rem), 0) scale(var(--body-scale));
         }
     }
 `;

@@ -4,6 +4,7 @@ import { GlobalStyle } from "./Styles/global";
 import { Router } from "./Router";
 import { blackTheme } from "./Styles/themes/blackTheme";
 import { AuthProvider } from "./contexts/auth";
+import { NotificationProvider } from "./contexts/notifications";
 
 function App() {
 
@@ -12,7 +13,9 @@ function App() {
         <ThemeProvider theme={blackTheme}>
           <BrowserRouter>
             <AuthProvider>
-              <Router />
+              <NotificationProvider>
+                <Router />
+              </NotificationProvider>
             </AuthProvider>
           </BrowserRouter>          
           <GlobalStyle/>
