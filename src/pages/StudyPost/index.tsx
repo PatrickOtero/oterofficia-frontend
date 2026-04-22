@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HeartStraight, X } from "phosphor-react";
 import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,6 +11,7 @@ import { StudyBlockRenderer } from "../../features/studies/components/public/Stu
 import { FeedbackState } from "../../features/studies/components/shared/FeedbackState";
 import { StudyComment, StudyDetail } from "../../features/studies/types/study";
 import { useBotSceneActions } from "../../hooks/useBotSceneActions";
+import { recordRobotStudyContext } from "../../features/robotConversation/utils/robotConversationContext";
 import {
   orbitalPanelCss,
   scrollableContentCss,
@@ -325,6 +326,7 @@ export const StudyPostPage = () => {
   const { slug = "" } = useParams();
   const { isAuthenticated } = useAuth();
   const { openAuthScene } = useBotSceneActions();
+  const containerRef = useRef<HTMLElement | null>(null);
   const [study, setStudy] = useState<StudyDetail | null>(null);
   const [comments, setComments] = useState<StudyComment[]>([]);
   const [commentValue, setCommentValue] = useState<string>("");
@@ -517,6 +519,54 @@ export const StudyPostPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (!study) {
+      return;
+    }
+
+    const container = containerRef.current;
+    const persistContext = () => {
+      const scrollRange = container ? container.scrollHeight - container.clientHeight : 0;
+      const progress = scrollRange > 0 && container ? (container.scrollTop / scrollRange) * 100 : 0;
+
+      recordRobotStudyContext({
+        path: `/studies/${study.slug}`,
+        progress,
+        study,
+      });
+    };
+
+    persistContext();
+
+    if (!container) {
+      return;
+    }
+
+    let timeoutId: number | null = null;
+    const handleScroll = () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+
+      timeoutId = window.setTimeout(() => {
+        persistContext();
+      }, 120);
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("beforeunload", persistContext);
+
+    return () => {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
+
+      persistContext();
+      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("beforeunload", persistContext);
+    };
+  }, [study]);
+
   if (isLoading) {
     return (
       <FeedbackState description="O conteudo detalhado esta sendo preparado." title="Carregando publicacao" />
@@ -534,7 +584,7 @@ export const StudyPostPage = () => {
   }
 
   return (
-    <StudyPostPageContainer>
+    <StudyPostPageContainer ref={containerRef}>
       {study.coverImage ? (
         <div
           className="post-cover"

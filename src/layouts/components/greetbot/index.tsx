@@ -7,14 +7,8 @@ import { RoundRobotScene } from "./RoundRobotScene";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { useNotifications } from "../../../features/notifications/hooks/useNotifications";
 import { NotificationCenterModal } from "../../../features/notifications/components/NotificationCenterModal";
+import { RobotConversationPanel } from "../../../features/robotConversation/components/RobotConversationPanel";
 import { RobotQuickMenu } from "./RobotQuickMenu";
-import { robotInsightsApi } from "../../../features/robot/api/robotInsightsApi";
-import { SiteVisitorSummary } from "../../../features/robot/types/robotInsights";
-import {
-    ensureAdminPresenceSession,
-    getAdminPresenceBriefingWindow,
-} from "../../../features/robot/utils/adminPresenceWindow";
-import { RobotSpeechBubble } from "./RobotSpeechBubble";
 import type {
     RobotAttentionTarget,
     RobotMotionIntent,
@@ -29,70 +23,15 @@ type GreetBotProps = {
     beamTarget?: BeamTarget;
 };
 
-type RobotSpeech = {
-    detail?: string;
-    message: string;
-    title?: string;
-};
-
-const formatShortDateTime = (value: string | null) => {
-    if (!value) {
-        return null;
-    }
-
-    return new Intl.DateTimeFormat("pt-BR", {
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        month: "2-digit",
-    }).format(new Date(value));
-};
-
-const pluralize = (value: number, singular: string, plural: string) => (value === 1 ? singular : plural);
-
-const buildVisitorBriefingSpeech = (summary: SiteVisitorSummary): RobotSpeech => {
-    const lastVisit = formatShortDateTime(summary.lastVisitAt);
-
-    if (!summary.since || !summary.until) {
-        return {
-            detail: lastVisit ? `Ultimo movimento no radar: ${lastVisit}.` : undefined,
-            message: `Ainda nao tenho sua ultima saida registrada. No radar atual, ja detectei ${summary.totalVisitors} ${pluralize(summary.totalVisitors, "visitante", "visitantes")} no seu site.`,
-            title: "Radar sem ancora",
-        };
-    }
-
-    if (summary.visitorsSince <= 0) {
-        return {
-            detail: lastVisit ? `Ultimo movimento captado em ${lastVisit}.` : undefined,
-            message: "Desde a ultima vez que voce esteve fora, nenhum visitante novo apareceu no radar do seu site.",
-            title: "Tudo calmo",
-        };
-    }
-
-    const entriesSnippet =
-        summary.entriesSince > summary.visitorsSince
-            ? ` Foram ${summary.entriesSince} entradas nesse intervalo.`
-            : "";
-    const newVisitorsSnippet =
-        summary.newVisitorsSince > 0
-            ? ` ${summary.newVisitorsSince} ${pluralize(summary.newVisitorsSince, "era", "eram")} visitante${summary.newVisitorsSince === 1 ? "" : "s"} totalmente novo${summary.newVisitorsSince === 1 ? "" : "s"} por aqui.`
-            : " Todos ja tinham passado por aqui antes.";
-
-    return {
-        detail: lastVisit ? `Ultima leitura captada em ${lastVisit}.` : undefined,
-        message: `Enquanto voce esteve fora, ${summary.visitorsSince} ${pluralize(summary.visitorsSince, "visitante apareceu", "visitantes apareceram")} no seu site.${entriesSnippet}${newVisitorsSnippet}`,
-        title: "Atualizacao do radar",
-    };
-};
-
 export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBotProps) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isHintVisible, setIsHintVisible] = useState(false);
     const [isBotHovered, setIsBotHovered] = useState(false);
     const [isNotificationCenterOpen, setIsNotificationCenterOpen] = useState(false);
-    const [robotSpeech, setRobotSpeech] = useState<RobotSpeech | null>(null);
-    const { isAdmin, isAuthenticated, user } = useAuth();
+    const [isConversationOpen, setIsConversationOpen] = useState(false);
+    const [conversationSessionKey, setConversationSessionKey] = useState<string | null>(null);
+    const { isAuthenticated } = useAuth();
     const {
         feed,
         isLoading: isNotificationsLoading,
@@ -127,7 +66,7 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
     const isHomeMenuScene = interactive && isHomeRoute && isShowingMenu;
     const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isAuthScene || isHomeMenuScene;
     const isReturningFromContent = isHomeMenuScene && sceneTransition === "content-to-home";
-    const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && isHintVisible && !robotSpeech;
+    const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && isHintVisible && !isConversationOpen;
 
     useEffect(() => {
         if (!isReturningFromContent) {
@@ -164,22 +103,41 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
     useEffect(() => {
         if (!isAuthenticated) {
             setIsNotificationCenterOpen(false);
-            setIsBotHovered(false);
-            setRobotSpeech(null);
+            if (!interactive) {
+                setIsBotHovered(false);
+            }
         }
-    }, [isAuthenticated]);
+    }, [interactive, isAuthenticated]);
 
     useEffect(() => {
-        if (!robotSpeech) {
+        if (!isConversationOpen) {
             return;
         }
 
-        const timeoutId = window.setTimeout(() => {
-            setRobotSpeech(null);
-        }, 9000);
+        setIsHintVisible(false);
+    }, [isConversationOpen]);
 
-        return () => window.clearTimeout(timeoutId);
-    }, [robotSpeech]);
+    useEffect(() => {
+    closeConversationPanel();
+}, [location.pathname]);
+
+    useEffect(() => {
+        if (!isBotHovered) {
+            return;
+        }
+
+        if (isConversationOpen) {
+            setIsHintVisible(false);
+        }
+    }, [isBotHovered, isConversationOpen]);
+
+    useEffect(() => {
+    if (shouldShowGreetText || isConversationOpen) {
+        return;
+    }
+
+    setIsHintVisible(false);
+}, [shouldShowGreetText, isConversationOpen]);
 
     const slot: RobotSceneSlot = interactive
         ? isReturningFromContent
@@ -225,18 +183,33 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
                 : "idle";
 
     const hasUnreadNotifications = feed.unreadCount > 0;
-    const shouldAllowNotificationHover = Boolean(isAuthenticated);
+    const shouldShowConversationAction = isBotHovered;
     const shouldShowNotificationAction = Boolean(isAuthenticated && (hasUnreadNotifications || isBotHovered));
-    const shouldShowUpdateAction = Boolean(isAdmin && isBotHovered);
     const shouldShowTravelAction = isBotHovered;
-    const shouldShowQuickMenu = shouldShowTravelAction || shouldShowNotificationAction || shouldShowUpdateAction;
+    const shouldShowQuickMenu =
+        shouldShowConversationAction || shouldShowTravelAction || shouldShowNotificationAction;
     const nextSpaceTheme = spaceTheme === "earth" ? "mars" : "earth";
+
+    const openConversationPanel = () => {
+    const nextSessionKey =
+        typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+            ? crypto.randomUUID()
+            : `conversation-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+
+    setConversationSessionKey(nextSessionKey);
+    setIsConversationOpen(true);
+};
+
+const closeConversationPanel = () => {
+    setIsConversationOpen(false);
+    setConversationSessionKey(null);
+};
 
     return (
         <>
             <RoundRobotScene
                 attentionTarget={attentionTarget}
-                hoverable={Boolean(!interactive || (isAuthenticated && shouldAllowNotificationHover))}
+                hoverable
                 interactive={interactive}
                 motionIntent={motionIntent}
                 projectionTarget={projectionTarget}
@@ -262,6 +235,7 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
             >
                 {shouldShowQuickMenu ? (
                     <RobotQuickMenu
+                        onConversationClick={openConversationPanel}
                         isNotificationAlerting={hasUnreadNotifications}
                         isNotificationLoading={isNotificationsLoading}
                         nextTheme={nextSpaceTheme}
@@ -272,50 +246,13 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
                         onTravelClick={() => {
                             setSpaceTheme((currentTheme) => (currentTheme === "earth" ? "mars" : "earth"));
                         }}
-                        onUpdateClick={() => {
-                            const openRobotUpdateSpeech = async () => {
-                                setRobotSpeech({
-                                    message: "Estou varrendo o radar do seu site para te atualizar sobre o movimento enquanto voce esteve fora.",
-                                    title: "Lendo o espaco",
-                                });
-
-                                try {
-                                    const briefingWindow = user
-                                        ? (() => {
-                                              const currentWindow = getAdminPresenceBriefingWindow(user.id);
-
-                                              if (currentWindow.until) {
-                                                  return currentWindow;
-                                              }
-
-                                              return ensureAdminPresenceSession(user.id);
-                                          })()
-                                        : { since: null, until: null };
-                                    const summary = await robotInsightsApi.fetchSiteVisitorSummary(briefingWindow);
-                                    setRobotSpeech(buildVisitorBriefingSpeech(summary));
-                                } catch (_error) {
-                                    setRobotSpeech({
-                                        message: "Nao consegui ler o radar agora. Tenta me chamar de novo em alguns instantes.",
-                                        title: "Sinal instavel",
-                                    });
-                                }
-                            };
-
-                            void openRobotUpdateSpeech();
-                        }}
+                        showConversation={shouldShowConversationAction}
                         showNotification={shouldShowNotificationAction}
                         showTravel={shouldShowTravelAction}
-                        showUpdate={shouldShowUpdateAction}
                         unreadCount={feed.unreadCount}
                     />
                 ) : null}
-                {robotSpeech ? (
-                    <RobotSpeechBubble
-                        detail={robotSpeech.detail}
-                        message={robotSpeech.message}
-                        title={robotSpeech.title}
-                    />
-                ) : shouldShowGreetText ? (
+                {shouldShowGreetText ? (
                     <GreetText />
                 ) : null}
             </RoundRobotScene>
@@ -345,6 +282,12 @@ export const GreetBot = memo(({ interactive = true, beamTarget = null }: GreetBo
                 />
             ) : null}
 
+            {isConversationOpen && conversationSessionKey ? (
+    <RobotConversationPanel
+        onClose={closeConversationPanel}
+        sessionKey={conversationSessionKey}
+    />
+) : null}
         </>
     );
 });

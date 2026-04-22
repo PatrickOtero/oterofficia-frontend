@@ -1,4 +1,4 @@
-import { ChartBar, RocketLaunch } from "phosphor-react";
+import { ChatsCircle, RocketLaunch } from "phosphor-react";
 import styled from "styled-components";
 import { RobotNotificationBeacon } from "../../../features/notifications/components/RobotNotificationBeacon";
 
@@ -8,20 +8,20 @@ type RobotQuickMenuProps = {
     isNotificationAlerting: boolean;
     isNotificationLoading?: boolean;
     nextTheme: SpaceTheme;
+    onConversationClick: () => void;
     onNotificationClick: () => void;
     onTravelClick: () => void;
-    onUpdateClick: () => void;
+    showConversation: boolean;
     showNotification: boolean;
     showTravel: boolean;
-    showUpdate: boolean;
     unreadCount: number;
 };
 
 const QuickMenuContainer = styled.div<{
     $nextTheme: SpaceTheme;
+    $showConversation: boolean;
     $showNotification: boolean;
     $showTravel: boolean;
-    $showUpdate: boolean;
 }>`
     position: absolute;
     inset: 0;
@@ -50,28 +50,28 @@ const QuickMenuContainer = styled.div<{
     .notification-slot {
         opacity: ${({ $showNotification }) => ($showNotification ? 1 : 0)};
         pointer-events: ${({ $showNotification }) => ($showNotification ? "auto" : "none")};
-        transform: ${({ $showNotification, $showTravel, $showUpdate }) =>
+        transform: ${({ $showConversation, $showNotification, $showTravel }) =>
             !$showNotification
                 ? "translateX(-50%) scale(0.84)"
-                : $showUpdate || $showTravel
+                : $showConversation || $showTravel
                   ? "translateX(calc(-50% - 4.8rem)) scale(1)"
                   : "translateX(-50%) scale(1)"};
     }
 
-    .update-slot {
-        opacity: ${({ $showUpdate }) => ($showUpdate ? 1 : 0)};
-        pointer-events: ${({ $showUpdate }) => ($showUpdate ? "auto" : "none")};
-        transform: ${({ $showUpdate }) =>
-            $showUpdate ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.84)"};
+    .conversation-slot {
+        opacity: ${({ $showConversation }) => ($showConversation ? 1 : 0)};
+        pointer-events: ${({ $showConversation }) => ($showConversation ? "auto" : "none")};
+        transform: ${({ $showConversation }) =>
+            $showConversation ? "translateX(-50%) scale(1)" : "translateX(-50%) scale(0.84)"};
     }
 
     .travel-slot {
         opacity: ${({ $showTravel }) => ($showTravel ? 1 : 0)};
         pointer-events: ${({ $showTravel }) => ($showTravel ? "auto" : "none")};
-        transform: ${({ $showNotification, $showTravel, $showUpdate }) =>
+        transform: ${({ $showConversation, $showNotification, $showTravel }) =>
             !$showTravel
                 ? "translateX(-50%) scale(0.84)"
-                : $showUpdate || $showNotification
+                : $showConversation || $showNotification
                   ? "translateX(calc(-50% + 4.8rem)) scale(1)"
                   : "translateX(-50%) scale(1)"};
     }
@@ -142,44 +142,44 @@ const QuickMenuContainer = styled.div<{
         border-radius: 50%;
     }
 
-    .update-beam {
+    .conversation-beam {
         background: linear-gradient(
             180deg,
-            rgba(183, 255, 237, 0.86) 0%,
-            rgba(98, 241, 204, 0.54) 28%,
-            rgba(48, 191, 167, 0.18) 72%,
-            rgba(48, 191, 167, 0) 100%
+            rgba(188, 244, 255, 0.88) 0%,
+            rgba(103, 209, 255, 0.56) 28%,
+            rgba(66, 138, 255, 0.18) 72%,
+            rgba(66, 138, 255, 0) 100%
         );
         box-shadow:
-            0 0 0.8rem rgba(98, 241, 204, 0.24),
-            0 0 1.6rem rgba(98, 241, 204, 0.14);
+            0 0 0.8rem rgba(103, 209, 255, 0.24),
+            0 0 1.6rem rgba(103, 209, 255, 0.14);
     }
 
-    .update-beam::after {
-        background: radial-gradient(circle, rgba(98, 241, 204, 0.28) 0%, rgba(98, 241, 204, 0) 72%);
+    .conversation-beam::after {
+        background: radial-gradient(circle, rgba(103, 209, 255, 0.28) 0%, rgba(103, 209, 255, 0) 72%);
     }
 
-    .update-button {
-        border: 1px solid rgba(122, 242, 214, 0.34);
+    .conversation-button {
+        border: 1px solid rgba(126, 210, 255, 0.32);
         background:
-            radial-gradient(circle at 30% 28%, rgba(219, 255, 245, 0.2), transparent 24%),
-            radial-gradient(circle at 50% 50%, rgba(52, 188, 168, 0.24), rgba(5, 28, 29, 0.9) 72%);
+            radial-gradient(circle at 30% 28%, rgba(220, 245, 255, 0.2), transparent 24%),
+            radial-gradient(circle at 50% 50%, rgba(75, 139, 255, 0.22), rgba(7, 21, 38, 0.9) 72%);
         box-shadow:
             inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-            0 0 1.2rem rgba(98, 241, 204, 0.18),
-            0 0 2rem rgba(47, 180, 159, 0.12);
-        color: rgba(204, 255, 245, 0.96);
+            0 0 1.2rem rgba(103, 209, 255, 0.18),
+            0 0 2rem rgba(80, 154, 255, 0.12);
+        color: rgba(224, 247, 255, 0.96);
     }
 
-    .update-button:hover {
+    .conversation-button:hover {
         box-shadow:
             inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-            0 0 1.6rem rgba(98, 241, 204, 0.24),
-            0 0 2.4rem rgba(47, 180, 159, 0.16);
+            0 0 1.6rem rgba(103, 209, 255, 0.24),
+            0 0 2.4rem rgba(80, 154, 255, 0.16);
     }
 
-    .update-button-core {
-        background: radial-gradient(circle, rgba(195, 255, 240, 0.16) 0%, rgba(195, 255, 240, 0) 72%);
+    .conversation-button-core {
+        background: radial-gradient(circle, rgba(192, 234, 255, 0.16) 0%, rgba(192, 234, 255, 0) 72%);
     }
 
     .travel-beam {
@@ -257,19 +257,19 @@ const QuickMenuContainer = styled.div<{
         }
 
         .notification-slot {
-            transform: ${({ $showNotification, $showTravel, $showUpdate }) =>
+            transform: ${({ $showConversation, $showNotification, $showTravel }) =>
                 !$showNotification
                     ? "translateX(-50%) scale(0.84)"
-                    : $showUpdate || $showTravel
+                    : $showConversation || $showTravel
                       ? "translateX(calc(-50% - 3.4rem)) scale(1)"
                       : "translateX(-50%) scale(1)"};
         }
 
         .travel-slot {
-            transform: ${({ $showNotification, $showTravel, $showUpdate }) =>
+            transform: ${({ $showConversation, $showNotification, $showTravel }) =>
                 !$showTravel
                     ? "translateX(-50%) scale(0.84)"
-                    : $showUpdate || $showNotification
+                    : $showConversation || $showNotification
                       ? "translateX(calc(-50% + 3.4rem)) scale(1)"
                       : "translateX(-50%) scale(1)"};
         }
@@ -292,22 +292,22 @@ const QuickMenuContainer = styled.div<{
 `;
 
 export const RobotQuickMenu = ({
+    onConversationClick,
     isNotificationAlerting,
     isNotificationLoading = false,
     nextTheme,
     onNotificationClick,
     onTravelClick,
-    onUpdateClick,
+    showConversation,
     showNotification,
     showTravel,
-    showUpdate,
     unreadCount,
 }: RobotQuickMenuProps) => (
     <QuickMenuContainer
         $nextTheme={nextTheme}
+        $showConversation={showConversation}
         $showNotification={showNotification}
         $showTravel={showTravel}
-        $showUpdate={showUpdate}
     >
         <div className="quick-menu-hub">
             <div
@@ -325,25 +325,25 @@ export const RobotQuickMenu = ({
             </div>
 
             <div
-                className="quick-menu-slot update-slot"
+                className="quick-menu-slot conversation-slot"
                 onClick={(event) => {
                     event.stopPropagation();
                 }}
             >
                 <div className="quick-menu-action">
-                    <span className="quick-menu-beam update-beam" />
+                    <span className="quick-menu-beam conversation-beam" />
                     <button
-                        aria-label="Me atualize"
-                        className="quick-menu-button update-button"
+                        aria-label="Conversar"
+                        className="quick-menu-button conversation-button"
                         onClick={(event) => {
                             event.stopPropagation();
-                            onUpdateClick();
+                            onConversationClick();
                         }}
-                        title="Me atualize"
+                        title="Conversar"
                         type="button"
                     >
-                        <span className="quick-menu-button-core update-button-core">
-                            <ChartBar size={24} weight="fill" />
+                        <span className="quick-menu-button-core conversation-button-core">
+                            <ChatsCircle size={24} weight="fill" />
                         </span>
                     </button>
                 </div>

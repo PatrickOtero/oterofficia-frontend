@@ -30,17 +30,19 @@ const getVisitorKey = () => {
 
 export const SiteVisitorTracker = () => {
   const location = useLocation();
-  const hasTrackedRef = useRef(false);
+  const lastTrackedPathRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (hasTrackedRef.current) {
+    const currentPath = `${location.pathname}${location.search}`;
+
+    if (lastTrackedPathRef.current === currentPath) {
       return;
     }
 
-    hasTrackedRef.current = true;
+    lastTrackedPathRef.current = currentPath;
 
     void robotInsightsApi.trackSiteVisit({
-      path: `${location.pathname}${location.search}`,
+      path: currentPath,
       referrer: typeof document !== "undefined" ? document.referrer || null : null,
       visitorKey: getVisitorKey(),
     });
