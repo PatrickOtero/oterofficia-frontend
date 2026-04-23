@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import type { SpaceTheme } from "../../layouts/components/greetbot/spaceThemes";
 
 export type ICompProps = {
     children: ReactNode;
@@ -7,8 +8,8 @@ export type ICompProps = {
 export interface IBotContext {
     sceneTransition: "idle" | "content-to-home" | "home-to-content" | "menu-to-content";
     setSceneTransition: Dispatch<SetStateAction<"idle" | "content-to-home" | "home-to-content" | "menu-to-content">>;
-    spaceTheme: "earth" | "mars";
-    setSpaceTheme: Dispatch<SetStateAction<"earth" | "mars">>;
+    spaceTheme: SpaceTheme;
+    setSpaceTheme: Dispatch<SetStateAction<SpaceTheme>>;
     homePage: boolean;
     setHomePage: Dispatch<SetStateAction<boolean>>;
     authPage: boolean;

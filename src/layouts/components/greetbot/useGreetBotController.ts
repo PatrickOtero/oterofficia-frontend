@@ -3,9 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { useNotifications } from "../../../features/notifications/hooks/useNotifications";
 import type { NotificationItem } from "../../../features/notifications/types/notification";
+import {
+    DEFAULT_SCENE_CAMERA_PRESET_ID,
+    getNextSceneCameraPresetId,
+    getPreviousSceneCameraPresetId,
+    getSceneCameraPresetLabel,
+} from "../../../features/sceneCamera/sceneCamera.presets";
 import { useTouchDevice } from "../../../hooks/useTouchDevice";
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
+import { useSceneCameraContext } from "../../../hooks/useSceneCameraContext";
 import type { GreetBotController, GreetBotProps } from "./greetBot.types";
 import {
     createConversationSessionKey,
@@ -17,6 +24,7 @@ import {
     getRobotProjectionTarget,
     getRobotSceneSlot,
 } from "./greetBot.utils";
+import { getNextSpaceTheme, getPreviousSpaceTheme } from "./spaceThemes";
 
 export const useGreetBotController = ({
     beamTarget = null,
@@ -31,6 +39,7 @@ export const useGreetBotController = ({
     const [isConversationOpen, setIsConversationOpen] = useState(false);
     const [sessionKey, setSessionKey] = useState<string | null>(null);
     const { isAuthenticated } = useAuth();
+    const { applyPreset, camera, isManualMode, toggleManualMode } = useSceneCameraContext();
     const {
         feed,
         isLoading: isNotificationsLoading,
@@ -79,13 +88,24 @@ export const useGreetBotController = ({
         slot,
     });
     const conversationPlacement = getRobotConversationPlacement(slot);
+    const activeScenePresetId = camera.activePreset ?? DEFAULT_SCENE_CAMERA_PRESET_ID;
+    const activeScenePresetLabel =
+        camera.activePreset === null && !isManualMode
+            ? "Livre"
+            : getSceneCameraPresetLabel(activeScenePresetId);
+    const nextScenePresetId = getNextSceneCameraPresetId(activeScenePresetId);
+    const previousScenePresetId = getPreviousSceneCameraPresetId(activeScenePresetId);
     const quickMenu = getQuickMenuState({
+        activeScenePresetLabel,
+        isSceneCameraManualMode: isManualMode,
         interactive,
         isAuthenticated,
         isBotHovered,
         isShowingMenu,
         isTouchDevice,
+        nextScenePresetLabel: getSceneCameraPresetLabel(nextScenePresetId),
         spaceTheme,
+        previousScenePresetLabel: getSceneCameraPresetLabel(previousScenePresetId),
         unreadCount: feed.unreadCount,
     });
     const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && isHintVisible && !isConversationOpen;
@@ -110,7 +130,27 @@ export const useGreetBotController = ({
     };
 
     const handleTravelClick = () => {
-        setSpaceTheme((currentTheme) => (currentTheme === "earth" ? "mars" : "earth"));
+        setSpaceTheme((currentTheme) => getNextSpaceTheme(currentTheme));
+    };
+
+    const handleTravelNextClick = () => {
+        setSpaceTheme((currentTheme) => getNextSpaceTheme(currentTheme));
+    };
+
+    const handleTravelPreviousClick = () => {
+        setSpaceTheme((currentTheme) => getPreviousSpaceTheme(currentTheme));
+    };
+
+    const handleSceneCameraClick = () => {
+        toggleManualMode();
+    };
+
+    const handleSceneCameraNextClick = () => {
+        applyPreset(nextScenePresetId);
+    };
+
+    const handleSceneCameraPreviousClick = () => {
+        applyPreset(previousScenePresetId);
     };
 
     const handleRobotActivate = () => {
@@ -219,7 +259,12 @@ export const useGreetBotController = ({
         handleNotificationItemClick,
         handleRobotActivate,
         handleRobotHoverChange,
+        handleSceneCameraClick,
+        handleSceneCameraNextClick,
+        handleSceneCameraPreviousClick,
         handleTravelClick,
+        handleTravelNextClick,
+        handleTravelPreviousClick,
         isConversationOpen,
         isNotificationCenterOpen,
         isNotificationsLoading,

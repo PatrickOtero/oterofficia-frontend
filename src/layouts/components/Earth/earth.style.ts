@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import earthMap from "../../../assets/world-map.png";
+import { EARTH_SCENE_CENTER_Y } from "../PlanetSystem/sceneAnchors";
 
 export const EarthContainer = styled("div")`
     @keyframes celestialBodyRotation {
@@ -13,24 +14,22 @@ export const EarthContainer = styled("div")`
     }
 
     position: absolute;
-    left: 50%;
-    bottom: -58rem;
-
-    width: min(96rem, 118vw);
-    height: min(96rem, 118vw);
-
-    transform: translateX(-50%);
+    inset: 0;
     z-index: 2;
     pointer-events: none;
+    overflow: visible;
 
     .earth-main {
         position: absolute;
-        inset: 0;
+        left: 50%;
+        top: ${EARTH_SCENE_CENTER_Y};
+        width: min(96rem, 118vw);
+        height: min(96rem, 118vw);
 
         overflow: hidden;
         border-radius: 50%;
         transition: transform 520ms ease;
-        transform: translateY(0) scale(1.08);
+        transform: translate(-50%, -50%) scale(1.08);
         background:
             radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.26), transparent 20%),
             radial-gradient(circle at 68% 74%, rgba(2, 10, 20, 0.82), transparent 38%),
@@ -78,12 +77,20 @@ export const EarthContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translateY(10rem) scale(1.05);
+        transform: translate(-50%, calc(-50% + 10rem)) scale(1.05);
     }
 
     @media (max-width: 900px) {
-        bottom: -44rem;
-        width: 72rem;
-        height: 72rem;
+        .earth-main {
+            width: 72rem;
+            height: 72rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .earth-main {
+            width: 58rem;
+            height: 58rem;
+        }
     }
 `;

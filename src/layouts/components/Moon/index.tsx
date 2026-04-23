@@ -1,8 +1,12 @@
 import { memo } from "react";
 import { MoonContainer } from "./moon.style";
 
-export const Moon = memo(() => (
-    <MoonContainer>
+type MoonProps = {
+    placement?: "back" | "front";
+};
+
+export const Moon = memo(({ placement = "back" }: MoonProps) => (
+    <MoonContainer data-placement={placement}>
         <div className="moon-orbit">
             <div className="moon-body">
                 <div className="moon-surface">

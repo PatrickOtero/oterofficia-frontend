@@ -279,6 +279,20 @@ export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactiv
     z-index: 3;
     pointer-events: none;
 
+    .robot-scene-camera-layer {
+        position: absolute;
+        inset: 0;
+        transform:
+            translate3d(
+                calc(var(--scene-camera-x, 0px) * -0.12),
+                calc(var(--scene-camera-y, 0px) * -0.12),
+                0
+            )
+            scale(calc(1 + ((var(--scene-camera-zoom, 1) - 1) * 0.08)));
+        transform-origin: 50% 58%;
+        will-change: transform;
+    }
+
     .robot-scene-roamer {
         position: absolute;
         width: var(--robot-scene-width);
@@ -390,6 +404,7 @@ export const RobotFigure = styled.div<{
     --visor-tilt: 0deg;
     --visor-hover-lift: 0rem;
     --visor-hover-scale: 1;
+    --robot-bottom-glow-opacity: 0.58;
 
     position: absolute;
     inset: 0;
@@ -411,7 +426,12 @@ export const RobotFigure = styled.div<{
         top: 50%;
         width: 9.5rem;
         height: 3rem;
-        transform: translate3d(-50%, calc(-50% + 7.1rem), 0) scale(var(--body-scale));
+        transform: translate3d(
+                calc(-50% + (var(--scene-pilot-x, 0) * 0.18rem)),
+                calc(-50% + 7.1rem + (var(--scene-pilot-y, 0) * 0.22rem)),
+                0
+            )
+            scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
         border-radius: 50%;
         background: radial-gradient(circle, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.08) 58%, transparent 74%);
         filter: blur(8px);
@@ -480,6 +500,7 @@ export const RobotFigure = styled.div<{
         box-shadow:
             inset 0 0.14rem 0.24rem rgba(255, 255, 255, 0.12),
             0 0.2rem 0.6rem rgba(0, 0, 0, 0.26);
+        transform: scale(calc(1 + (var(--scene-pilot-thrust, 0) * 0.06)));
         transform-origin: center;
         backface-visibility: hidden;
         will-change: transform, opacity;
@@ -517,7 +538,7 @@ export const RobotFigure = styled.div<{
         inset: 18% 24% 22%;
         border-radius: 50%;
         background: radial-gradient(circle, rgba(209, 114, 255, 0.24) 0%, transparent 72%);
-        transform: scale(var(--turbine-glow-scale, 1));
+        transform: scale(calc(var(--turbine-glow-scale, 1) + (var(--scene-pilot-thrust, 0) * 0.24)));
     }
 
     .turbine-trail {
@@ -525,7 +546,7 @@ export const RobotFigure = styled.div<{
         left: 50%;
         top: calc(100% - 0.08rem);
         width: 56%;
-        height: 2.45rem;
+        height: calc(2.45rem + (var(--scene-pilot-thrust, 0) * 0.72rem));
         transform: translateX(-50%);
         transform-origin: top center;
         border-radius: 0 0 1.2rem 1.2rem;
@@ -542,7 +563,7 @@ export const RobotFigure = styled.div<{
             0 0 0.8rem rgba(214, 95, 255, 0.28),
             0 0 1.4rem rgba(214, 95, 255, 0.18);
         filter: blur(0.9px);
-        opacity: 0.92;
+        opacity: calc(0.82 + (var(--scene-pilot-thrust, 0) * 0.18));
         animation: ${turbineExhaustPulse} 1.46s ease-in-out infinite;
         animation-delay: var(--orbit-delay);
     }
@@ -593,7 +614,14 @@ export const RobotFigure = styled.div<{
         position: absolute;
         inset: 0;
         z-index: 4;
-        transform: translate3d(var(--body-shift), 0, 0) rotate(var(--body-tilt)) scale(var(--body-scale));
+        transform:
+            translate3d(
+                calc(var(--body-shift) + (var(--scene-pilot-x, 0) * 0.52rem)),
+                calc(var(--scene-pilot-y, 0) * 0.28rem),
+                0
+            )
+            rotate(calc(var(--body-tilt) + (var(--scene-pilot-x, 0) * 7deg) + (var(--scene-pilot-z, 0) * 3deg)))
+            scale(calc(var(--body-scale) + (var(--scene-pilot-thrust, 0) * 0.02)));
         transition:
             transform 260ms ease,
             filter 260ms ease;
@@ -736,11 +764,13 @@ export const RobotFigure = styled.div<{
         bottom: 16%;
         width: 38%;
         height: 16%;
-        transform: translateX(-50%);
+        transform:
+            translateX(calc(-50% + (var(--scene-pilot-x, 0) * 0.08rem)))
+            scale(calc(1 + (var(--scene-pilot-thrust, 0) * 0.08)));
         border-radius: 50%;
         background: radial-gradient(circle, rgba(196, 105, 255, 0.46) 0%, rgba(94, 34, 145, 0.08) 72%, transparent 100%);
         filter: blur(8px);
-        opacity: ${({ $activated, $hovered }) => ($activated ? 1 : $hovered ? 0.78 : 0.58)};
+        opacity: calc(var(--robot-bottom-glow-opacity) + (var(--scene-pilot-thrust, 0) * 0.2));
         transition: opacity 220ms ease;
     }
 
@@ -881,6 +911,7 @@ export const RobotFigure = styled.div<{
     ${({ $hovered }) =>
         $hovered
             ? css`
+                  --robot-bottom-glow-opacity: 0.78;
                   --visor-hover-lift: -0.1rem;
                   --visor-hover-scale: 1.02;
 
@@ -891,6 +922,13 @@ export const RobotFigure = styled.div<{
                   .turbine-shell {
                       filter: blur(0) brightness(1.04);
                   }
+              `
+            : ""}
+
+    ${({ $activated }) =>
+        $activated
+            ? css`
+                  --robot-bottom-glow-opacity: 1;
               `
             : ""}
 
@@ -913,7 +951,12 @@ export const RobotFigure = styled.div<{
 
         .robot-shadow {
             width: 7.8rem;
-            transform: translate3d(-50%, calc(-50% + 5.8rem), 0) scale(var(--body-scale));
+            transform: translate3d(
+                    calc(-50% + (var(--scene-pilot-x, 0) * 0.16rem)),
+                    calc(-50% + 5.8rem + (var(--scene-pilot-y, 0) * 0.18rem)),
+                    0
+                )
+                scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
         }
     }
 
@@ -929,7 +972,12 @@ export const RobotFigure = styled.div<{
         .robot-shadow {
             width: 6.8rem;
             height: 2.2rem;
-            transform: translate3d(-50%, calc(-50% + 5rem), 0) scale(var(--body-scale));
+            transform: translate3d(
+                    calc(-50% + (var(--scene-pilot-x, 0) * 0.14rem)),
+                    calc(-50% + 5rem + (var(--scene-pilot-y, 0) * 0.16rem)),
+                    0
+                )
+                scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
         }
     }
 `;

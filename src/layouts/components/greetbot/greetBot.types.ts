@@ -1,4 +1,5 @@
 import type { NotificationFeed, NotificationItem } from "../../../features/notifications/types/notification";
+import type { SpaceTheme } from "./spaceThemes";
 import type {
     RobotAttentionTarget,
     RobotMotionIntent,
@@ -7,8 +8,6 @@ import type {
 } from "./types";
 
 export type BeamTarget = "auth-panel" | "content-menu" | null;
-
-export type SpaceTheme = "earth" | "mars";
 
 export type GreetBotProps = {
     interactive?: boolean;
@@ -23,9 +22,16 @@ export type GreetBotRouteState = {
 };
 
 export type GreetBotQuickMenuState = {
+    activeScenePresetLabel: string;
+    cameraHint?: string;
     isNotificationAlerting: boolean;
+    isSceneCameraManualMode: boolean;
+    nextScenePresetLabel: string;
     nextTheme: SpaceTheme;
+    previousScenePresetLabel: string;
+    previousTheme: SpaceTheme;
     shouldShowQuickMenu: boolean;
+    showCamera: boolean;
     showConversation: boolean;
     showNotification: boolean;
     showTravel: boolean;
@@ -43,7 +49,12 @@ export type GreetBotController = {
     handleNotificationItemClick: (item: NotificationItem) => void;
     handleRobotActivate: () => void;
     handleRobotHoverChange: (hovered: boolean) => void;
+    handleSceneCameraClick: () => void;
+    handleSceneCameraNextClick: () => void;
+    handleSceneCameraPreviousClick: () => void;
     handleTravelClick: () => void;
+    handleTravelNextClick: () => void;
+    handleTravelPreviousClick: () => void;
     isConversationOpen: boolean;
     isNotificationCenterOpen: boolean;
     isNotificationsLoading: boolean;

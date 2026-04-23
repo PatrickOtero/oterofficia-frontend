@@ -78,36 +78,38 @@ export const RoundRobotScene = ({
 
     return (
         <RobotSceneContainer $hoverable={hoverable} $interactive={interactive} $slot={slot}>
-            <div className="robot-scene-roamer">
-                <div
-                    className="robot-scene-shell"
-                    onBlur={() => handleHoverChange(false)}
-                    onClick={handleActivate}
-                    onFocus={() => handleHoverChange(true)}
-                    onKeyDown={(event) => {
-                        if (event.key !== "Enter" && event.key !== " ") {
-                            return;
-                        }
+            <div className="robot-scene-camera-layer">
+                <div className="robot-scene-roamer">
+                    <div
+                        className="robot-scene-shell"
+                        onBlur={() => handleHoverChange(false)}
+                        onClick={handleActivate}
+                        onFocus={() => handleHoverChange(true)}
+                        onKeyDown={(event) => {
+                            if (event.key !== "Enter" && event.key !== " ") {
+                                return;
+                            }
 
-                        event.preventDefault();
-                        handleActivate();
-                    }}
-                    onMouseEnter={() => handleHoverChange(true)}
-                    onMouseLeave={() => handleHoverChange(false)}
-                    role={interactive ? "button" : undefined}
-                    tabIndex={interactive ? 0 : -1}
-                >
-                    <div className="robot-scene-robot">
-                        <RoundRobot
-                            activated={activated}
-                            attentionTarget={attentionTarget}
-                            hovered={hovered}
-                            interactive={interactive}
-                            motionIntent={motionIntent}
-                            projectionTarget={projectionTarget}
-                        />
+                            event.preventDefault();
+                            handleActivate();
+                        }}
+                        onMouseEnter={() => handleHoverChange(true)}
+                        onMouseLeave={() => handleHoverChange(false)}
+                        role={interactive ? "button" : undefined}
+                        tabIndex={interactive ? 0 : -1}
+                    >
+                        <div className="robot-scene-robot">
+                            <RoundRobot
+                                activated={activated}
+                                attentionTarget={attentionTarget}
+                                hovered={hovered}
+                                interactive={interactive}
+                                motionIntent={motionIntent}
+                                projectionTarget={projectionTarget}
+                            />
+                        </div>
+                        {children ? <div className="robot-scene-overlay">{children}</div> : null}
                     </div>
-                    {children ? <div className="robot-scene-overlay">{children}</div> : null}
                 </div>
             </div>
         </RobotSceneContainer>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import marsMap from "../../../assets/mars-map.jpg";
+import { MARS_SCENE_CENTER_Y } from "../PlanetSystem/sceneAnchors";
 
 export const MarsContainer = styled("div")`
     @keyframes marsRotation {
@@ -13,23 +14,21 @@ export const MarsContainer = styled("div")`
     }
 
     position: absolute;
-    left: 50%;
-    bottom: -56rem;
-
-    width: min(90rem, 112vw);
-    height: min(90rem, 112vw);
-
-    transform: translateX(-50%);
+    inset: 0;
     z-index: 2;
     pointer-events: none;
+    overflow: visible;
 
     .mars-main {
         position: absolute;
-        inset: 0;
+        left: 50%;
+        top: ${MARS_SCENE_CENTER_Y};
+        width: min(90rem, 112vw);
+        height: min(90rem, 112vw);
         overflow: hidden;
         border-radius: 50%;
         transition: transform 520ms ease;
-        transform: translateY(0) scale(1.06);
+        transform: translate(-50%, -50%) scale(1.06);
         background:
             radial-gradient(circle at 30% 24%, rgba(255, 236, 214, 0.18), transparent 20%),
             radial-gradient(circle at 74% 74%, rgba(44, 16, 8, 0.72), transparent 38%),
@@ -84,12 +83,20 @@ export const MarsContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translateY(10rem) scale(1.03);
+        transform: translate(-50%, calc(-50% + 10rem)) scale(1.03);
     }
 
     @media (max-width: 900px) {
-        bottom: -43rem;
-        width: 70rem;
-        height: 70rem;
+        .mars-main {
+            width: 70rem;
+            height: 70rem;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .mars-main {
+            width: 56rem;
+            height: 56rem;
+        }
     }
 `;

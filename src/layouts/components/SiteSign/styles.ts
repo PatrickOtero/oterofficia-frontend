@@ -14,6 +14,15 @@ export const SiteSignContainer = styled.div`
 
     pointer-events: none;
     user-select: none;
+    transform:
+        translate3d(
+            calc(var(--scene-camera-x, 0px) * -0.05),
+            calc(var(--scene-camera-y, 0px) * -0.05),
+            0
+        )
+        scale(calc(1 + ((var(--scene-camera-zoom, 1) - 1) * 0.02)));
+    transform-origin: left top;
+    will-change: transform;
 
     .site-sign-emblem {
         position: relative;

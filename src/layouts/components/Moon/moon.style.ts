@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import moonMap from "../../../assets/moon-map.jpg";
+import { EARTH_SCENE_CENTER_Y } from "../PlanetSystem/sceneAnchors";
 
 export const MoonContainer = styled.div`
     --orbit-size: 110rem;
@@ -9,7 +10,7 @@ export const MoonContainer = styled.div`
 
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    overflow: visible;
     pointer-events: none;
     z-index: 2;
 
@@ -36,26 +37,28 @@ export const MoonContainer = styled.div`
     .moon-orbit {
         position: absolute;
         left: 50%;
-        bottom: -42rem;
+        top: ${EARTH_SCENE_CENTER_Y};
 
         width: var(--orbit-size);
         height: var(--orbit-size);
         margin-left: calc(var(--orbit-size) / -2);
+        margin-top: calc(var(--orbit-size) / -2);
 
         border-radius: 50%;
         transform-origin: center center;
         animation: moonOrbit var(--orbit-duration) linear infinite;
+        animation-delay: -24s;
         will-change: transform;
     }
 
     .moon-body {
         position: absolute;
-        top: 4.6rem;
+        top: 0;
         left: 50%;
 
         width: var(--moon-size);
         height: var(--moon-size);
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         border-radius: 50%;
         overflow: hidden;
         isolation: isolate;
@@ -67,6 +70,8 @@ export const MoonContainer = styled.div`
         box-shadow:
             0 0 2.2rem rgba(255, 255, 255, 0.08),
             0 0 4rem rgba(255, 255, 255, 0.03);
+        filter: saturate(1.01) brightness(1);
+        will-change: transform, filter;
     }
 
     .moon-surface {
@@ -128,9 +133,5 @@ export const MoonContainer = styled.div`
     @media (max-width: 900px) {
         --orbit-size: 88rem;
         --moon-size: 6.8rem;
-
-        .moon-orbit {
-            bottom: -33rem;
-        }
     }
 `;

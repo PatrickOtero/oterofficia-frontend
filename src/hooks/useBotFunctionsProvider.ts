@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
+import type { SpaceTheme } from "../layouts/components/greetbot/spaceThemes";
+import { isSpaceTheme } from "../layouts/components/greetbot/spaceThemes";
 
-const getInitialSpaceTheme = (): "earth" | "mars" => {
+const getInitialSpaceTheme = (): SpaceTheme => {
     if (typeof window === "undefined") {
         return "earth";
     }
 
     const storedTheme = window.localStorage.getItem("oterofficia-space-theme");
 
-    return storedTheme === "mars" ? "mars" : "earth";
+    return isSpaceTheme(storedTheme) ? storedTheme : "earth";
 };
 
 export const useBotFunctionsContextProvider = () => {
     const [sceneTransition, setSceneTransition] = useState<
         "idle" | "content-to-home" | "home-to-content" | "menu-to-content"
     >("idle");
-    const [spaceTheme, setSpaceTheme] = useState<"earth" | "mars">(getInitialSpaceTheme);
+    const [spaceTheme, setSpaceTheme] = useState<SpaceTheme>(getInitialSpaceTheme);
     const [earthPosition, setEarthPosition] = useState<string>("");
     const [isShowingMenu, setIsShowingMenu] = useState<boolean>(false);
     const [homePage, setHomePage] = useState<boolean>(false);

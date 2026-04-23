@@ -2,8 +2,9 @@ import type {
     BeamTarget,
     GreetBotQuickMenuState,
     GreetBotRouteState,
-    SpaceTheme,
 } from "./greetBot.types";
+import type { SpaceTheme } from "./spaceThemes";
+import { getNextSpaceTheme, getPreviousSpaceTheme } from "./spaceThemes";
 import type {
     RobotAttentionTarget,
     RobotMotionIntent,
@@ -24,12 +25,16 @@ const AUTH_ROUTES = new Set([
 type SceneTransition = "idle" | "content-to-home" | "home-to-content" | "menu-to-content";
 
 type QuickMenuVisibilityInput = {
+    activeScenePresetLabel: string;
+    isSceneCameraManualMode: boolean;
     interactive: boolean;
     isAuthenticated: boolean;
     isBotHovered: boolean;
     isShowingMenu: boolean;
     isTouchDevice: boolean;
+    nextScenePresetLabel: string;
     spaceTheme: SpaceTheme;
+    previousScenePresetLabel: string;
     unreadCount: number;
 };
 
@@ -142,35 +147,46 @@ export const getRobotConversationPlacement = (slot: RobotSceneSlot) =>
     slot === "home-center" ? "right" : "left";
 
 export const getQuickMenuState = ({
+    activeScenePresetLabel,
+    isSceneCameraManualMode,
     interactive,
     isAuthenticated,
     isBotHovered,
     isShowingMenu,
     isTouchDevice,
+    nextScenePresetLabel,
     spaceTheme,
+    previousScenePresetLabel,
     unreadCount,
 }: QuickMenuVisibilityInput): GreetBotQuickMenuState => {
     const isNotificationAlerting = unreadCount > 0;
-    const shouldKeepQuickMenuVisible = interactive && isTouchDevice && !isShowingMenu;
+    const shouldKeepQuickMenuVisible =
+        interactive && !isShowingMenu && (isTouchDevice || isSceneCameraManualMode);
     const showConversation = shouldKeepQuickMenuVisible || isBotHovered;
     const showNotification = Boolean(
         isAuthenticated && (isNotificationAlerting || isBotHovered || shouldKeepQuickMenuVisible)
     );
     const showTravel = shouldKeepQuickMenuVisible || isBotHovered;
+    const showCamera = shouldKeepQuickMenuVisible || isBotHovered;
 
     return {
+        activeScenePresetLabel,
+        cameraHint: isSceneCameraManualMode ? "WASD / QE / ESC" : activeScenePresetLabel,
         isNotificationAlerting,
+        isSceneCameraManualMode,
+        nextScenePresetLabel,
         nextTheme: getNextSpaceTheme(spaceTheme),
-        shouldShowQuickMenu: !isShowingMenu && (showConversation || showNotification || showTravel),
+        previousScenePresetLabel,
+        previousTheme: getPreviousSpaceTheme(spaceTheme),
+        shouldShowQuickMenu:
+            !isShowingMenu && (showConversation || showNotification || showTravel || showCamera),
+        showCamera,
         showConversation,
         showNotification,
         showTravel,
         unreadCount,
     };
 };
-
-export const getNextSpaceTheme = (spaceTheme: SpaceTheme): SpaceTheme =>
-    spaceTheme === "earth" ? "mars" : "earth";
 
 export const createConversationSessionKey = () => {
     if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {

@@ -1,25 +1,64 @@
 import { ROBOT_NAME } from "../../../features/robot/robot.constants";
+import { getSpaceThemeLabel } from "./spaceThemes";
 import type {
     RobotQuickMenuAction,
     RobotQuickMenuActionPosition,
+    RobotQuickMenuActionTone,
     RobotQuickMenuProps,
 } from "./RobotQuickMenu.types";
 
-const ACTION_POSITIONS: Record<number, RobotQuickMenuActionPosition[]> = {
-    1: ["top"],
-    2: ["left", "right"],
-    3: ["left", "top", "right"],
+const ACTION_POSITION_BY_ID: Record<RobotQuickMenuAction["id"], RobotQuickMenuActionPosition> = {
+    camera: "bottom",
+    conversation: "top",
+    notification: "left",
+    travel: "right",
 };
 
 type ActionDraft = Omit<RobotQuickMenuAction, "position">;
 
+const getTravelTone = (spaceTheme: RobotQuickMenuProps["nextTheme"]): RobotQuickMenuActionTone => {
+    if (spaceTheme === "mars") {
+        return "travel-mars";
+    }
+
+    if (spaceTheme === "jupiter") {
+        return "travel-jupiter";
+    }
+
+    if (spaceTheme === "saturn") {
+        return "travel-saturn";
+    }
+
+    if (spaceTheme === "space") {
+        return "travel-space";
+    }
+
+    if (spaceTheme === "asteroids") {
+        return "travel-asteroids";
+    }
+
+    return "travel-earth";
+};
+
 export const getRobotQuickMenuActions = ({
+    activeScenePresetLabel,
+    cameraHint,
+    isCameraManualMode,
     isNotificationAlerting,
     isNotificationLoading = false,
+    nextScenePresetLabel,
     nextTheme,
+    onCameraClick,
+    onCameraNextClick,
+    onCameraPreviousClick,
+    previousTheme,
+    previousScenePresetLabel,
     onConversationClick,
     onNotificationClick,
     onTravelClick,
+    onTravelNextClick,
+    onTravelPreviousClick,
+    showCamera,
     showConversation,
     showNotification,
     showTravel,
@@ -54,21 +93,49 @@ export const getRobotQuickMenuActions = ({
     }
 
     if (showTravel) {
+        const nextThemeLabel = getSpaceThemeLabel(nextTheme);
+        const previousThemeLabel = getSpaceThemeLabel(previousTheme);
+
         actions.push({
-            ariaLabel: nextTheme === "mars" ? "Viajar para Marte" : "Voltar para Terra",
+            ariaLabel: `Viajar para ${nextThemeLabel}`,
             iconWeight: "fill",
             id: "travel",
-            label: nextTheme === "mars" ? "Marte" : "Terra",
+            label: nextThemeLabel,
+            navigation: {
+                nextAriaLabel: `Proximo planeta: ${nextThemeLabel}`,
+                onNextClick: onTravelNextClick,
+                onPreviousClick: onTravelPreviousClick,
+                previousAriaLabel: `Planeta anterior: ${previousThemeLabel}`,
+            },
             onClick: onTravelClick,
-            tone: nextTheme === "mars" ? "travel-mars" : "travel-earth",
+            tone: getTravelTone(nextTheme),
         });
     }
 
-    const positions = ACTION_POSITIONS[actions.length] || ACTION_POSITIONS[3];
+    if (showCamera) {
+        actions.push({
+            ariaLabel: isCameraManualMode
+                ? "Sair do controle manual da camera"
+                : "Assumir controle manual da camera",
+            caption: cameraHint,
+            iconWeight: "fill",
+            id: "camera",
+            label: isCameraManualMode ? "Pilotando" : "Camera",
+            navigation: {
+                nextAriaLabel: `Proximo preset de camera: ${nextScenePresetLabel}`,
+                onNextClick: onCameraNextClick,
+                onPreviousClick: onCameraPreviousClick,
+                previousAriaLabel: `Preset anterior de camera: ${previousScenePresetLabel}`,
+            },
+            onClick: onCameraClick,
+            tone: isCameraManualMode ? "camera-manual" : "camera-preset",
+        });
+    }
 
-    return actions.map((action, index) => ({
+    return actions.map((action) => ({
         ...action,
-        position: positions[index] || "top",
+        caption: action.id === "camera" && !isCameraManualMode ? activeScenePresetLabel : action.caption,
+        position: ACTION_POSITION_BY_ID[action.id] || "top",
     }));
 };
 

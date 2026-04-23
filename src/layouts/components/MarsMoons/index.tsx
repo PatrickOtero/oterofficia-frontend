@@ -1,69 +1,52 @@
-import type { CSSProperties } from "react";
 import { memo } from "react";
 import deimosMap from "../../../assets/deimos-map.jpg";
 import phobosMap from "../../../assets/phobos-map.jpg";
-import { MarsMoonsContainer } from "./moons.style";
+import { OrbitalMoons, type OrbitalMoonConfig, type OrbitalMoonPlacement } from "../OrbitalMoons";
+import { MARS_SCENE_CENTER_Y } from "../PlanetSystem/sceneAnchors";
 
-const moons = [
+const centerY = MARS_SCENE_CENTER_Y;
+
+const moons: OrbitalMoonConfig[] = [
     {
+        centerY,
+        glow: "rgba(255, 215, 192, 0.08)",
         key: "phobos",
         map: phobosMap,
-        size: "3.6rem",
-        orbitSize: "76rem",
-        orbitBottom: "-19rem",
-        orbitDuration: "120s",
+        mapFilter: "saturate(0.92) contrast(1.06) brightness(0.98)",
         orbitDelay: "-18s",
+        orbitDuration: "120s",
+        orbitSize: "76rem",
+        shadow: "rgba(10, 10, 16, 0.22)",
+        shellEnd: "#6a6257",
+        shellMid: "#aa9f90",
+        shellStart: "#d9d2c6",
+        size: "3.6rem",
         spinDuration: "114s",
-        top: "9.4rem",
+        trackOpacity: "0.96",
     },
     {
+        centerY,
+        glow: "rgba(255, 225, 205, 0.06)",
         key: "deimos",
         map: deimosMap,
-        size: "2.9rem",
-        orbitSize: "88rem",
-        orbitBottom: "-24rem",
-        orbitDuration: "176s",
+        mapFilter: "saturate(0.92) contrast(1.06) brightness(0.98)",
         orbitDelay: "-102s",
+        orbitDuration: "176s",
+        orbitSize: "88rem",
+        shadow: "rgba(12, 10, 16, 0.24)",
+        shellEnd: "#6a6257",
+        shellMid: "#b4a697",
+        shellStart: "#e2dbce",
+        size: "2.9rem",
         spinDuration: "162s",
-        top: "7.4rem",
+        trackOpacity: "0.96",
     },
 ];
 
-type MoonOrbitStyle = CSSProperties & {
-    "--moon-map": string;
-    "--moon-orbit-delay": string;
-    "--moon-orbit-bottom": string;
-    "--moon-orbit-duration": string;
-    "--moon-orbit-size": string;
-    "--moon-size": string;
-    "--moon-spin-duration": string;
-    "--moon-top": string;
+type MarsMoonsProps = {
+    placement?: OrbitalMoonPlacement;
 };
 
-const createMoonOrbitStyle = (moon: (typeof moons)[number]): MoonOrbitStyle => ({
-    "--moon-map": `url(${moon.map})`,
-    "--moon-orbit-delay": moon.orbitDelay,
-    "--moon-orbit-bottom": moon.orbitBottom,
-    "--moon-orbit-duration": moon.orbitDuration,
-    "--moon-orbit-size": moon.orbitSize,
-    "--moon-size": moon.size,
-    "--moon-spin-duration": moon.spinDuration,
-    "--moon-top": moon.top,
-});
-
-export const MarsMoons = memo(() => (
-    <MarsMoonsContainer>
-        {moons.map((moon) => (
-            <div className="mars-moon-orbit" key={moon.key} style={createMoonOrbitStyle(moon)}>
-                <div className="mars-moon-body">
-                    <div className="mars-moon-surface">
-                        <div className="mars-moon-track">
-                            <div className="mars-moon-panel" />
-                            <div className="mars-moon-panel" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        ))}
-    </MarsMoonsContainer>
+export const MarsMoons = memo(({ placement = "back" }: MarsMoonsProps) => (
+    <OrbitalMoons mobileScale="0.68" moons={moons} placement={placement} tabletScale="0.82" />
 ));

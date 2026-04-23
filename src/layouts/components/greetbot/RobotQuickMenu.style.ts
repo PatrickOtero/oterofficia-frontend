@@ -115,6 +115,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             opacity 180ms ease;
     }
 
+    .quick-menu-action.has-navigation {
+        width: 9.6rem;
+    }
+
     .quick-menu-action.position-left {
         transform: translate(calc(-50% - 9.1rem), calc(-50% - 3.6rem));
     }
@@ -125,6 +129,31 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
 
     .quick-menu-action.position-right {
         transform: translate(calc(-50% + 9.1rem), calc(-50% - 3.6rem));
+    }
+
+    .quick-menu-action.position-bottom {
+        transform: translate(-50%, calc(-50% + 6.4rem));
+    }
+
+    .quick-menu-action.position-bottom.has-navigation {
+        width: 10rem;
+    }
+
+    .quick-menu-action.tone-camera-preset {
+        --quick-accent-rgb: 166, 226, 255;
+        --quick-button-border: rgba(196, 236, 255, 0.34);
+        --quick-button-highlight: rgba(245, 252, 255, 0.3);
+        --quick-button-start: rgba(74, 160, 255, 0.22);
+        --quick-button-end: rgba(6, 19, 38, 0.94);
+    }
+
+    .quick-menu-action.tone-camera-manual {
+        --quick-accent-rgb: 201, 126, 255;
+        --quick-button-border: rgba(225, 185, 255, 0.38);
+        --quick-button-highlight: rgba(255, 242, 255, 0.28);
+        --quick-button-start: rgba(181, 87, 255, 0.24);
+        --quick-button-end: rgba(24, 10, 40, 0.94);
+        --quick-label-bg: rgba(27, 14, 42, 0.84);
     }
 
     .quick-menu-action.tone-notification {
@@ -160,6 +189,41 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         --quick-label-bg: rgba(39, 20, 14, 0.82);
     }
 
+    .quick-menu-action.tone-travel-jupiter {
+        --quick-accent-rgb: 255, 198, 115;
+        --quick-button-border: rgba(255, 220, 164, 0.36);
+        --quick-button-highlight: rgba(255, 246, 225, 0.26);
+        --quick-button-start: rgba(218, 144, 92, 0.24);
+        --quick-button-end: rgba(47, 24, 15, 0.92);
+        --quick-label-bg: rgba(42, 24, 16, 0.82);
+    }
+
+    .quick-menu-action.tone-travel-saturn {
+        --quick-accent-rgb: 255, 224, 172;
+        --quick-button-border: rgba(255, 236, 198, 0.34);
+        --quick-button-highlight: rgba(255, 250, 234, 0.28);
+        --quick-button-start: rgba(226, 188, 126, 0.2);
+        --quick-button-end: rgba(29, 22, 17, 0.9);
+        --quick-label-bg: rgba(36, 28, 21, 0.82);
+    }
+
+    .quick-menu-action.tone-travel-space {
+        --quick-accent-rgb: 164, 215, 255;
+        --quick-button-border: rgba(189, 231, 255, 0.34);
+        --quick-button-highlight: rgba(242, 248, 255, 0.24);
+        --quick-button-start: rgba(83, 127, 255, 0.2);
+        --quick-button-end: rgba(6, 17, 36, 0.92);
+    }
+
+    .quick-menu-action.tone-travel-asteroids {
+        --quick-accent-rgb: 244, 198, 142;
+        --quick-button-border: rgba(255, 219, 181, 0.34);
+        --quick-button-highlight: rgba(255, 243, 226, 0.24);
+        --quick-button-start: rgba(201, 132, 84, 0.2);
+        --quick-button-end: rgba(24, 17, 13, 0.92);
+        --quick-label-bg: rgba(34, 24, 18, 0.82);
+    }
+
     .quick-menu-action-beam {
         position: absolute;
         left: 50%;
@@ -183,6 +247,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         pointer-events: none;
     }
 
+    .quick-menu-action.has-navigation .quick-menu-action-beam {
+        top: 4.15rem;
+    }
+
     .quick-menu-action.position-left .quick-menu-action-beam {
         top: 3.95rem;
         height: 8.2rem;
@@ -195,6 +263,41 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         height: 8.2rem;
         transform-origin: top center;
         transform: translateX(-50%) rotate(65deg);
+    }
+
+    .quick-menu-action.position-bottom .quick-menu-action-beam {
+        top: auto;
+        bottom: 4rem;
+        height: 6.7rem;
+        transform-origin: top center;
+        transform: translateX(-50%) rotate(180deg);
+    }
+
+    .quick-menu-button-stack {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.9rem;
+        height: 4.9rem;
+        z-index: 1;
+    }
+
+    .quick-menu-button-stack.has-navigation {
+        width: 9.1rem;
+        height: 5rem;
+    }
+
+    .quick-menu-nav-orbit {
+        position: absolute;
+        inset: 0.28rem 0.65rem;
+        border: 1px solid rgba(var(--quick-accent-rgb), 0.14);
+        border-radius: 999px;
+        opacity: 0.6;
+        pointer-events: none;
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+            0 0 0.9rem rgba(var(--quick-accent-rgb), 0.08);
     }
 
     .quick-menu-button {
@@ -220,6 +323,64 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             transform 180ms ease,
             box-shadow 180ms ease,
             border-color 180ms ease;
+        z-index: 1;
+    }
+
+    .quick-menu-button-stack.has-navigation .quick-menu-button {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        bottom: auto;
+        transform: translate(-50%, -50%);
+    }
+
+    .quick-menu-nav-button {
+        position: absolute;
+        top: 50%;
+        width: 2.3rem;
+        height: 2.3rem;
+        min-width: 0;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 1px solid rgba(var(--quick-accent-rgb), 0.24);
+        background:
+            radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), transparent 28%),
+            linear-gradient(180deg, rgba(var(--quick-accent-rgb), 0.22) 0%, rgba(6, 18, 34, 0.86) 100%);
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+            0 0 0.9rem rgba(var(--quick-accent-rgb), 0.14);
+        color: rgba(240, 249, 255, 0.94);
+        cursor: pointer;
+        pointer-events: auto;
+        transition:
+            transform 180ms ease,
+            box-shadow 180ms ease,
+            border-color 180ms ease;
+        z-index: 2;
+        transform: translateY(-50%);
+    }
+
+    .quick-menu-nav-button.previous {
+        left: 0.2rem;
+    }
+
+    .quick-menu-nav-button.next {
+        right: 0.2rem;
+    }
+
+    .quick-menu-nav-button:hover {
+        transform: translateY(-50%) scale(1.05);
+        border-color: rgba(var(--quick-accent-rgb), 0.34);
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+            0 0 1.2rem rgba(var(--quick-accent-rgb), 0.18);
+    }
+
+    .quick-menu-nav-button svg {
+        filter: drop-shadow(0 0 0.35rem rgba(var(--quick-accent-rgb), 0.22));
     }
 
     .quick-menu-button:hover {
@@ -228,6 +389,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             inset 0 0 0 1px rgba(255, 255, 255, 0.08),
             0 0 1.8rem rgba(var(--quick-accent-rgb), 0.24),
             0 0 2.8rem rgba(var(--quick-accent-rgb), 0.14);
+    }
+
+    .quick-menu-button-stack.has-navigation .quick-menu-button:hover {
+        transform: translate(-50%, calc(-50% - 0.16rem)) scale(1.04);
     }
 
     .quick-menu-button-core {
@@ -281,6 +446,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
     }
 
     .quick-menu-label {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.14rem;
         padding: 0.34rem 0.72rem;
         border-radius: 999px;
         border: 1px solid rgba(var(--quick-accent-rgb), 0.18);
@@ -293,6 +462,17 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         white-space: nowrap;
         box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.16);
         pointer-events: none;
+    }
+
+    .quick-menu-label-title {
+        line-height: 1;
+    }
+
+    .quick-menu-label-caption {
+        font-size: 0.6rem;
+        letter-spacing: 0.06em;
+        opacity: 0.76;
+        line-height: 1;
     }
 
     ${({ $actionCount }) =>
@@ -308,6 +488,18 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
                       height: 15.4rem;
                   }
               `
+            : $actionCount === 4
+              ? css`
+                    .quick-menu-orbit::before {
+                        width: 23rem;
+                        height: 23rem;
+                    }
+
+                    .quick-menu-orbit::after {
+                        width: 19.6rem;
+                        height: 19.6rem;
+                    }
+                `
             : ""}
 
     @media (max-width: 900px) {
@@ -336,6 +528,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             width: 6rem;
         }
 
+        .quick-menu-action.has-navigation {
+            width: 8.4rem;
+        }
+
         .quick-menu-action.position-left {
             transform: translate(calc(-50% - 6.9rem), calc(-50% - 2.7rem));
         }
@@ -348,9 +544,17 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             transform: translate(calc(-50% + 6.9rem), calc(-50% - 2.7rem));
         }
 
+        .quick-menu-action.position-bottom {
+            transform: translate(-50%, calc(-50% + 4.8rem));
+        }
+
         .quick-menu-action-beam {
             top: 3.55rem;
             height: 6rem;
+        }
+
+        .quick-menu-action.has-navigation .quick-menu-action-beam {
+            top: 3.85rem;
         }
 
         .quick-menu-action.position-left .quick-menu-action-beam,
@@ -359,9 +563,25 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             height: 6rem;
         }
 
+        .quick-menu-action.position-bottom .quick-menu-action-beam {
+            top: auto;
+            bottom: 3.6rem;
+            height: 5.2rem;
+        }
+
         .quick-menu-button {
             width: 4.35rem;
             height: 4.35rem;
+        }
+
+        .quick-menu-button-stack.has-navigation {
+            width: 7.9rem;
+            height: 4.5rem;
+        }
+
+        .quick-menu-nav-button {
+            width: 2.05rem;
+            height: 2.05rem;
         }
 
         .quick-menu-button-core {
@@ -400,6 +620,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             transform: translate(calc(-50% - 5.35rem), calc(-50% - 1.85rem));
         }
 
+        .quick-menu-action.has-navigation {
+            width: 7.5rem;
+        }
+
         .quick-menu-action.position-top {
             transform: translate(-50%, calc(-50% - 7.1rem));
         }
@@ -408,9 +632,17 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             transform: translate(calc(-50% + 5.35rem), calc(-50% - 1.85rem));
         }
 
+        .quick-menu-action.position-bottom {
+            transform: translate(-50%, calc(-50% + 3.9rem));
+        }
+
         .quick-menu-action-beam {
             top: 3.1rem;
             height: 4.8rem;
+        }
+
+        .quick-menu-action.has-navigation .quick-menu-action-beam {
+            top: 3.4rem;
         }
 
         .quick-menu-action.position-left .quick-menu-action-beam,
@@ -419,9 +651,25 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
             height: 4.8rem;
         }
 
+        .quick-menu-action.position-bottom .quick-menu-action-beam {
+            top: auto;
+            bottom: 3.2rem;
+            height: 4.1rem;
+        }
+
         .quick-menu-button {
             width: 3.95rem;
             height: 3.95rem;
+        }
+
+        .quick-menu-button-stack.has-navigation {
+            width: 7rem;
+            height: 4rem;
+        }
+
+        .quick-menu-nav-button {
+            width: 1.84rem;
+            height: 1.84rem;
         }
 
         .quick-menu-button-core svg {
@@ -438,6 +686,10 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         .quick-menu-label {
             padding: 0.28rem 0.58rem;
             font-size: 0.62rem;
+        }
+
+        .quick-menu-label-caption {
+            font-size: 0.52rem;
         }
     }
 `;

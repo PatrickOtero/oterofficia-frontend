@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { BotContextProvider } from "./contexts/botFunctions";
+import { SceneCameraProvider } from "./contexts/sceneCamera";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { ContentLayout } from "./layouts/contentLayout";
 import { DefaultLayout } from "./layouts/defaultLayout";
@@ -97,42 +98,44 @@ const RouteFallback = () => (
 export function Router() {
   return (
     <BotContextProvider>
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route element={<DefaultLayout />} path="/">
-            <Route element={<HomePage />} path="/" />
-            <Route element={<AboutMePage />} path="/aboutme" />
-            <Route element={<PortfolioPage />} path="/portfolio" />
-            <Route element={<LoginPage />} path="/login" />
-            <Route element={<RegisterPage />} path="/register" />
-            <Route element={<ForgotPasswordPage />} path="/forgot-password" />
-            <Route element={<ResetPasswordPage />} path="/reset-password" />
-            <Route element={<VerifyEmailPage />} path="/verify-email" />
-            <Route element={<ConfirmEmailChangePage />} path="/confirm-email-change" />
-            <Route element={<ConfirmAccountDeletionPage />} path="/confirm-account-deletion" />
-          </Route>
-
-          <Route element={<ContentLayout />}>
-            <Route element={<StudiesPage />} path="/studies" />
-            <Route element={<StudyPostPage />} path="/studies/:slug" />
-
-            <Route element={<ProtectedRoute />}>
-              <Route element={<ProfilePage />} path="/profile" />
+      <SceneCameraProvider>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route element={<DefaultLayout />} path="/">
+              <Route element={<HomePage />} path="/" />
+              <Route element={<AboutMePage />} path="/aboutme" />
+              <Route element={<PortfolioPage />} path="/portfolio" />
+              <Route element={<LoginPage />} path="/login" />
+              <Route element={<RegisterPage />} path="/register" />
+              <Route element={<ForgotPasswordPage />} path="/forgot-password" />
+              <Route element={<ResetPasswordPage />} path="/reset-password" />
+              <Route element={<VerifyEmailPage />} path="/verify-email" />
+              <Route element={<ConfirmEmailChangePage />} path="/confirm-email-change" />
+              <Route element={<ConfirmAccountDeletionPage />} path="/confirm-account-deletion" />
             </Route>
 
-            <Route element={<ProtectedRoute requireAdmin />}>
-              <Route element={<AdminAboutEditorPage />} path="/admin/about" />
-              <Route element={<AdminStudiesDashboardPage />} path="/admin/studies" />
-              <Route element={<AdminInteractionAnalyticsPage />} path="/admin/analytics" />
-              <Route element={<AdminStudyEditorPage />} path="/admin/studies/new" />
-              <Route element={<AdminStudyEditorPage />} path="/admin/studies/:id/edit" />
-              <Route element={<AdminProjectsDashboardPage />} path="/admin/projects" />
-              <Route element={<AdminProjectEditorPage />} path="/admin/projects/new" />
-              <Route element={<AdminProjectEditorPage />} path="/admin/projects/:id/edit" />
+            <Route element={<ContentLayout />}>
+              <Route element={<StudiesPage />} path="/studies" />
+              <Route element={<StudyPostPage />} path="/studies/:slug" />
+
+              <Route element={<ProtectedRoute />}>
+                <Route element={<ProfilePage />} path="/profile" />
+              </Route>
+
+              <Route element={<ProtectedRoute requireAdmin />}>
+                <Route element={<AdminAboutEditorPage />} path="/admin/about" />
+                <Route element={<AdminStudiesDashboardPage />} path="/admin/studies" />
+                <Route element={<AdminInteractionAnalyticsPage />} path="/admin/analytics" />
+                <Route element={<AdminStudyEditorPage />} path="/admin/studies/new" />
+                <Route element={<AdminStudyEditorPage />} path="/admin/studies/:id/edit" />
+                <Route element={<AdminProjectsDashboardPage />} path="/admin/projects" />
+                <Route element={<AdminProjectEditorPage />} path="/admin/projects/new" />
+                <Route element={<AdminProjectEditorPage />} path="/admin/projects/:id/edit" />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
-      </Suspense>
+          </Routes>
+        </Suspense>
+      </SceneCameraProvider>
     </BotContextProvider>
   );
 }

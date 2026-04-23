@@ -24,11 +24,34 @@ export const DefaultContainer = styled.div`
         z-index: 1;
     }
 
+    .scene-stage {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: visible;
+        transform: translate3d(
+            calc(var(--scene-camera-x, 0px) * -0.08),
+            calc(var(--scene-camera-y, 0px) * -0.08),
+            0
+        );
+        transform-origin: 50% 60%;
+        will-change: transform;
+    }
+
     .planet-system {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: visible;
+        transform:
+            translate3d(
+                calc(var(--scene-camera-x, 0px) * -1),
+                calc(var(--scene-camera-y, 0px) * -1),
+                0
+            )
+            scale(var(--scene-camera-zoom, 1));
+        transform-origin: 50% 60%;
+        will-change: transform;
     }
 
     @media (max-width: 900px) {

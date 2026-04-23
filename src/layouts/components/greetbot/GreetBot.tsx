@@ -21,7 +21,12 @@ export const GreetBot = memo((props: GreetBotProps) => {
         handleNotificationItemClick,
         handleRobotActivate,
         handleRobotHoverChange,
+        handleSceneCameraClick,
+        handleSceneCameraNextClick,
+        handleSceneCameraPreviousClick,
         handleTravelClick,
+        handleTravelNextClick,
+        handleTravelPreviousClick,
         isConversationOpen,
         isNotificationCenterOpen,
         isNotificationsLoading,
@@ -47,12 +52,24 @@ export const GreetBot = memo((props: GreetBotProps) => {
             >
                 {quickMenu.shouldShowQuickMenu && !isConversationOpen ? (
                     <RobotQuickMenu
+                        activeScenePresetLabel={quickMenu.activeScenePresetLabel}
+                        cameraHint={quickMenu.cameraHint}
+                        isCameraManualMode={quickMenu.isSceneCameraManualMode}
                         isNotificationAlerting={quickMenu.isNotificationAlerting}
                         isNotificationLoading={isNotificationsLoading}
+                        nextScenePresetLabel={quickMenu.nextScenePresetLabel}
                         nextTheme={quickMenu.nextTheme}
+                        onCameraClick={handleSceneCameraClick}
+                        onCameraNextClick={handleSceneCameraNextClick}
+                        onCameraPreviousClick={handleSceneCameraPreviousClick}
+                        previousTheme={quickMenu.previousTheme}
+                        previousScenePresetLabel={quickMenu.previousScenePresetLabel}
                         onConversationClick={handleConversationClick}
                         onNotificationClick={handleNotificationClick}
                         onTravelClick={handleTravelClick}
+                        onTravelNextClick={handleTravelNextClick}
+                        onTravelPreviousClick={handleTravelPreviousClick}
+                        showCamera={quickMenu.showCamera}
                         showConversation={quickMenu.showConversation}
                         showNotification={quickMenu.showNotification}
                         showTravel={quickMenu.showTravel}

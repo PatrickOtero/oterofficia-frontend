@@ -4,6 +4,7 @@ import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
 import { PlanetSystem } from "../components/PlanetSystem";
 import { SiteSign } from "../components/SiteSign";
 import { StarsBackground } from "../components/StarsBackground";
+import { SceneParallaxLayer } from "../components/sceneCamera/SceneParallaxLayer";
 import { useAuth } from "../../features/auth/hooks/useAuth";
 import { ContentLayoutContainer } from "./styles";
 import { GreetBot } from "../components/greetbot";
@@ -14,7 +15,7 @@ export const ContentLayout = () => {
   const location = useLocation();
   const hasInitializedScene = useRef(false);
   const { logout, user, isAdmin, isLoading } = useAuth();
-  const { earthPosition, sceneTransition } = useBotFunctionsContext();
+  const { earthPosition, sceneTransition, spaceTheme } = useBotFunctionsContext();
   const { openAuthScene, openContentScene, showHomeMenu } = useBotSceneActions();
   const shouldShowAmbientBot = true;
   const beamTarget = location.pathname.startsWith("/profile")
@@ -48,9 +49,13 @@ export const ContentLayout = () => {
 
   return (
     <ContentLayoutContainer>
-      <StarsBackground />
-      <div className="planet-system">
-        <PlanetSystem planetPosition={earthPosition} />
+      <div className="scene-stage">
+        <SceneParallaxLayer depth={0.06} zoomFactor={0.02}>
+          <StarsBackground theme={spaceTheme} />
+        </SceneParallaxLayer>
+        <div className="planet-system">
+          <PlanetSystem planetPosition={earthPosition} />
+        </div>
       </div>
 
       <SiteSign forceVisible />
