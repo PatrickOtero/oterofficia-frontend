@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { BotContextProvider } from "./contexts/botFunctions";
 import { SceneCameraProvider } from "./contexts/sceneCamera";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
+import { UserDock } from "./layouts/components/userDock";
 import { ContentLayout } from "./layouts/contentLayout";
 import { DefaultLayout } from "./layouts/defaultLayout";
 
@@ -100,6 +101,7 @@ export function Router() {
     <BotContextProvider>
       <SceneCameraProvider>
         <Suspense fallback={<RouteFallback />}>
+          <UserDock />
           <Routes>
             <Route element={<DefaultLayout />} path="/">
               <Route element={<HomePage />} path="/" />

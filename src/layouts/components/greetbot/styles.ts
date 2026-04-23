@@ -255,6 +255,11 @@ const slotStyles: Record<RobotSceneSlot, ReturnType<typeof css>> = {
         transform: translate3d(0, 0, 0) scale(1);
         animation: ${returnHome} 980ms cubic-bezier(0.16, 1, 0.22, 1);
     `,
+    "content-conversation": css`
+        left: calc(50vw - (var(--robot-scene-width) / 2));
+        top: calc(50vh - (var(--robot-scene-height) / 2) - 0.8rem);
+        transform: translate3d(0, 0, 0) scale(1.02);
+    `,
     "content-entering": css`
         left: calc(100vw - var(--robot-scene-width) - clamp(1.6rem, 4vw, 3.2rem));
         top: calc(100vh - var(--robot-scene-height) - clamp(1rem, 3vh, 2rem));
@@ -270,13 +275,18 @@ const slotStyles: Record<RobotSceneSlot, ReturnType<typeof css>> = {
 
 const visorGlow = "0 0 1.8rem rgba(185, 105, 255, 0.2)";
 
-export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactive: boolean; $slot: RobotSceneSlot }>`
+export const RobotSceneContainer = styled.div<{
+    $elevated: boolean;
+    $hoverable: boolean;
+    $interactive: boolean;
+    $slot: RobotSceneSlot;
+}>`
     --robot-scene-width: 24rem;
     --robot-scene-height: 24rem;
 
     position: fixed;
     inset: 0;
-    z-index: 3;
+    z-index: ${({ $elevated }) => ($elevated ? 12 : 3)};
     pointer-events: none;
 
     .robot-scene-camera-layer {
@@ -344,11 +354,10 @@ export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactiv
     @media (max-width: 900px) {
         --robot-scene-width: 18.5rem;
         --robot-scene-height: 18.5rem;
-        z-index: 3;
 
         .robot-scene-roamer {
             ${({ $slot }) =>
-                $slot === "home-center"
+                $slot === "home-center" || $slot === "content-conversation"
                     ? css`
                           top: calc(50vh - (var(--robot-scene-height) / 2) - 2rem);
                       `
@@ -365,7 +374,7 @@ export const RobotSceneContainer = styled.div<{ $hoverable: boolean; $interactiv
 
         .robot-scene-roamer {
             ${({ $slot }) =>
-                $slot === "home-center"
+                $slot === "home-center" || $slot === "content-conversation"
                     ? css`
                           top: calc(50vh - (var(--robot-scene-height) / 2) - 2.3rem);
                       `

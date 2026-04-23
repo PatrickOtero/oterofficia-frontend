@@ -80,7 +80,7 @@ export const JupiterContainer = styled("div")`
         flex: 0 0 50%;
         height: 100%;
         background-image: url(${jupiterMap});
-        background-size: calc(100% + 2.8rem) 128%;
+        background-size: calc(100% + 2.8rem) 100%;
         background-position: center 46%;
         background-repeat: no-repeat;
         filter: saturate(1.06) contrast(1.08) brightness(0.98);

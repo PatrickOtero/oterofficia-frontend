@@ -1,26 +1,28 @@
-import { useEffect, useRef } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { X } from "phosphor-react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
-import { PlanetSystem } from "../components/PlanetSystem";
 import { SiteSign } from "../components/SiteSign";
-import { StarsBackground } from "../components/StarsBackground";
-import { SceneParallaxLayer } from "../components/sceneCamera/SceneParallaxLayer";
-import { useAuth } from "../../features/auth/hooks/useAuth";
+import { SceneBackdrop } from "../components/SceneBackdrop";
 import { ContentLayoutContainer } from "./styles";
 import { GreetBot } from "../components/greetbot";
 import { useBotSceneActions } from "../../hooks/useBotSceneActions";
+import { useTouchDevice } from "../../hooks/useTouchDevice";
 
 export const ContentLayout = () => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
   const hasInitializedScene = useRef(false);
-  const { logout, user, isAdmin, isLoading } = useAuth();
-  const { earthPosition, sceneTransition, spaceTheme } = useBotFunctionsContext();
-  const { openAuthScene, openContentScene, showHomeMenu } = useBotSceneActions();
+  const isTouchDevice = useTouchDevice();
+  const [isConversationOpen, setIsConversationOpen] = useState(false);
+  const { earthPosition, sceneTransition } = useBotFunctionsContext();
+  const { openContentScene, showHomeMenu } = useBotSceneActions();
   const shouldShowAmbientBot = true;
-  const beamTarget = location.pathname.startsWith("/profile")
-    ? "auth-panel"
-    : "content-menu";
+  const beamTarget = "content-panel";
+  const shouldEnableOutsideDismiss =
+    location.pathname.startsWith("/studies") ||
+    location.pathname.startsWith("/admin") ||
+    location.pathname.startsWith("/profile");
 
   useEffect(() => {
     if (hasInitializedScene.current) {
@@ -34,96 +36,45 @@ export const ContentLayout = () => {
     }
   }, [openContentScene, sceneTransition]);
 
-  const handleLogout = async () => {
-    await logout();
-
-    if (location.pathname.startsWith("/admin")) {
-      navigate("/studies");
-    }
-  };
-
-  const handleGoHome = () => {
+  const handleOutsideDismiss = () => {
     showHomeMenu("content");
     navigate("/");
   };
 
   return (
     <ContentLayoutContainer>
-      <div className="scene-stage">
-        <SceneParallaxLayer depth={0.06} zoomFactor={0.02}>
-          <StarsBackground theme={spaceTheme} />
-        </SceneParallaxLayer>
-        <div className="planet-system">
-          <PlanetSystem planetPosition={earthPosition} />
-        </div>
-      </div>
+      {shouldEnableOutsideDismiss ? (
+        <div
+          className="layout-clickable-container"
+          onClick={handleOutsideDismiss}
+        />
+      ) : null}
+
+      <SceneBackdrop planetPosition={earthPosition} />
 
       <SiteSign forceVisible />
-      {shouldShowAmbientBot ? <GreetBot beamTarget={beamTarget} interactive={false} /> : null}
+      {shouldShowAmbientBot ? (
+        <GreetBot
+          beamTarget={beamTarget}
+          interactive={false}
+          onConversationVisibilityChange={setIsConversationOpen}
+        />
+      ) : null}
 
-      <div className="content-topbar">
-        <button
-          className={`content-nav-button-link ${location.pathname === "/" ? "active" : ""}`}
-          onClick={handleGoHome}
-          type="button"
-        >
-          Inicio
-        </button>
-        <NavLink
-          className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
-          to="/studies"
-          onClick={() => openContentScene("content")}
-        >
-          Estudos
-        </NavLink>
-        {isAdmin ? (
-          <NavLink
-              className={() =>
-                `content-nav-link ${location.pathname.startsWith("/admin") ? "active" : ""}`
-              }
-              onClick={() => openContentScene("content")}
-              to="/admin/studies"
-            >
-              Painel
-          </NavLink>
-        ) : null}
-        {!isLoading && !user ? (
-          <>
-            <NavLink
-              className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
-              to="/login"
-              onClick={() => openAuthScene()}
-            >
-              Entrar
-            </NavLink>
-            <NavLink
-              className={({ isActive }) => `content-nav-link ${isActive ? "active" : ""}`}
-              to="/register"
-              onClick={() => openAuthScene()}
-            >
-              Cadastro
-            </NavLink>
-          </>
-        ) : null}
-        {user ? (
-          <NavLink
-            className={({ isActive }) =>
-              `content-nav-link content-session-chip ${isActive ? "active" : ""}`
-            }
-            onClick={() => openContentScene("content")}
-            to="/profile"
+      {isTouchDevice && isConversationOpen ? <div className="content-conversation-fade" /> : null}
+
+      <main className={`content-main${isTouchDevice && isConversationOpen ? " conversation-active" : ""}`}>
+        {shouldEnableOutsideDismiss ? (
+          <button
+            aria-label="Fechar painel e voltar para tela inicial"
+            className="content-exit-button"
+            onClick={handleOutsideDismiss}
+            type="button"
           >
-            {user.name}
-          </NavLink>
-        ) : null}
-        {user ? (
-          <button className="content-nav-button" onClick={() => void handleLogout()} type="button">
-            Sair
+            <X size={18} weight="bold" />
           </button>
         ) : null}
-      </div>
 
-      <main className="content-main">
         <div className={`content-stage ${location.pathname.startsWith("/admin") ? "panel-stage" : "study-stage"}`}>
           <Outlet />
         </div>

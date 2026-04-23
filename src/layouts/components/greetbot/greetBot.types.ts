@@ -7,11 +7,12 @@ import type {
     RobotSceneSlot,
 } from "./types";
 
-export type BeamTarget = "auth-panel" | "content-menu" | null;
+export type BeamTarget = "auth-panel" | "content-panel" | null;
 
 export type GreetBotProps = {
     interactive?: boolean;
     beamTarget?: BeamTarget;
+    onConversationVisibilityChange?: (isOpen: boolean) => void;
 };
 
 export type GreetBotRouteState = {

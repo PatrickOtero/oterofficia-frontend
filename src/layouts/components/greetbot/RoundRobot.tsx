@@ -31,7 +31,7 @@ const projectionTargetSelectors: Record<RobotProjectionTarget, string[]> = {
     about: [".aboutme-page-main"],
     portfolio: [".portfolio-page-main", ".content-stage"],
     auth: [".auth-scene-panel"],
-    content: [".content-topbar"],
+    content: [".content-main", ".content-stage"],
 };
 
 const projectionHotspotMap: Record<RobotProjectionTarget, { x: number; y: number }> = {

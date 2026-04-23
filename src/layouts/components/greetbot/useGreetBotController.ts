@@ -64,7 +64,9 @@ export const useGreetBotController = ({
     const isHomeMenuScene = interactive && routeState.isHomeRoute && isShowingMenu;
     const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isAuthScene || isHomeMenuScene;
     const isReturningFromContent = isHomeMenuScene && sceneTransition === "content-to-home";
+    const isContentConversationFocused = !interactive && isTouchDevice && isConversationOpen;
     const slot = getRobotSceneSlot({
+        isContentConversationFocused,
         interactive,
         isReturningFromContent,
         sceneTransition,
@@ -72,10 +74,11 @@ export const useGreetBotController = ({
     });
     const attentionTarget = getRobotAttentionTarget({
         beamTarget,
+        isConversationFocused: isContentConversationFocused,
         interactive,
         shouldDockInDefaultScene,
     });
-    const projectionTarget = getRobotProjectionTarget({
+    const baseProjectionTarget = getRobotProjectionTarget({
         beamTarget,
         interactive,
         isAboutScene,
@@ -83,6 +86,7 @@ export const useGreetBotController = ({
         isHomeMenuScene,
         isPortfolioScene,
     });
+    const projectionTarget = isContentConversationFocused ? "none" : baseProjectionTarget;
     const motionIntent = getRobotMotionIntent({
         attentionTarget,
         slot,
@@ -97,6 +101,7 @@ export const useGreetBotController = ({
     const previousScenePresetId = getPreviousSceneCameraPresetId(activeScenePresetId);
     const quickMenu = getQuickMenuState({
         activeScenePresetLabel,
+        isContentScene: !interactive,
         isSceneCameraManualMode: isManualMode,
         interactive,
         isAuthenticated,

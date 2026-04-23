@@ -1,27 +1,10 @@
-import { BellSimpleRinging, Camera, CaretLeft, CaretRight, ChatsCircle, RocketLaunch } from "phosphor-react";
+import { CaretLeft, CaretRight } from "phosphor-react";
 import type { RobotQuickMenuAction as RobotQuickMenuActionType } from "./RobotQuickMenu.types";
 import { getQuickMenuBadgeLabel } from "./RobotQuickMenu.utils";
+import { renderQuickMenuIcon } from "./quickMenuIcons";
 
 type RobotQuickMenuActionProps = {
     action: RobotQuickMenuActionType;
-};
-
-const iconSize = 24;
-
-const renderActionIcon = (action: RobotQuickMenuActionType) => {
-    if (action.id === "notification") {
-        return <BellSimpleRinging size={iconSize} weight={action.iconWeight || "regular"} />;
-    }
-
-    if (action.id === "travel") {
-        return <RocketLaunch size={iconSize} weight={action.iconWeight || "fill"} />;
-    }
-
-    if (action.id === "camera") {
-        return <Camera size={iconSize} weight={action.iconWeight || "fill"} />;
-    }
-
-    return <ChatsCircle size={iconSize} weight={action.iconWeight || "fill"} />;
 };
 
 const renderActionNavigation = (action: RobotQuickMenuActionType) => {
@@ -81,7 +64,7 @@ export const RobotQuickMenuAction = ({ action }: RobotQuickMenuActionProps) => (
                 title={action.ariaLabel || action.label}
                 type="button"
             >
-                <span className="quick-menu-button-core">{renderActionIcon(action)}</span>
+                <span className="quick-menu-button-core">{renderQuickMenuIcon(action)}</span>
                 {action.unreadCount ? (
                     <span className="quick-menu-badge">{getQuickMenuBadgeLabel(action.unreadCount)}</span>
                 ) : null}

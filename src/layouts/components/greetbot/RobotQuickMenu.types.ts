@@ -1,8 +1,9 @@
 import type { SpaceTheme } from "./spaceThemes";
 
-export type RobotQuickMenuProps = {
+export type RobotQuickMenuActionSource = {
     activeScenePresetLabel: string;
     cameraHint?: string;
+    isContentScene?: boolean;
     isCameraManualMode: boolean;
     isNotificationAlerting: boolean;
     isNotificationLoading?: boolean;
@@ -24,6 +25,12 @@ export type RobotQuickMenuProps = {
     showTravel: boolean;
     unreadCount: number;
 };
+
+export type RobotQuickMenuProps = {
+    actions: RobotQuickMenuAction[];
+};
+
+export type RobotQuickMenuLauncherMode = "content" | "default";
 
 export type RobotQuickMenuActionId = "camera" | "notification" | "conversation" | "travel";
 

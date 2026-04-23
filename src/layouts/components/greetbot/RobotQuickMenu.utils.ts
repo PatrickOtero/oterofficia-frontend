@@ -3,8 +3,8 @@ import { getSpaceThemeLabel } from "./spaceThemes";
 import type {
     RobotQuickMenuAction,
     RobotQuickMenuActionPosition,
+    RobotQuickMenuActionSource,
     RobotQuickMenuActionTone,
-    RobotQuickMenuProps,
 } from "./RobotQuickMenu.types";
 
 const ACTION_POSITION_BY_ID: Record<RobotQuickMenuAction["id"], RobotQuickMenuActionPosition> = {
@@ -16,7 +16,7 @@ const ACTION_POSITION_BY_ID: Record<RobotQuickMenuAction["id"], RobotQuickMenuAc
 
 type ActionDraft = Omit<RobotQuickMenuAction, "position">;
 
-const getTravelTone = (spaceTheme: RobotQuickMenuProps["nextTheme"]): RobotQuickMenuActionTone => {
+const getTravelTone = (spaceTheme: RobotQuickMenuActionSource["nextTheme"]): RobotQuickMenuActionTone => {
     if (spaceTheme === "mars") {
         return "travel-mars";
     }
@@ -43,6 +43,7 @@ const getTravelTone = (spaceTheme: RobotQuickMenuProps["nextTheme"]): RobotQuick
 export const getRobotQuickMenuActions = ({
     activeScenePresetLabel,
     cameraHint,
+    isContentScene = false,
     isCameraManualMode,
     isNotificationAlerting,
     isNotificationLoading = false,
@@ -63,8 +64,24 @@ export const getRobotQuickMenuActions = ({
     showNotification,
     showTravel,
     unreadCount,
-}: RobotQuickMenuProps): RobotQuickMenuAction[] => {
+}: RobotQuickMenuActionSource): RobotQuickMenuAction[] => {
     const actions: ActionDraft[] = [];
+
+    if (isContentScene) {
+        actions.push({
+            ariaLabel: `Abrir conversa com ${ROBOT_NAME}`,
+            iconWeight: "fill",
+            id: "conversation",
+            label: "Conversar",
+            onClick: onConversationClick,
+            tone: "conversation",
+        });
+
+        return actions.map((action) => ({
+            ...action,
+            position: ACTION_POSITION_BY_ID[action.id] || "top",
+        }));
+    }
 
     if (showNotification) {
         actions.push({

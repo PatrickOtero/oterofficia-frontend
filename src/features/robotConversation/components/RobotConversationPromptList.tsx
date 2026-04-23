@@ -4,32 +4,41 @@ import { ROBOT_NAME } from "../../robot/robot.constants";
 
 type RobotConversationPromptListProps = {
     actions: RobotConversationAction[];
+    descriptionId?: string;
+    dismissAriaLabel: string;
+    dismissAutoFocus?: boolean;
     isThinking: boolean;
     latestUserPrompt: string | null;
     onActionSelect: (action: RobotConversationAction) => void;
-    onClose: () => void;
+    onDismiss: () => void;
+    titleId?: string;
 };
 
 export const RobotConversationPromptList = ({
     actions,
+    descriptionId,
+    dismissAriaLabel,
+    dismissAutoFocus = false,
     isThinking,
     latestUserPrompt,
     onActionSelect,
-    onClose,
+    onDismiss,
+    titleId,
 }: RobotConversationPromptListProps) => (
     <>
         <div className="conversation-panel-header">
             <div className="conversation-panel-title">
-                <strong>Dialogo</strong>
-                <span>Escolha a proxima pergunta.</span>
+                <strong id={titleId}>Dialogo</strong>
+                <span id={descriptionId}>Escolha a proxima pergunta.</span>
             </div>
 
             <button
-                aria-label={`Encerrar conversa com ${ROBOT_NAME}`}
+                aria-label={dismissAriaLabel}
+                autoFocus={dismissAutoFocus}
                 className="conversation-close"
                 onClick={(event) => {
                     event.stopPropagation();
-                    onClose();
+                    onDismiss();
                 }}
                 type="button"
             >

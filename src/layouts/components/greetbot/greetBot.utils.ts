@@ -26,6 +26,7 @@ type SceneTransition = "idle" | "content-to-home" | "home-to-content" | "menu-to
 
 type QuickMenuVisibilityInput = {
     activeScenePresetLabel: string;
+    isContentScene: boolean;
     isSceneCameraManualMode: boolean;
     interactive: boolean;
     isAuthenticated: boolean;
@@ -46,16 +47,22 @@ export const getGreetBotRouteState = (pathname: string): GreetBotRouteState => (
 });
 
 export const getRobotSceneSlot = ({
+    isContentConversationFocused,
     interactive,
     isReturningFromContent,
     sceneTransition,
     shouldDockInDefaultScene,
 }: {
+    isContentConversationFocused: boolean;
     interactive: boolean;
     isReturningFromContent: boolean;
     sceneTransition: SceneTransition;
     shouldDockInDefaultScene: boolean;
 }): RobotSceneSlot => {
+    if (isContentConversationFocused) {
+        return "content-conversation";
+    }
+
     if (!interactive) {
         return sceneTransition === "home-to-content" ? "content-entering" : "content-docked";
     }
@@ -69,13 +76,19 @@ export const getRobotSceneSlot = ({
 
 export const getRobotAttentionTarget = ({
     beamTarget,
+    isConversationFocused,
     interactive,
     shouldDockInDefaultScene,
 }: {
     beamTarget: BeamTarget;
+    isConversationFocused: boolean;
     interactive: boolean;
     shouldDockInDefaultScene: boolean;
 }): RobotAttentionTarget => {
+    if (isConversationFocused) {
+        return "center";
+    }
+
     if (!interactive) {
         return beamTarget ? "left" : "center";
     }
@@ -103,7 +116,7 @@ export const getRobotProjectionTarget = ({
             return "auth";
         }
 
-        if (beamTarget === "content-menu") {
+        if (beamTarget === "content-panel") {
             return "content";
         }
 
@@ -144,10 +157,11 @@ export const getRobotMotionIntent = ({
 };
 
 export const getRobotConversationPlacement = (slot: RobotSceneSlot) =>
-    slot === "home-center" ? "right" : "left";
+    slot === "home-center" || slot === "content-conversation" ? "right" : "left";
 
 export const getQuickMenuState = ({
     activeScenePresetLabel,
+    isContentScene,
     isSceneCameraManualMode,
     interactive,
     isAuthenticated,
@@ -159,6 +173,25 @@ export const getQuickMenuState = ({
     previousScenePresetLabel,
     unreadCount,
 }: QuickMenuVisibilityInput): GreetBotQuickMenuState => {
+    if (isContentScene) {
+        return {
+            activeScenePresetLabel,
+            cameraHint: undefined,
+            isNotificationAlerting: false,
+            isSceneCameraManualMode: false,
+            nextScenePresetLabel,
+            nextTheme: getNextSpaceTheme(spaceTheme),
+            previousScenePresetLabel,
+            previousTheme: getPreviousSpaceTheme(spaceTheme),
+            shouldShowQuickMenu: true,
+            showCamera: false,
+            showConversation: true,
+            showNotification: false,
+            showTravel: false,
+            unreadCount: 0,
+        };
+    }
+
     const isNotificationAlerting = unreadCount > 0;
     const shouldKeepQuickMenuVisible =
         interactive && !isShowingMenu && (isTouchDevice || isSceneCameraManualMode);

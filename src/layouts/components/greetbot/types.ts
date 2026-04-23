@@ -4,6 +4,7 @@ export type RobotSceneSlot =
     | "home-center"
     | "home-docked"
     | "home-returning"
+    | "content-conversation"
     | "content-entering"
     | "content-docked";
 
@@ -20,6 +21,7 @@ export type RobotMotionIntent =
 
 export type RoundRobotSceneProps = {
     slot: RobotSceneSlot;
+    elevated?: boolean;
     interactive?: boolean;
     hoverable?: boolean;
     attentionTarget?: RobotAttentionTarget;

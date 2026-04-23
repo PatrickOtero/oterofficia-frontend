@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import saturnTexture from "../../../assets/saturn-nasa-2025-texture.jpg";
+import saturnTexture from "../../../assets/saturn-map.jpg";
 import { SATURN_SCENE_CENTER_Y } from "../PlanetSystem/sceneAnchors";
 
 export const SaturnContainer = styled("div")`
@@ -134,7 +134,7 @@ export const SaturnContainer = styled("div")`
         flex: 0 0 50%;
         height: 100%;
         background-image: url(${saturnTexture});
-        background-size: calc(100% + 2.2rem) 118%;
+        background-size: calc(100% + 2.2rem) 100%;
         background-position: center 47%;
         background-repeat: no-repeat;
         filter: saturate(1.08) contrast(1.05) brightness(1.04);

@@ -7,6 +7,7 @@ export const RoundRobotScene = ({
     activationKey = 0,
     attentionTarget = "center",
     children,
+    elevated = false,
     hoverable = false,
     interactive = true,
     motionIntent = "idle",
@@ -77,7 +78,12 @@ export const RoundRobotScene = ({
     };
 
     return (
-        <RobotSceneContainer $hoverable={hoverable} $interactive={interactive} $slot={slot}>
+        <RobotSceneContainer
+            $elevated={elevated}
+            $hoverable={hoverable}
+            $interactive={interactive}
+            $slot={slot}
+        >
             <div className="robot-scene-camera-layer">
                 <div className="robot-scene-roamer">
                     <div
