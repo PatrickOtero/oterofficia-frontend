@@ -72,7 +72,7 @@ const RankingCard = ({
                 </div>
                 <div className="ranking-stats">
                   <span className="ranking-stat-pill">{row.reads} leituras</span>
-                  <span className="ranking-stat-pill">{row.comments + row.replies} comentarios</span>
+                  <span className="ranking-stat-pill">{row.comments + row.replies} comentários</span>
                   <span className="ranking-stat-pill">{row.studyLikes + row.commentLikes} curtidas</span>
                   <span className="ranking-stat-pill">{row.role === "admin" ? "admin" : "user"}</span>
                 </div>
@@ -103,21 +103,21 @@ export const AdminInteractionAnalyticsView = ({
       <div className="analytics-hero">
         <div className="analytics-hero-copy">
           <span className="analytics-eyebrow">Painel comportamental</span>
-          <h1 className="analytics-title">Mapa vivo da interacao dos usuarios</h1>
+          <h1 className="analytics-title">Mapa vivo da interação dos usuários</h1>
           <p className="analytics-description">
-            Aqui fica o pulso do site: quem le com frequencia, quem comenta mais, quem distribui curtidas e
-            como a conversa cresce em volta das publicacoes.
+            Aqui fica o pulso do site: quem lê com frequência, quem comenta mais, quem distribui curtidas e
+            como a conversa cresce em volta das publicações.
           </p>
           <span className="analytics-kicker">
-            {analytics.overview.totalEvents} eventos rastreados desde a ativacao deste modulo
+            {analytics.overview.totalEvents} eventos rastreados desde a ativação deste módulo
           </span>
         </div>
 
         <div className="analytics-hero-highlight">
-          <span className="analytics-eyebrow">Usuarios engajados</span>
+          <span className="analytics-eyebrow">Usuários engajados</span>
           <strong>{formatCompact(analytics.overview.trackedUsers)}</strong>
           <p>
-            Pessoas autenticadas que ja leram, curtiram ou conversaram nas suas publicacoes. O destaque abaixo
+            Pessoas autenticadas que já leram, curtiram ou conversaram nas suas publicações. O destaque abaixo
             mistura profundidade de leitura com sinais sociais.
           </p>
         </div>
@@ -127,29 +127,29 @@ export const AdminInteractionAnalyticsView = ({
         <div className="analytics-metric-card">
           <span>Leituras rastreadas</span>
           <strong>{formatCompact(analytics.overview.totalReads)}</strong>
-          <p>Visualizacoes autenticadas em estudos, com controle para nao inflar recargas seguidas.</p>
+          <p>Visualizações autenticadas em estudos, com controle para não inflar recargas seguidas.</p>
         </div>
         <div className="analytics-metric-card">
-          <span>Comentarios e respostas</span>
+          <span>Comentários e respostas</span>
           <strong>{formatCompact(analytics.overview.totalComments + analytics.overview.totalReplies)}</strong>
-          <p>Conversas iniciadas e continuadas dentro das publicacoes.</p>
+          <p>Conversas iniciadas e continuadas dentro das publicações.</p>
         </div>
         <div className="analytics-metric-card">
           <span>Curtidas sociais</span>
           <strong>{formatCompact(analytics.overview.totalStudyLikes + analytics.overview.totalCommentLikes)}</strong>
-          <p>Somatorio de curtidas em publicacoes e em comentarios.</p>
+          <p>Somatório de curtidas em publicações e em comentários.</p>
         </div>
         <div className="analytics-metric-card">
           <span>Eventos totais</span>
           <strong>{formatCompact(analytics.overview.totalEvents)}</strong>
-          <p>Volume consolidado da atividade registrada para leitura, conversa e reacao.</p>
+          <p>Volume consolidado da atividade registrada para leitura, conversa e reação.</p>
         </div>
       </div>
 
       <div className="analytics-detail-grid">
         <div className="analytics-panel-card">
-          <h3>Ritmo dos ultimos dias</h3>
-          <p>Leituras, comentarios e curtidas distribuidas em uma linha temporal curta para revelar picos recentes.</p>
+          <h3>Ritmo dos últimos dias</h3>
+          <p>Leituras, comentários e curtidas distribuídas em uma linha temporal curta para revelar picos recentes.</p>
 
           <div className="series-chart">
             {analytics.activitySeries.map((point) => (
@@ -169,8 +169,8 @@ export const AdminInteractionAnalyticsView = ({
         </div>
 
         <div className="analytics-panel-card">
-          <h3>Composicao da interacao</h3>
-          <p>Qual tipo de gesto domina a experiencia hoje e como o peso da leitura conversa com a reacao social.</p>
+          <h3>Composição da interação</h3>
+          <p>Qual tipo de gesto domina a experiência hoje e como o peso da leitura conversa com a reação social.</p>
 
           <div className="mix-list">
             {analytics.interactionMix.map((item) => (
@@ -190,28 +190,28 @@ export const AdminInteractionAnalyticsView = ({
 
       <div className="analytics-ranking-grid">
         <RankingCard
-          description="Quem mais gera movimento somando leitura, conversa e reacao."
-          getMetricLabel={(row) => `${row.totalInteractions} interacoes`}
+          description="Quem mais gera movimento somando leitura, conversa e reação."
+          getMetricLabel={(row) => `${row.totalInteractions} interações`}
           rows={analytics.topUsers}
           title="Motores da comunidade"
           valueSelector={(row) => row.totalInteractions}
         />
         <RankingCard
-          description="Perfis que mais avancam pelas publicacoes e mantem frequencia de leitura."
+          description="Perfis que mais avançam pelas publicações e mantêm frequência de leitura."
           getMetricLabel={(row) => `${row.reads} leituras`}
           rows={analytics.topReaders}
           title="Leitores mais ativos"
           valueSelector={(row) => row.reads}
         />
         <RankingCard
-          description="Quem mais puxa ou sustenta conversa com comentarios e respostas."
-          getMetricLabel={(row) => `${row.comments + row.replies} comentarios`}
+          description="Quem mais puxa ou sustenta conversa com comentários e respostas."
+          getMetricLabel={(row) => `${row.comments + row.replies} comentários`}
           rows={analytics.topCommenters}
           title="Quem mais conversa"
           valueSelector={(row) => row.comments + row.replies}
         />
         <RankingCard
-          description="Perfis que mais distribuem sinais de aprovacao entre posts e comentarios."
+          description="Perfis que mais distribuem sinais de aprovação entre posts e comentários."
           getMetricLabel={(row) => `${row.studyLikes + row.commentLikes} curtidas`}
           rows={analytics.topLikers}
           title="Quem mais curte"
@@ -222,7 +222,7 @@ export const AdminInteractionAnalyticsView = ({
       <div className="analytics-panel-card">
         <h3>Atividade recente</h3>
         <p>
-          Ultimos movimentos registrados no site, misturando leitura, curtidas e conversa para ajudar a enxergar
+          Últimos movimentos registrados no site, misturando leitura, curtidas e conversa para ajudar a enxergar
           contexto e timing.
         </p>
 
@@ -249,10 +249,10 @@ export const AdminInteractionAnalyticsView = ({
       </div>
 
       <div className="analytics-panel-card">
-        <h3>Leitura rapida</h3>
+        <h3>Leitura rápida</h3>
         <p>
-          Hoje voce tem {analytics.overview.trackedUsers} usuarios rastreados, {socialActions} acoes sociais e um
-          volume de {analytics.overview.totalReads} leituras autenticadas distribuido entre as suas publicacoes.
+          Hoje você tem {analytics.overview.trackedUsers} usuários rastreados, {socialActions} ações sociais e um
+          volume de {analytics.overview.totalReads} leituras autenticadas distribuído entre as suas publicações.
         </p>
       </div>
     </AdminInteractionAnalyticsContainer>

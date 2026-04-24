@@ -4,11 +4,11 @@ import type {
 } from "../../types/notification";
 
 const kindLabelMap: Record<NotificationKind, string> = {
-    "admin-comment": "Comentario",
+    "admin-comment": "Comentário",
     "admin-comment-like": "Curtida",
     "admin-reply": "Resposta",
-    "admin-study-like": "Publicacao",
-    "comment-like": "Curtiram voce",
+    "admin-study-like": "Publicação",
+    "comment-like": "Curtiram você",
     "comment-reply": "Resposta",
     "thread-comment": "Conversa",
 };

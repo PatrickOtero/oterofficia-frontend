@@ -25,7 +25,7 @@ export const StudyPostImageLightbox = ({
     <StudyPostImageLightboxContainer onClick={onClose}>
       <div className="image-lightbox-shell" onClick={(event) => event.stopPropagation()}>
         <button
-          aria-label="Fechar visualizacao da imagem"
+          aria-label="Fechar visualização da imagem"
           className="image-lightbox-close"
           onClick={onClose}
           type="button"

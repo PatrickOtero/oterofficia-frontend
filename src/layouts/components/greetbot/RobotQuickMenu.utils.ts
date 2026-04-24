@@ -87,8 +87,8 @@ export const getRobotQuickMenuActions = ({
         actions.push({
             alerting: isNotificationAlerting,
             ariaLabel: isNotificationAlerting
-                ? "Abrir notificacoes nao lidas"
-                : "Abrir central de notificacoes",
+                ? "Abrir notificações não lidas"
+                : "Abrir central de notificações",
             iconWeight: isNotificationLoading || isNotificationAlerting ? "fill" : "regular",
             id: "notification",
             label: "Alertas",
@@ -119,7 +119,7 @@ export const getRobotQuickMenuActions = ({
             id: "travel",
             label: nextThemeLabel,
             navigation: {
-                nextAriaLabel: `Proximo planeta: ${nextThemeLabel}`,
+                nextAriaLabel: `Próximo planeta: ${nextThemeLabel}`,
                 onNextClick: onTravelNextClick,
                 onPreviousClick: onTravelPreviousClick,
                 previousAriaLabel: `Planeta anterior: ${previousThemeLabel}`,
@@ -132,17 +132,17 @@ export const getRobotQuickMenuActions = ({
     if (showCamera) {
         actions.push({
             ariaLabel: isCameraManualMode
-                ? "Sair do controle manual da camera"
-                : "Assumir controle manual da camera",
+                ? "Sair do controle manual da câmera"
+                : "Assumir controle manual da câmera",
             caption: cameraHint,
             iconWeight: "fill",
             id: "camera",
-            label: isCameraManualMode ? "Pilotando" : "Camera",
+            label: isCameraManualMode ? "Pilotando" : "Câmera",
             navigation: {
-                nextAriaLabel: `Proximo preset de camera: ${nextScenePresetLabel}`,
+                nextAriaLabel: `Próximo preset de câmera: ${nextScenePresetLabel}`,
                 onNextClick: onCameraNextClick,
                 onPreviousClick: onCameraPreviousClick,
-                previousAriaLabel: `Preset anterior de camera: ${previousScenePresetLabel}`,
+                previousAriaLabel: `Preset anterior de câmera: ${previousScenePresetLabel}`,
             },
             onClick: onCameraClick,
             tone: isCameraManualMode ? "camera-manual" : "camera-preset",

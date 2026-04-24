@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "phosphor-react";
 import { useTouchDevice } from "../../../hooks/useTouchDevice";
+import { useAuth } from "../../auth/hooks/useAuth";
 import { RobotTypingText } from "./RobotTypingText";
 import {
     RobotConversationModalPortal,
@@ -9,6 +10,7 @@ import {
 } from "./RobotConversationPanel.style";
 import { RobotConversationPromptList } from "./RobotConversationPromptList";
 import { useRobotConversationSession } from "../hooks/useRobotConversationSession";
+import { GUEST_CONVERSATION_DESCRIPTION } from "../robotConversation.constants";
 import { ROBOT_NAME } from "../../robot/robot.constants";
 
 type RobotConversationPanelProps = {
@@ -23,6 +25,7 @@ export const RobotConversationPanel = ({
     sessionKey,
 }: RobotConversationPanelProps) => {
     const isTouchDevice = useTouchDevice();
+    const { isAuthenticated } = useAuth();
     const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
     const launcherRef = useRef<HTMLButtonElement | null>(null);
     const dialogTitleId = useId();
@@ -35,7 +38,11 @@ export const RobotConversationPanel = ({
         latestReplyText,
         latestUserPrompt,
         showThinkingState,
+        emptyStateText,
+        isGuestRestricted,
+        statusText,
     } = useRobotConversationSession({
+        isAuthenticated,
         onClose,
         sessionKey,
     });
@@ -71,12 +78,23 @@ export const RobotConversationPanel = ({
     }, [isPromptModalOpen]);
 
     const shouldUseMobilePromptModal = isTouchDevice;
-    const promptLauncherLabel = latestUserPrompt ? "Continuar dialogo" : "Abrir perguntas";
-    const promptLauncherCaption = isThinking
-        ? "Aguardando resposta"
-        : actions.length
-          ? "Escolher pergunta"
-          : "Sem opcoes por enquanto";
+    const promptLauncherLabel = isGuestRestricted
+        ? "Ler aviso"
+        : latestUserPrompt
+          ? "Continuar diálogo"
+          : "Abrir perguntas";
+    const promptLauncherCaption = isGuestRestricted
+        ? "Cadastro necessário"
+        : isThinking
+          ? "Aguardando resposta"
+          : actions.length
+            ? "Escolher pergunta"
+            : "Sem opções por enquanto";
+    const promptTitle = isGuestRestricted ? "Acesso necessário" : "Diálogo";
+    const promptDescription = isGuestRestricted
+        ? GUEST_CONVERSATION_DESCRIPTION
+        : "Escolha a próxima pergunta.";
+    const promptStatusLabel = isGuestRestricted ? "Convidado" : "Pronto";
 
     const scene = (
         <RobotConversationScene
@@ -131,11 +149,16 @@ export const RobotConversationPanel = ({
                 <div className="conversation-panel">
                     <RobotConversationPromptList
                         actions={actions}
+                        description={promptDescription}
                         dismissAriaLabel={`Encerrar conversa com ${ROBOT_NAME}`}
+                        emptyStateText={emptyStateText}
                         isThinking={isThinking}
                         latestUserPrompt={latestUserPrompt}
                         onActionSelect={handleActionSelection}
                         onDismiss={onClose}
+                        statusLabel={promptStatusLabel}
+                        statusText={statusText}
+                        title={promptTitle}
                     />
                 </div>
             )}
@@ -165,9 +188,11 @@ export const RobotConversationPanel = ({
                     >
                         <RobotConversationPromptList
                             actions={actions}
+                            description={promptDescription}
                             descriptionId={dialogDescriptionId}
-                            dismissAriaLabel="Fechar perguntas do dialogo"
+                            dismissAriaLabel="Fechar perguntas do diálogo"
                             dismissAutoFocus
+                            emptyStateText={emptyStateText}
                             isThinking={isThinking}
                             latestUserPrompt={latestUserPrompt}
                             onActionSelect={(action) => {
@@ -175,6 +200,9 @@ export const RobotConversationPanel = ({
                                 closePromptModal();
                             }}
                             onDismiss={closePromptModal}
+                            statusLabel={promptStatusLabel}
+                            statusText={statusText}
+                            title={promptTitle}
                             titleId={dialogTitleId}
                         />
                     </div>

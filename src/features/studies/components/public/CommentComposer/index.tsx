@@ -96,7 +96,7 @@ export const CommentComposer = ({
 
   return (
     <CommentComposerContainer>
-      <div className="composer-title">Comentarios</div>
+      <div className="composer-title">Comentários</div>
 
       {isAuthenticated ? (
         <>
@@ -116,25 +116,25 @@ export const CommentComposer = ({
             placeholder={
               replyTargetName
                 ? "Escreva sua resposta para continuar a conversa."
-                : "Compartilhe uma observacao, uma duvida ou uma leitura complementar."
+                : "Compartilhe uma observação, uma dúvida ou uma leitura complementar."
             }
             value={value}
           />
           <div className="composer-footer">
-            <span className="composer-auth-text">Seu comentario fica vinculado ao seu perfil.</span>
+            <span className="composer-auth-text">Seu comentário fica vinculado ao seu perfil.</span>
             <button className="composer-action" onClick={onSubmit} type="button">
               {isSubmitting
                 ? "Enviando"
                 : replyTargetName
                   ? "Publicar resposta"
-                  : "Publicar comentario"}
+                  : "Publicar comentário"}
             </button>
           </div>
         </>
       ) : (
         <div className="composer-footer">
           <span className="composer-auth-text">
-            Entre com sua conta para curtir e participar da discussao desta publicacao.
+            Entre com sua conta para curtir e participar da discussão desta publicação.
           </span>
           <div className="composer-auth-links">
             <Link

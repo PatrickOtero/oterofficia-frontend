@@ -16,12 +16,12 @@ export const ResetPasswordPage = () => {
 
   const handleSubmit = async () => {
     if (!token) {
-      setErrorMessage("O link informado esta incompleto.");
+      setErrorMessage("O link informado está incompleto.");
       return;
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("As senhas informadas nao coincidem.");
+      setErrorMessage("As senhas informadas não coincidem.");
       return;
     }
 
@@ -35,7 +35,7 @@ export const ResetPasswordPage = () => {
       setPassword("");
       setConfirmPassword("");
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel redefinir a senha.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível redefinir a senha.");
     } finally {
       setIsSubmitting(false);
     }
@@ -67,7 +67,7 @@ export const ResetPasswordPage = () => {
         footer={
           <>
             <div>
-              Depois da redefinicao, voce pode <Link to="/login">voltar ao login</Link>.
+              Depois da redefinição, você pode <Link to="/login">voltar ao login</Link>.
             </div>
           </>
         }

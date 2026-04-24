@@ -205,7 +205,7 @@ export const ProfilePage = () => {
       });
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel atualizar o perfil.");
+      setError(error.response?.data?.message || "Não foi possível atualizar o perfil.");
     } finally {
       setPendingAction("");
     }
@@ -226,7 +226,7 @@ export const ProfilePage = () => {
       await refreshUser();
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel atualizar a imagem.");
+      setError(error.response?.data?.message || "Não foi possível atualizar a imagem.");
     } finally {
       event.target.value = "";
       setPendingAction("");
@@ -242,7 +242,7 @@ export const ProfilePage = () => {
       await refreshUser();
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel remover a imagem.");
+      setError(error.response?.data?.message || "Não foi possível remover a imagem.");
     } finally {
       setPendingAction("");
     }
@@ -257,7 +257,7 @@ export const ProfilePage = () => {
       setPasswordForm({ currentPassword: "", newPassword: "" });
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel atualizar a senha.");
+      setError(error.response?.data?.message || "Não foi possível atualizar a senha.");
     } finally {
       setPendingAction("");
     }
@@ -271,7 +271,7 @@ export const ProfilePage = () => {
       const response = await authApi.requestEmailChange(emailChange);
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel solicitar a troca do e-mail.");
+      setError(error.response?.data?.message || "Não foi possível solicitar a troca do e-mail.");
     } finally {
       setPendingAction("");
     }
@@ -289,7 +289,7 @@ export const ProfilePage = () => {
       const response = await authApi.resendVerificationEmail(user.email);
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel reenviar a confirmacao.");
+      setError(error.response?.data?.message || "Não foi possível reenviar a confirmação.");
     } finally {
       setPendingAction("");
     }
@@ -304,7 +304,7 @@ export const ProfilePage = () => {
       setDeletionPassword("");
       setSuccess(response.message);
     } catch (error: any) {
-      setError(error.response?.data?.message || "Nao foi possivel solicitar a exclusao da conta.");
+      setError(error.response?.data?.message || "Não foi possível solicitar a exclusão da conta.");
     } finally {
       setPendingAction("");
     }
@@ -313,7 +313,7 @@ export const ProfilePage = () => {
   if (!user) {
     return (
       <FeedbackState
-        description="Nao foi possivel carregar os dados do seu perfil."
+        description="Não foi possível carregar os dados do seu perfil."
         title="Perfil indisponivel"
         variant="error"
       />
@@ -334,7 +334,7 @@ export const ProfilePage = () => {
           <div className="profile-meta">
             <span className="profile-pill">{user.email}</span>
             <span className="profile-pill">
-              {user.emailVerifiedAt ? "E-mail confirmado" : "Aguardando confirmacao"}
+              {user.emailVerifiedAt ? "E-mail confirmado" : "Aguardando confirmação"}
             </span>
           </div>
           <div className="profile-actions">
@@ -363,7 +363,7 @@ export const ProfilePage = () => {
       {feedback ? (
         <FeedbackState
           description={feedback.message}
-          title={feedback.variant === "success" ? "Atualizacao concluida" : "Falha na atualizacao"}
+          title={feedback.variant === "success" ? "Atualização concluída" : "Falha na atualização"}
           variant={feedback.variant}
         />
       ) : null}
@@ -396,10 +396,10 @@ export const ProfilePage = () => {
 
       {!user.emailVerifiedAt ? (
         <div className="profile-section">
-          <div className="profile-section-title">Confirmacao de e-mail</div>
+          <div className="profile-section-title">Confirmação de e-mail</div>
           <div className="profile-actions">
             <button onClick={() => void handleResendVerification()} type="button">
-              {pendingAction === "verification" ? "Enviando" : "Reenviar confirmacao"}
+              {pendingAction === "verification" ? "Enviando" : "Reenviar confirmação"}
             </button>
           </div>
         </div>
@@ -457,7 +457,7 @@ export const ProfilePage = () => {
         </label>
         <div className="profile-actions">
           <button onClick={() => void handleAccountDeletionRequest()} type="button">
-            {pendingAction === "deletion" ? "Enviando" : "Solicitar exclusao"}
+            {pendingAction === "deletion" ? "Enviando" : "Solicitar exclusão"}
           </button>
         </div>
       </div>

@@ -11,13 +11,13 @@ export const ConfirmAccountDeletionPage = () => {
   const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
   const { refreshUser } = useAuth();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const [message, setMessage] = useState<string>("Confirmando a exclusao da conta.");
+  const [message, setMessage] = useState<string>("Confirmando a exclusão da conta.");
 
   useEffect(() => {
     const confirm = async () => {
       if (!token) {
         setStatus("error");
-        setMessage("O link de confirmacao esta incompleto.");
+        setMessage("O link de confirmação está incompleto.");
         return;
       }
 
@@ -29,7 +29,7 @@ export const ConfirmAccountDeletionPage = () => {
         setMessage(response.message);
       } catch (error: any) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Nao foi possivel confirmar a exclusao.");
+        setMessage(error.response?.data?.message || "Não foi possível confirmar a exclusão.");
       }
     };
 
@@ -40,12 +40,12 @@ export const ConfirmAccountDeletionPage = () => {
     <AuthSceneShell>
         <FeedbackState
           description={message}
-          title={status === "loading" ? "Excluindo conta" : status === "success" ? "Conta removida" : "Falha na exclusao"}
+          title={status === "loading" ? "Excluindo conta" : status === "success" ? "Conta removida" : "Falha na exclusão"}
           variant={status === "success" ? "success" : status === "error" ? "error" : "info"}
         />
         {status !== "loading" ? (
           <div style={{ marginTop: "1.4rem" }}>
-            <Link to="/">Voltar ao inicio</Link>
+            <Link to="/">Voltar ao início</Link>
           </div>
         ) : null}
     </AuthSceneShell>

@@ -4,32 +4,42 @@ import { ROBOT_NAME } from "../../robot/robot.constants";
 
 type RobotConversationPromptListProps = {
     actions: RobotConversationAction[];
+    description?: string;
     descriptionId?: string;
     dismissAriaLabel: string;
     dismissAutoFocus?: boolean;
+    emptyStateText?: string;
     isThinking: boolean;
     latestUserPrompt: string | null;
     onActionSelect: (action: RobotConversationAction) => void;
     onDismiss: () => void;
+    statusLabel?: string;
+    statusText?: string;
+    title?: string;
     titleId?: string;
 };
 
 export const RobotConversationPromptList = ({
     actions,
+    description = "Escolha a próxima pergunta.",
     descriptionId,
     dismissAriaLabel,
     dismissAutoFocus = false,
+    emptyStateText,
     isThinking,
     latestUserPrompt,
     onActionSelect,
     onDismiss,
+    statusLabel,
+    statusText,
+    title = "Diálogo",
     titleId,
 }: RobotConversationPromptListProps) => (
     <>
         <div className="conversation-panel-header">
             <div className="conversation-panel-title">
-                <strong id={titleId}>Dialogo</strong>
-                <span id={descriptionId}>Escolha a proxima pergunta.</span>
+                <strong id={titleId}>{title}</strong>
+                <span id={descriptionId}>{description}</span>
             </div>
 
             <button
@@ -47,13 +57,11 @@ export const RobotConversationPromptList = ({
         </div>
 
         <div className="conversation-status">
-            <strong>{latestUserPrompt ? "Agora" : "Pronto"}</strong>
+            <strong>{latestUserPrompt ? "Agora" : statusLabel || "Pronto"}</strong>
             <span>
                 {latestUserPrompt
                     ? latestUserPrompt
-                    : isThinking
-                      ? `${ROBOT_NAME} esta organizando a resposta.`
-                      : "Selecione uma pergunta."}
+                    : statusText || (isThinking ? `${ROBOT_NAME} está organizando a resposta.` : "Selecione uma pergunta.")}
             </span>
         </div>
 
@@ -75,7 +83,7 @@ export const RobotConversationPromptList = ({
                 ))
             ) : (
                 <div className="conversation-option-empty">
-                    {`Aguarde ${ROBOT_NAME} terminar de organizar a resposta.`}
+                    {emptyStateText || `Aguarde ${ROBOT_NAME} terminar de organizar a resposta.`}
                 </div>
             )}
         </div>

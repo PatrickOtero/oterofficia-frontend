@@ -26,11 +26,11 @@ type SceneTransition = "idle" | "content-to-home" | "home-to-content" | "menu-to
 
 type QuickMenuVisibilityInput = {
     activeScenePresetLabel: string;
-    isContentScene: boolean;
     isSceneCameraManualMode: boolean;
     interactive: boolean;
     isAuthenticated: boolean;
     isBotHovered: boolean;
+    isConversationLauncherScene: boolean;
     isShowingMenu: boolean;
     isTouchDevice: boolean;
     nextScenePresetLabel: string;
@@ -161,11 +161,11 @@ export const getRobotConversationPlacement = (slot: RobotSceneSlot) =>
 
 export const getQuickMenuState = ({
     activeScenePresetLabel,
-    isContentScene,
     isSceneCameraManualMode,
     interactive,
     isAuthenticated,
     isBotHovered,
+    isConversationLauncherScene,
     isShowingMenu,
     isTouchDevice,
     nextScenePresetLabel,
@@ -173,12 +173,33 @@ export const getQuickMenuState = ({
     previousScenePresetLabel,
     unreadCount,
 }: QuickMenuVisibilityInput): GreetBotQuickMenuState => {
-    if (isContentScene) {
+    if (!isAuthenticated) {
         return {
             activeScenePresetLabel,
             cameraHint: undefined,
             isNotificationAlerting: false,
             isSceneCameraManualMode: false,
+            launcherMode: "content",
+            nextScenePresetLabel,
+            nextTheme: getNextSpaceTheme(spaceTheme),
+            previousScenePresetLabel,
+            previousTheme: getPreviousSpaceTheme(spaceTheme),
+            shouldShowQuickMenu: !interactive || isConversationLauncherScene || !isShowingMenu,
+            showCamera: false,
+            showConversation: true,
+            showNotification: false,
+            showTravel: false,
+            unreadCount: 0,
+        };
+    }
+
+    if (isConversationLauncherScene) {
+        return {
+            activeScenePresetLabel,
+            cameraHint: undefined,
+            isNotificationAlerting: false,
+            isSceneCameraManualMode: false,
+            launcherMode: "content",
             nextScenePresetLabel,
             nextTheme: getNextSpaceTheme(spaceTheme),
             previousScenePresetLabel,
@@ -207,6 +228,7 @@ export const getQuickMenuState = ({
         cameraHint: isSceneCameraManualMode ? "WASD / QE / ESC" : activeScenePresetLabel,
         isNotificationAlerting,
         isSceneCameraManualMode,
+        launcherMode: "default",
         nextScenePresetLabel,
         nextTheme: getNextSpaceTheme(spaceTheme),
         previousScenePresetLabel,

@@ -11,13 +11,13 @@ export const DEFAULT_SCENE_CAMERA_PRESET_ID: SceneCameraPresetId = "default";
 
 export const SCENE_CAMERA_PRESETS: Record<SceneCameraPresetId, SceneCameraPreset> = {
     default: {
-        description: "Visao equilibrada da cena principal.",
+        description: "Visão equilibrada da cena principal.",
         id: "default",
-        label: "Padrao",
+        label: "Padrão",
         value: { x: 0, y: -88, z: 1 },
     },
     "planet-full": {
-        description: "Mostra o planeta inteiro com enquadramento estavel e sem arremessar a cena para o topo.",
+        description: "Mostra o planeta inteiro com enquadramento estável e sem arremessar a cena para o topo.",
         id: "planet-full",
         label: "Planeta inteiro",
         value: { x: 0, y: 88, z: 0.52 },
@@ -29,9 +29,9 @@ export const SCENE_CAMERA_PRESETS: Record<SceneCameraPresetId, SceneCameraPreset
         value: { x: 0, y: -18, z: 1.1 },
     },
     "wide-orbit": {
-        description: "Abre a cena para mostrar o planeta inteiro junto da extensao das orbitas.",
+        description: "Abre a cena para mostrar o planeta inteiro junto da extensão das órbitas.",
         id: "wide-orbit",
-        label: "Orbita ampla",
+        label: "Órbita ampla",
         value: { x: 0, y: 18, z: 0.4 },
     },
     centered: {

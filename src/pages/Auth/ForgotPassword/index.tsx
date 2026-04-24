@@ -22,7 +22,7 @@ export const ForgotPasswordPage = () => {
       const response = await authApi.requestPasswordReset(email);
       setSuccessMessage(response.message);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel solicitar a redefinicao.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível solicitar a redefinição.");
     } finally {
       setIsSubmitting(false);
     }

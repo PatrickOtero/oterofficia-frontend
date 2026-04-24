@@ -42,10 +42,10 @@ export const formatDate = (value: string | null) =>
     : "Sem registro";
 
 export const activityLabelMap: Record<InteractionAnalyticsRecentActivityItem["kind"], string> = {
-  comment_created: "Comentario",
-  comment_like: "Curtida em comentario",
+  comment_created: "Comentário",
+  comment_like: "Curtida em comentário",
   comment_reply: "Resposta",
-  study_like: "Curtida em publicacao",
+  study_like: "Curtida em publicação",
   study_view: "Leitura",
 };
 

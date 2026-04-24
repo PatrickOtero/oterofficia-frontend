@@ -69,7 +69,7 @@ export const AdminStudiesDashboardPage = () => {
       setDashboard(dashboardResponse);
       setComments(commentsResponse);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar o painel de estudos.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível carregar o painel de estudos.");
     } finally {
       setIsLoading(false);
     }
@@ -95,7 +95,7 @@ export const AdminStudiesDashboardPage = () => {
       });
       setStudies(studiesResponse);
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar a lista de estudos.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível carregar a lista de estudos.");
     } finally {
       setIsStudiesLoading(false);
     }
@@ -116,7 +116,7 @@ export const AdminStudiesDashboardPage = () => {
   );
 
   const handleDeleteStudy = async (postId: string) => {
-    if (!window.confirm("Confirma a exclusao definitiva desta postagem?")) {
+    if (!window.confirm("Confirma a exclusão definitiva desta postagem?")) {
       return;
     }
 
@@ -145,7 +145,7 @@ export const AdminStudiesDashboardPage = () => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    if (!window.confirm("Remover este comentario do historico publico?")) {
+    if (!window.confirm("Remover este comentário do histórico público?")) {
       return;
     }
 
@@ -164,7 +164,7 @@ export const AdminStudiesDashboardPage = () => {
       <AdminSectionTabs />
 
       {(isLoading || isStudiesLoading) ? (
-        <FeedbackState description="Os dados do painel estao sendo agregados." title="Carregando painel" />
+        <FeedbackState description="Os dados do painel estão sendo agregados." title="Carregando painel" />
       ) : null}
 
       {!isLoading && !isStudiesLoading && errorMessage ? (

@@ -36,7 +36,7 @@ export const LoginPage = () => {
       await login(form);
       navigate(redirectPath, { replace: true });
     } catch (error: any) {
-      const nextMessage = error.response?.data?.message || "Nao foi possivel concluir o login.";
+      const nextMessage = error.response?.data?.message || "Não foi possível concluir o login.";
       const nextCode = error.response?.data?.code;
 
       setErrorMessage(nextMessage);
@@ -61,7 +61,7 @@ export const LoginPage = () => {
       const response = await authApi.resendVerificationEmail(pendingVerificationEmail);
       setVerificationMessage(response.message);
     } catch (error: any) {
-      setVerificationMessage(error.response?.data?.message || "Nao foi possivel reenviar a confirmacao.");
+      setVerificationMessage(error.response?.data?.message || "Não foi possível reenviar a confirmação.");
     } finally {
       setIsResendingVerification(false);
     }
@@ -86,13 +86,13 @@ export const LoginPage = () => {
             />
             {pendingVerificationEmail ? (
               <button onClick={() => void handleResendVerification()} type="button">
-                {isResendingVerification ? "Reenviando confirmacao" : "Reenviar confirmacao de e-mail"}
+                {isResendingVerification ? "Reenviando confirmação" : "Reenviar confirmação de e-mail"}
               </button>
             ) : null}
             {verificationMessage ? (
               <FeedbackState
                 description={verificationMessage}
-                title="Confirmacao de e-mail"
+                title="Confirmação de e-mail"
                 variant="success"
               />
             ) : null}
@@ -101,7 +101,7 @@ export const LoginPage = () => {
         footer={
           <>
             <div>
-              Ainda nao tem conta?{" "}
+              Ainda não tem conta?{" "}
               <Link to={`/register?redirect=${encodeURIComponent(redirectPath)}`}>Criar cadastro</Link>
             </div>
             <div>

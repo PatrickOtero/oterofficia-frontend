@@ -23,7 +23,7 @@ export const NotificationCenterModal = ({
             >
                 <div className="notification-center-header">
                     <div className="notification-title-group">
-                        <strong>Central de notificacoes</strong>
+                        <strong>Central de notificações</strong>
                         <span>{getNotificationHeaderCopy(feed.unreadCount)}</span>
                     </div>
 
@@ -38,7 +38,7 @@ export const NotificationCenterModal = ({
                             </button>
                         ) : null}
                         <button
-                            aria-label="Fechar notificacoes"
+                            aria-label="Fechar notificações"
                             className="notification-close"
                             onClick={onClose}
                             type="button"
@@ -61,7 +61,7 @@ export const NotificationCenterModal = ({
                         <div className="notification-empty">
                             <strong>Sem sinais novos</strong>
                             <span>
-                                Quando alguem interagir com o seu espaco, o sino holografico vai chamar voce aqui.
+                                Quando alguém interagir com o seu espaço, o sino holográfico vai chamar você aqui.
                             </span>
                         </div>
                     )}

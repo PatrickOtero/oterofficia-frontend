@@ -20,7 +20,6 @@ export const EarthContainer = styled("div")`
     overflow: visible;
 
     .earth-main {
-        position: absolute;
         left: 50%;
         top: ${EARTH_SCENE_CENTER_Y};
         width: min(96rem, 118vw);

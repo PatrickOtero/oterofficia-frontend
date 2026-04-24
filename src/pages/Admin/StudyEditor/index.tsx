@@ -50,7 +50,7 @@ export const AdminStudyEditorPage = () => {
         const study = await studiesApi.fetchAdminStudy(id);
         setForm(mapStudyToFormValues(study));
       } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar a postagem.");
+        setErrorMessage(error.response?.data?.message || "Não foi possível carregar a postagem.");
       } finally {
         setIsLoading(false);
       }
@@ -82,7 +82,7 @@ export const AdminStudyEditorPage = () => {
       setForm(mapStudyToFormValues(response));
       setNoticeMessage(
         targetStatus === "published"
-          ? "Publicacao salva e publicada."
+          ? "Publicação salva e publicada."
           : "Rascunho salvo com sucesso."
       );
 
@@ -90,7 +90,7 @@ export const AdminStudyEditorPage = () => {
         navigate(`/admin/studies/${response.id}/edit`, { replace: true });
       }
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel salvar a postagem.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível salvar a postagem.");
     } finally {
       setIsSaving(false);
       setIsPublishing(false);
@@ -102,7 +102,7 @@ export const AdminStudyEditorPage = () => {
       <AdminSectionTabs />
 
       {isLoading ? (
-        <FeedbackState description="O editor esta carregando os dados salvos." title="Carregando editor" />
+        <FeedbackState description="O editor está carregando os dados salvos." title="Carregando editor" />
       ) : null}
 
       {!isLoading && errorMessage ? (
@@ -110,7 +110,7 @@ export const AdminStudyEditorPage = () => {
       ) : null}
 
       {!isLoading && noticeMessage ? (
-        <FeedbackState description={noticeMessage} title="Atualizacao concluida" variant="success" />
+        <FeedbackState description={noticeMessage} title="Atualização concluída" variant="success" />
       ) : null}
 
       {!isLoading ? (

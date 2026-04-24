@@ -78,13 +78,13 @@ export const ImageUploadField = ({
       onUploaded(response.url);
       setStatusMessage(
         response.fallbackUsed
-          ? "Upload concluido com fallback local."
+          ? "Upload concluído com fallback local."
           : response.source === "cloudflare"
-          ? "Upload concluido na Cloudflare."
-          : "Upload local concluido."
+          ? "Upload concluído na Cloudflare."
+          : "Upload local concluído."
       );
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel concluir o upload.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível concluir o upload.");
     } finally {
       setIsUploading(false);
       event.target.value = "";

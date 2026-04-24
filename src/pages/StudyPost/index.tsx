@@ -304,7 +304,7 @@ const ImageLightboxPortal = ({ image, onClose }: ImageLightboxPortalProps) => {
     <ImageLightboxPortalContainer onClick={onClose}>
       <div className="image-lightbox-shell" onClick={(event) => event.stopPropagation()}>
         <button
-          aria-label="Fechar visualizacao da imagem"
+          aria-label="Fechar visualização da imagem"
           className="image-lightbox-close"
           onClick={onClose}
           type="button"
@@ -364,7 +364,7 @@ export const StudyPostPage = () => {
         setStudy(post);
         await loadComments(post.id);
       } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar esta leitura.");
+        setErrorMessage(error.response?.data?.message || "Não foi possível carregar esta leitura.");
       } finally {
         setIsLoading(false);
       }
@@ -413,7 +413,7 @@ export const StudyPostPage = () => {
         likesCount: response.likesCount,
       });
     } catch (error: any) {
-      setLikeFeedback(error.response?.data?.message || "Nao foi possivel atualizar a curtida agora.");
+      setLikeFeedback(error.response?.data?.message || "Não foi possível atualizar a curtida agora.");
     } finally {
       setIsTogglingLike(false);
     }
@@ -442,7 +442,7 @@ export const StudyPostPage = () => {
         commentsCount: response.commentsCount,
       });
     } catch (error: any) {
-      setCommentFeedback(error.response?.data?.message || "Nao foi possivel publicar o comentario.");
+      setCommentFeedback(error.response?.data?.message || "Não foi possível publicar o comentário.");
     } finally {
       setIsSubmittingComment(false);
     }
@@ -468,7 +468,7 @@ export const StudyPostPage = () => {
         setReplyTarget(null);
       }
     } catch (error: any) {
-      setCommentFeedback(error.response?.data?.message || "Nao foi possivel remover o comentario.");
+      setCommentFeedback(error.response?.data?.message || "Não foi possível remover o comentário.");
     } finally {
       setDeletingCommentId(null);
     }
@@ -513,7 +513,7 @@ export const StudyPostPage = () => {
 
       await loadComments(study.id);
     } catch (error: any) {
-      setCommentFeedback(error.response?.data?.message || "Nao foi possivel atualizar a curtida deste comentario.");
+      setCommentFeedback(error.response?.data?.message || "Não foi possível atualizar a curtida deste comentário.");
     } finally {
       setLikePendingId(null);
     }
@@ -569,14 +569,14 @@ export const StudyPostPage = () => {
 
   if (isLoading) {
     return (
-      <FeedbackState description="O conteudo detalhado esta sendo preparado." title="Carregando publicacao" />
+      <FeedbackState description="O conteúdo detalhado está sendo preparado." title="Carregando publicação" />
     );
   }
 
   if (errorMessage || !study) {
     return (
       <FeedbackState
-        description={errorMessage || "A publicacao solicitada nao esta disponivel."}
+        description={errorMessage || "A publicação solicitada não está disponível."}
         title="Leitura indisponivel"
         variant="error"
       />
@@ -605,16 +605,16 @@ export const StudyPostPage = () => {
             <div className="meta-strip">
               <span className="meta-pill">{study.category}</span>
               <span className="meta-pill">{study.readingTime} min de leitura</span>
-              <span className="meta-pill">{study.commentsCount} comentarios</span>
+              <span className="meta-pill">{study.commentsCount} comentários</span>
             </div>
 
             <div className="post-like-cluster">
               <button
-                aria-label={study.likedByCurrentUser ? "Remover curtida da publicacao" : "Curtir publicacao"}
+                aria-label={study.likedByCurrentUser ? "Remover curtida da publicação" : "Curtir publicação"}
                 className="post-like-button"
                 data-liked={study.likedByCurrentUser}
                 onClick={() => void handleToggleLike()}
-                title={study.likedByCurrentUser ? "Remover curtida" : "Curtir publicacao"}
+                title={study.likedByCurrentUser ? "Remover curtida" : "Curtir publicação"}
                 type="button"
               >
                 <HeartStraight size={20} weight={isTogglingLike ? "fill" : "regular"} />
@@ -661,7 +661,7 @@ export const StudyPostPage = () => {
       />
 
       {commentFeedback ? (
-        <FeedbackState description={commentFeedback} title="Interacao nao concluida" variant="error" />
+        <FeedbackState description={commentFeedback} title="Interação não concluída" variant="error" />
       ) : null}
 
       <CommentList

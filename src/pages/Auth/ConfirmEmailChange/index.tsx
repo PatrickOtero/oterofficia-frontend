@@ -16,7 +16,7 @@ export const ConfirmEmailChangePage = () => {
     const confirm = async () => {
       if (!token) {
         setStatus("error");
-        setMessage("O link de confirmacao esta incompleto.");
+        setMessage("O link de confirmação está incompleto.");
         return;
       }
 
@@ -27,7 +27,7 @@ export const ConfirmEmailChangePage = () => {
         setMessage(response.message);
       } catch (error: any) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Nao foi possivel confirmar o novo e-mail.");
+        setMessage(error.response?.data?.message || "Não foi possível confirmar o novo e-mail.");
       }
     };
 
@@ -38,7 +38,7 @@ export const ConfirmEmailChangePage = () => {
     <AuthSceneShell>
         <FeedbackState
           description={message}
-          title={status === "loading" ? "Atualizando e-mail" : status === "success" ? "E-mail atualizado" : "Falha na confirmacao"}
+          title={status === "loading" ? "Atualizando e-mail" : status === "success" ? "E-mail atualizado" : "Falha na confirmação"}
           variant={status === "success" ? "success" : status === "error" ? "error" : "info"}
         />
         {status !== "loading" ? (

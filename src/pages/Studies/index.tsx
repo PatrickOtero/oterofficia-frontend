@@ -76,7 +76,7 @@ export const StudiesPage = () => {
         });
         setData(response);
       } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar os estudos.");
+        setErrorMessage(error.response?.data?.message || "Não foi possível carregar os estudos.");
       } finally {
         setIsLoading(false);
       }

@@ -187,7 +187,7 @@ const renderBlockFields = (
               onChange={(event) => onChange(updateBlockData(form, blockIndex, "style", event.target.value))}
               value={String(block.data.style || "unordered")}
             >
-              <option value="unordered">Nao ordenada</option>
+              <option value="unordered">Não ordenada</option>
               <option value="ordered">Ordenada</option>
             </select>
           </label>

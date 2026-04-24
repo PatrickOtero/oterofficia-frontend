@@ -40,7 +40,7 @@ export const RegisterPage = () => {
       setSuccessMessage(response.message);
       setShowVerificationAction(response.requiresEmailVerification);
     } catch (error: any) {
-      const errorInfo = getApiErrorInfo(error, "Nao foi possivel concluir o cadastro.");
+      const errorInfo = getApiErrorInfo(error, "Não foi possível concluir o cadastro.");
       setErrorMessage(errorInfo.message);
     } finally {
       setIsSubmitting(false);
@@ -55,7 +55,7 @@ export const RegisterPage = () => {
       const response = await authApi.resendVerificationEmail(form.email);
       setSuccessMessage(response.message);
     } catch (error: any) {
-      const errorInfo = getApiErrorInfo(error, "Nao foi possivel reenviar a confirmacao.");
+      const errorInfo = getApiErrorInfo(error, "Não foi possível reenviar a confirmação.");
       setErrorMessage(errorInfo.message);
     } finally {
       setIsResendingVerification(false);
@@ -70,14 +70,14 @@ export const RegisterPage = () => {
             {successMessage ? (
               <FeedbackState
                 description={successMessage}
-                title="Cadastro concluido"
+                title="Cadastro concluído"
                 variant="success"
               />
             ) : null}
             {errorMessage ? (
               <FeedbackState
                 description={errorMessage}
-                title="Nao foi possivel concluir o cadastro"
+                title="Não foi possível concluir o cadastro"
                 variant="error"
               />
             ) : null}
@@ -99,7 +99,7 @@ export const RegisterPage = () => {
             />
             {showVerificationAction ? (
               <button onClick={() => void handleResendVerification()} type="button">
-                {isResendingVerification ? "Reenviando confirmacao" : "Reenviar confirmacao"}
+                {isResendingVerification ? "Reenviando confirmação" : "Reenviar confirmação"}
               </button>
             ) : null}
           </>
@@ -107,11 +107,11 @@ export const RegisterPage = () => {
         footer={
           <>
             <div>
-              Ja tem acesso?{" "}
+              Já tem acesso?{" "}
               <Link to={`/login?redirect=${encodeURIComponent(redirectPath)}`}>Entrar</Link>
             </div>
             <div>
-              Depois da confirmacao, voce pode voltar para{" "}
+              Depois da confirmação, você pode voltar para{" "}
               <Link to={redirectPath}>continuar navegando</Link>.
             </div>
           </>

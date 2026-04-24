@@ -49,7 +49,7 @@ export const AdminProjectEditorPage = () => {
         const project = await projectsApi.fetchProjectById(id);
         setForm(mapProjectToFormValues(project));
       } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar o projeto.");
+        setErrorMessage(error.response?.data?.message || "Não foi possível carregar o projeto.");
       } finally {
         setIsLoading(false);
       }
@@ -63,7 +63,7 @@ export const AdminProjectEditorPage = () => {
     setNoticeMessage("");
 
     if (!form.projectName.trim() || !form.imageUrl.trim() || !form.projectDescription.trim()) {
-      setErrorMessage("Preencha nome, imagem e descricao.");
+      setErrorMessage("Preencha nome, imagem e descrição.");
       return;
     }
 
@@ -81,7 +81,7 @@ export const AdminProjectEditorPage = () => {
         navigate(`/admin/projects/${response.id}/edit`, { replace: true });
       }
     } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Nao foi possivel salvar o projeto.");
+      setErrorMessage(error.response?.data?.message || "Não foi possível salvar o projeto.");
     } finally {
       setIsSaving(false);
     }
@@ -98,7 +98,7 @@ export const AdminProjectEditorPage = () => {
       ) : null}
 
       {!isLoading && noticeMessage ? (
-        <FeedbackState description={noticeMessage} title="Atualizacao concluida" variant="success" />
+        <FeedbackState description={noticeMessage} title="Atualização concluída" variant="success" />
       ) : null}
 
       {!isLoading ? (

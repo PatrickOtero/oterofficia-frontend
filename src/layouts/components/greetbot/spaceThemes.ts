@@ -5,9 +5,9 @@ export type SpaceTheme = (typeof SPACE_THEMES)[number];
 export const SPACE_THEME_LABELS: Record<SpaceTheme, string> = {
     earth: "Terra",
     mars: "Marte",
-    jupiter: "Jupiter",
+    jupiter: "Júpiter",
     saturn: "Saturno",
-    space: "Espaco",
+    space: "Espaço",
     asteroids: "Asteroides",
 };
 

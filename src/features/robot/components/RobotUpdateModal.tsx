@@ -136,10 +136,10 @@ export const RobotUpdateModal = ({ isLoading, onClose, summary }: RobotUpdateMod
         <div className="robot-update-header">
           <div className="robot-update-title">
             <strong>Me atualize</strong>
-            <span>Radar rapido do movimento no seu site.</span>
+            <span>Radar rápido do movimento no seu site.</span>
           </div>
           <button
-            aria-label={`Fechar atualizacao de ${ROBOT_NAME}`}
+            aria-label={`Fechar atualização de ${ROBOT_NAME}`}
             className="robot-update-close"
             onClick={onClose}
             type="button"
@@ -154,20 +154,20 @@ export const RobotUpdateModal = ({ isLoading, onClose, summary }: RobotUpdateMod
           ) : summary ? (
             <>
               <strong>{summary.totalVisitors}</strong>
-              <span>visitantes unicos ja entraram no seu site.</span>
+              <span>visitantes únicos já entraram no seu site.</span>
             </>
           ) : (
             <>
               <strong>--</strong>
-              <span>Nao consegui consultar os visitantes agora.</span>
+              <span>Não consegui consultar os visitantes agora.</span>
             </>
           )}
         </div>
 
         <span className="robot-update-footnote">
           {summary
-            ? `Ultima entrada detectada em ${formatDateTime(summary.lastVisitAt)}.`
-            : "Esse contador comeca a valer a partir do rastreio atual."}
+            ? `Última entrada detectada em ${formatDateTime(summary.lastVisitAt)}.`
+            : "Esse contador começa a valer a partir do rastreio atual."}
         </span>
       </div>
     </RobotUpdatePortal>,

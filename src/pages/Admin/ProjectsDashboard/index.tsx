@@ -46,7 +46,7 @@ export const AdminProjectsDashboardPage = () => {
       if (error.response?.status === 404) {
         setProjects([]);
       } else {
-        setErrorMessage(error.response?.data?.message || "Nao foi possivel carregar os projetos.");
+        setErrorMessage(error.response?.data?.message || "Não foi possível carregar os projetos.");
       }
     } finally {
       setIsLoading(false);
@@ -80,7 +80,7 @@ export const AdminProjectsDashboardPage = () => {
   }, [filters, projects]);
 
   const handleDeleteProject = async (projectId: string) => {
-    if (!window.confirm("Excluir este projeto do portfolio?")) {
+    if (!window.confirm("Excluir este projeto do portfólio?")) {
       return;
     }
 

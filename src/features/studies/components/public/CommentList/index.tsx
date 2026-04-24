@@ -231,11 +231,11 @@ const CommentNodeBase = ({
           {onToggleLike ? (
             <div className="comment-like-group">
               <button
-                aria-label={comment.likedByCurrentUser ? "Remover curtida" : "Curtir comentario"}
+                aria-label={comment.likedByCurrentUser ? "Remover curtida" : "Curtir comentário"}
                 className="comment-action-icon"
                 data-liked={comment.likedByCurrentUser}
                 onClick={() => onToggleLike(comment)}
-                title={comment.likedByCurrentUser ? "Remover curtida" : "Curtir comentario"}
+                title={comment.likedByCurrentUser ? "Remover curtida" : "Curtir comentário"}
                 type="button"
               >
                 <HeartStraight size={18} weight={likePendingId === comment.id ? "fill" : "regular"} />
@@ -250,10 +250,10 @@ const CommentNodeBase = ({
 
           {onReply ? (
             <button
-              aria-label="Responder comentario"
+              aria-label="Responder comentário"
               className="comment-action-icon"
               onClick={() => onReply(comment)}
-              title="Responder comentario"
+              title="Responder comentário"
               type="button"
             >
               <ChatCircleDots size={18} weight="regular" />
@@ -262,10 +262,10 @@ const CommentNodeBase = ({
 
           {comment.canDelete && onDelete ? (
             <button
-              aria-label="Remover comentario"
+              aria-label="Remover comentário"
               className="comment-action-icon"
               onClick={() => onDelete(comment.id)}
-              title={isDeleting === comment.id ? "Removendo comentario" : "Remover comentario"}
+              title={isDeleting === comment.id ? "Removendo comentário" : "Remover comentário"}
               type="button"
             >
               <Trash size={18} weight={isDeleting === comment.id ? "fill" : "regular"} />
@@ -308,8 +308,8 @@ export const CommentList = memo(
     if (!comments.length) {
       return (
         <EmptyState
-          description="A conversa desta publicacao comeca quando o primeiro comentario e enviado."
-          title="Sem comentarios ainda"
+          description="A conversa desta publicação começa quando o primeiro comentário é enviado."
+          title="Sem comentários ainda"
         />
       );
     }

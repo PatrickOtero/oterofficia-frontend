@@ -8,13 +8,13 @@ export const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
   const token = useMemo(() => searchParams.get("token") || "", [searchParams]);
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const [message, setMessage] = useState<string>("Validando o link de confirmacao.");
+  const [message, setMessage] = useState<string>("Validando o link de confirmação.");
 
   useEffect(() => {
     const verify = async () => {
       if (!token) {
         setStatus("error");
-        setMessage("O link de confirmacao esta incompleto.");
+        setMessage("O link de confirmação está incompleto.");
         return;
       }
 
@@ -24,7 +24,7 @@ export const VerifyEmailPage = () => {
         setMessage(response.message);
       } catch (error: any) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Nao foi possivel confirmar o e-mail.");
+        setMessage(error.response?.data?.message || "Não foi possível confirmar o e-mail.");
       }
     };
 
@@ -35,7 +35,7 @@ export const VerifyEmailPage = () => {
     <AuthSceneShell>
         <FeedbackState
           description={message}
-          title={status === "loading" ? "Confirmando e-mail" : status === "success" ? "E-mail confirmado" : "Falha na confirmacao"}
+          title={status === "loading" ? "Confirmando e-mail" : status === "success" ? "E-mail confirmado" : "Falha na confirmação"}
           variant={status === "success" ? "success" : status === "error" ? "error" : "info"}
         />
         {status !== "loading" ? (

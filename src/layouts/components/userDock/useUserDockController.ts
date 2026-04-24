@@ -127,13 +127,13 @@ export const useUserDockController = (): UserDockController => {
 
     return {
         actions,
-        caption: isAuthenticated ? "Sessao ativa" : AUTH_ROUTES.has(location.pathname) ? "Acesso" : "Conta",
+        caption: isAuthenticated ? "Sessão ativa" : AUTH_ROUTES.has(location.pathname) ? "Acesso" : "Conta",
         closePanel,
         isAuthenticated,
         isPanelOpen,
         roleLabel: isAuthenticated ? (isAdmin ? "Administrador" : "Membro") : null,
         shortcutAction,
-        status: isAuthenticated ? user?.name || "Usuario" : "Entrar ou cadastrar",
+        status: isAuthenticated ? user?.name || "Usuário" : "Entrar ou cadastrar",
         togglePanel: () => {
             setIsPanelOpen((currentState) => !currentState);
         },

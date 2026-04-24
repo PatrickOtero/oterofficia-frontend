@@ -42,10 +42,11 @@ export const GreetBot = memo((props: GreetBotProps) => {
         shouldShowGreetText,
         slot,
     } = useGreetBotController(props);
+    const shouldUseConversationLauncher = quickMenu.launcherMode === "content";
     const quickMenuActions = getRobotQuickMenuActions({
         activeScenePresetLabel: quickMenu.activeScenePresetLabel,
         cameraHint: quickMenu.cameraHint,
-        isContentScene: !interactive,
+        isContentScene: shouldUseConversationLauncher,
         isCameraManualMode: quickMenu.isSceneCameraManualMode,
         isNotificationAlerting: quickMenu.isNotificationAlerting,
         isNotificationLoading: isNotificationsLoading,
@@ -67,7 +68,7 @@ export const GreetBot = memo((props: GreetBotProps) => {
         showTravel: quickMenu.showTravel,
         unreadCount: quickMenu.unreadCount,
     });
-    const shouldUseFloatingQuickMenu = !interactive || isTouchDevice;
+    const shouldUseFloatingQuickMenu = shouldUseConversationLauncher || isTouchDevice;
 
     useEffect(() => {
         onConversationVisibilityChange?.(isConversationOpen);
@@ -118,7 +119,7 @@ export const GreetBot = memo((props: GreetBotProps) => {
             {quickMenu.shouldShowQuickMenu && !isConversationOpen && shouldUseFloatingQuickMenu ? (
                 <MobileQuickMenu
                     actions={quickMenuActions}
-                    mode={!interactive ? "content" : "default"}
+                    mode={quickMenu.launcherMode}
                 />
             ) : null}
         </>

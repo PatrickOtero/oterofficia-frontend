@@ -126,13 +126,13 @@ export const StudyCard = ({ study }: StudyCardProps) => (
           : undefined
       }
     >
-      <span className="card-hover-label">Ler publicacao</span>
+      <span className="card-hover-label">Ler publicação</span>
     </div>
     <div className="card-body">
       <div className="card-meta">
         <span className="card-pill">{study.category}</span>
         <span className="card-pill">{study.readingTime} min</span>
-        <span className="card-pill">{study.commentsCount} comentarios</span>
+        <span className="card-pill">{study.commentsCount} comentários</span>
       </div>
       <h3>{study.title}</h3>
       <p>{study.excerpt}</p>

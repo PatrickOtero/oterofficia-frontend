@@ -63,6 +63,7 @@ export const useGreetBotController = ({
     const isAuthScene = interactive && routeState.isAuthRoute;
     const isHomeMenuScene = interactive && routeState.isHomeRoute && isShowingMenu;
     const shouldDockInDefaultScene = isAboutScene || isPortfolioScene || isAuthScene || isHomeMenuScene;
+    const isConversationLauncherScene = !interactive || isAboutScene || isPortfolioScene || isAuthScene;
     const isReturningFromContent = isHomeMenuScene && sceneTransition === "content-to-home";
     const isContentConversationFocused = !interactive && isTouchDevice && isConversationOpen;
     const slot = getRobotSceneSlot({
@@ -101,11 +102,11 @@ export const useGreetBotController = ({
     const previousScenePresetId = getPreviousSceneCameraPresetId(activeScenePresetId);
     const quickMenu = getQuickMenuState({
         activeScenePresetLabel,
-        isContentScene: !interactive,
         isSceneCameraManualMode: isManualMode,
         interactive,
         isAuthenticated,
         isBotHovered,
+        isConversationLauncherScene,
         isShowingMenu,
         isTouchDevice,
         nextScenePresetLabel: getSceneCameraPresetLabel(nextScenePresetId),

@@ -1,6 +1,7 @@
 import { CaretLeft, CaretRight, GameController } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ROBOT_NAME } from "../../../features/robot/robot.constants";
 import type { RobotQuickMenuAction, RobotQuickMenuLauncherMode } from "./RobotQuickMenu.types";
 import { getQuickMenuBadgeLabel } from "./RobotQuickMenu.utils";
 import { renderQuickMenuIcon } from "./quickMenuIcons";
@@ -16,10 +17,10 @@ export const MobileQuickMenu = ({ actions, mode = "default" }: MobileQuickMenuPr
     const [isOpen, setIsOpen] = useState(false);
     const isDirectAction = mode === "content" && actions.length === 1;
     const triggerLabel = isDirectAction
-        ? "Conversar com o robo"
+        ? `Conversar com ${ROBOT_NAME}`
         : isOpen
-          ? "Fechar robo"
-          : "Comandos do robo";
+          ? `Fechar ${ROBOT_NAME}`
+          : `Comandos de ${ROBOT_NAME}`;
 
     useEffect(() => {
         setIsOpen(false);
