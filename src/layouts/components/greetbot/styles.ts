@@ -430,23 +430,7 @@ export const RobotFigure = styled.div<{
     }
 
     .robot-shadow {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 9.5rem;
-        height: 3rem;
-        transform: translate3d(
-                calc(-50% + (var(--scene-pilot-x, 0) * 0.18rem)),
-                calc(-50% + 7.1rem + (var(--scene-pilot-y, 0) * 0.22rem)),
-                0
-            )
-            scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(0, 0, 0, 0.34) 0%, rgba(0, 0, 0, 0.08) 58%, transparent 74%);
-        filter: blur(8px);
-        opacity: ${({ $hovered }) => ($hovered ? 0.54 : 0.4)};
-        transition: opacity 220ms ease;
-        pointer-events: none;
+        display: none;
     }
 
     .robot-hologram-overlay {
@@ -958,15 +942,6 @@ export const RobotFigure = styled.div<{
         --orbit-lateral-range: 3.7rem;
         --orbit-vertical-range: 1.54rem;
 
-        .robot-shadow {
-            width: 7.8rem;
-            transform: translate3d(
-                    calc(-50% + (var(--scene-pilot-x, 0) * 0.16rem)),
-                    calc(-50% + 5.8rem + (var(--scene-pilot-y, 0) * 0.18rem)),
-                    0
-                )
-                scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
-        }
     }
 
     @media (max-width: 640px) {
@@ -978,15 +953,14 @@ export const RobotFigure = styled.div<{
         --orbit-vertical-range: 1.2rem;
         --orbit-duration: 6.6s;
 
-        .robot-shadow {
-            width: 6.8rem;
-            height: 2.2rem;
-            transform: translate3d(
-                    calc(-50% + (var(--scene-pilot-x, 0) * 0.14rem)),
-                    calc(-50% + 5rem + (var(--scene-pilot-y, 0) * 0.16rem)),
-                    0
-                )
-                scale(calc(var(--body-scale) - (var(--scene-pilot-thrust, 0) * 0.02)));
-        }
+    }
+
+    @media (max-width: 420px) {
+        --robot-size: 7.6rem;
+        --body-scale: 0.98;
+        --orbit-scale: 1.58;
+        --orbit-radius: 3.56rem;
+        --orbit-lateral-range: 2.58rem;
+        --orbit-vertical-range: 1.02rem;
     }
 `;

@@ -42,7 +42,17 @@ export const SCENE_CAMERA_PRESETS: Record<SceneCameraPresetId, SceneCameraPreset
     },
 };
 
-const SCENE_CAMERA_THEME_PRESET_VALUES: Record<SpaceTheme, Record<SceneCameraPresetId, SceneCameraVector>> = {
+const compactBodyPreset: Record<SceneCameraPresetId, SceneCameraVector> = {
+    default: { x: 0, y: -84, z: 1 },
+    "planet-full": { x: 0, y: 98, z: 0.56 },
+    "close-up": { x: 0, y: -20, z: 1.12 },
+    "wide-orbit": { x: 0, y: 20, z: 0.44 },
+    centered: { x: 0, y: 168, z: 0.72 },
+};
+
+const SCENE_CAMERA_THEME_PRESET_VALUES: Partial<Record<SpaceTheme, Record<SceneCameraPresetId, SceneCameraVector>>> = {
+    mercury: compactBodyPreset,
+    venus: compactBodyPreset,
     earth: {
         default: { x: 0, y: -92, z: 1 },
         "planet-full": { x: 0, y: 94, z: 0.52 },
@@ -71,6 +81,25 @@ const SCENE_CAMERA_THEME_PRESET_VALUES: Record<SpaceTheme, Record<SceneCameraPre
         "wide-orbit": { x: 0, y: 22, z: 0.33 },
         centered: { x: 0, y: 132, z: 0.64 },
     },
+    uranus: {
+        default: { x: 0, y: -86, z: 1 },
+        "planet-full": { x: 0, y: 84, z: 0.5 },
+        "close-up": { x: 0, y: -20, z: 1.08 },
+        "wide-orbit": { x: 0, y: 18, z: 0.38 },
+        centered: { x: 0, y: 154, z: 0.68 },
+    },
+    neptune: {
+        default: { x: 0, y: -88, z: 1 },
+        "planet-full": { x: 0, y: 84, z: 0.5 },
+        "close-up": { x: 0, y: -22, z: 1.08 },
+        "wide-orbit": { x: 0, y: 18, z: 0.38 },
+        centered: { x: 0, y: 154, z: 0.68 },
+    },
+    ceres: compactBodyPreset,
+    pluto: compactBodyPreset,
+    haumea: compactBodyPreset,
+    makemake: compactBodyPreset,
+    eris: compactBodyPreset,
     space: {
         default: { x: 0, y: 0, z: 1 },
         "planet-full": { x: 0, y: 0, z: 0.82 },

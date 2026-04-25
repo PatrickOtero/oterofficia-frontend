@@ -1,218 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { OrbitalTurbines } from "./OrbitalTurbines";
 import { RobotFigure } from "./styles";
-import type { RobotProjectionTarget, RoundRobotProps } from "./types";
-
-const attentionOffsetMap = {
-    center: "0%",
-    left: "-12%",
-    right: "12%",
-} as const;
-
-const bodyTiltMap = {
-    idle: "0deg",
-    "turn-left": "-7deg",
-    "turn-right": "7deg",
-    "strafe-left": "-5deg",
-    "strafe-right": "5deg",
-} as const;
-
-const bodyShiftMap = {
-    idle: "0rem",
-    "turn-left": "-0.18rem",
-    "turn-right": "0.18rem",
-    "strafe-left": "-0.68rem",
-    "strafe-right": "0.68rem",
-} as const;
-
-const projectionTargetSelectors: Record<RobotProjectionTarget, string[]> = {
-    none: [],
-    home: [".initial-menu-main"],
-    about: [".aboutme-page-main"],
-    portfolio: [".portfolio-page-main", ".content-stage"],
-    auth: [".auth-scene-panel"],
-    content: [".content-main", ".content-stage"],
-};
-
-const projectionHotspotMap: Record<RobotProjectionTarget, { x: number; y: number }> = {
-    none: { x: 0.5, y: 0.5 },
-    home: { x: 0.5, y: 0.5 },
-    about: { x: 0.5, y: 0.5 },
-    portfolio: { x: 0.5, y: 0.5 },
-    auth: { x: 0.5, y: 0.5 },
-    content: { x: 0.5, y: 0.5 },
-};
-
-type ProjectionBounds = {
-    left: number;
-    right: number;
-    top: number;
-    bottom: number;
-};
-
-const insetProjectionBounds = (rect: DOMRect, inset: number): ProjectionBounds => {
-    const insetX = Math.max(0, Math.min(inset, rect.width / 2 - 1));
-    const insetY = Math.max(0, Math.min(inset, rect.height / 2 - 1));
-
-    return {
-        left: rect.left + insetX,
-        right: rect.right - insetX,
-        top: rect.top + insetY,
-        bottom: rect.bottom - insetY,
-    };
-};
-
-const resolveProjectedBeamLength = ({
-    anchorX,
-    anchorY,
-    targetX,
-    targetY,
-    targetRect,
-}: {
-    anchorX: number;
-    anchorY: number;
-    targetX: number;
-    targetY: number;
-    targetRect: DOMRect;
-}) => {
-    const deltaX = targetX - anchorX;
-    const deltaY = targetY - anchorY;
-    const distance = Math.hypot(deltaX, deltaY);
-
-    if (!distance) {
-        return 0;
-    }
-
-    const clippedBounds = insetProjectionBounds(
-        targetRect,
-        Math.min(10, Math.max(4, Math.min(targetRect.width, targetRect.height) * 0.02))
-    );
-    const intersections: number[] = [];
-
-    const pushIntersection = (factor: number, coordinate: number, min: number, max: number) => {
-        if (factor > 0 && factor < 1 && coordinate >= min && coordinate <= max) {
-            intersections.push(factor);
-        }
-    };
-
-    if (deltaX !== 0) {
-        const leftFactor = (clippedBounds.left - anchorX) / deltaX;
-        const rightFactor = (clippedBounds.right - anchorX) / deltaX;
-
-        pushIntersection(leftFactor, anchorY + leftFactor * deltaY, clippedBounds.top, clippedBounds.bottom);
-        pushIntersection(rightFactor, anchorY + rightFactor * deltaY, clippedBounds.top, clippedBounds.bottom);
-    }
-
-    if (deltaY !== 0) {
-        const topFactor = (clippedBounds.top - anchorY) / deltaY;
-        const bottomFactor = (clippedBounds.bottom - anchorY) / deltaY;
-
-        pushIntersection(topFactor, anchorX + topFactor * deltaX, clippedBounds.left, clippedBounds.right);
-        pushIntersection(bottomFactor, anchorX + bottomFactor * deltaX, clippedBounds.left, clippedBounds.right);
-    }
-
-    if (!intersections.length) {
-        return distance;
-    }
-
-    return distance * Math.min(...intersections);
-};
-
-const projectionMap: Record<
-    RobotProjectionTarget,
-    {
-        angle: string;
-        length: string;
-        eyeScale: string;
-        eyeShiftX: string;
-        eyeShiftY: string;
-        visorScale: string;
-        visorShiftX: string;
-        visorShiftY: string;
-        visorTilt: string;
-    }
-> = {
-    none: {
-        angle: "0deg",
-        length: "0rem",
-        eyeScale: "1",
-        eyeShiftX: "0rem",
-        eyeShiftY: "0rem",
-        visorScale: "1",
-        visorShiftX: "0rem",
-        visorShiftY: "0rem",
-        visorTilt: "0deg",
-    },
-    home: {
-        angle: "20deg",
-        length: "59rem",
-        eyeScale: "0.64",
-        eyeShiftX: "-0.28rem",
-        eyeShiftY: "0rem",
-        visorScale: "0.78",
-        visorShiftX: "-0.82rem",
-        visorShiftY: "0rem",
-        visorTilt: "-10deg",
-    },
-    about: {
-        angle: "33deg",
-        length: "47rem",
-        eyeScale: "0.62",
-        eyeShiftX: "-0.3rem",
-        eyeShiftY: "-0.06rem",
-        visorScale: "0.76",
-        visorShiftX: "-0.88rem",
-        visorShiftY: "-0.08rem",
-        visorTilt: "-11deg",
-    },
-    portfolio: {
-        angle: "35deg",
-        length: "45rem",
-        eyeScale: "0.62",
-        eyeShiftX: "-0.28rem",
-        eyeShiftY: "-0.04rem",
-        visorScale: "0.77",
-        visorShiftX: "-0.84rem",
-        visorShiftY: "-0.04rem",
-        visorTilt: "-10deg",
-    },
-    auth: {
-        angle: "37deg",
-        length: "42rem",
-        eyeScale: "0.64",
-        eyeShiftX: "-0.26rem",
-        eyeShiftY: "-0.04rem",
-        visorScale: "0.78",
-        visorShiftX: "-0.78rem",
-        visorShiftY: "-0.04rem",
-        visorTilt: "-9deg",
-    },
-    content: {
-        angle: "58deg",
-        length: "25rem",
-        eyeScale: "0.6",
-        eyeShiftX: "-0.2rem",
-        eyeShiftY: "-0.14rem",
-        visorScale: "0.78",
-        visorShiftX: "-0.5rem",
-        visorShiftY: "-0.34rem",
-        visorTilt: "-7deg",
-    },
-};
-
-type ProjectionStyleState = {
-    beamOriginX: string;
-    beamOriginY: string;
-    beamAngle: string;
-    beamLength: string;
-    eyeScale: string;
-    eyeShiftX: string;
-    eyeShiftY: string;
-    visorScale: string;
-    visorShiftX: string;
-    visorShiftY: string;
-    visorTilt: string;
-};
+import { attentionOffsetMap, bodyShiftMap, bodyTiltMap } from "./robotMotion.constants";
+import { projectionHotspotMap, projectionMap, projectionTargetSelectors } from "./robotProjection.constants";
+import type { ProjectionStyleState } from "./robotProjection.types";
+import { createDefaultProjectionStyle, resolveProjectedBeamLength } from "./robotProjection.utils";
+import type { RoundRobotProps } from "./types";
 
 export const RoundRobot = ({
     attentionTarget = "center",
@@ -224,34 +17,12 @@ export const RoundRobot = ({
 }: RoundRobotProps) => {
     const projectorAnchorRef = useRef<HTMLDivElement | null>(null);
     const projection = projectionMap[projectionTarget];
-    const [projectionStyle, setProjectionStyle] = useState<ProjectionStyleState>({
-        beamOriginX: "-9999px",
-        beamOriginY: "-9999px",
-        beamAngle: projection.angle,
-        beamLength: projection.length,
-        eyeScale: projection.eyeScale,
-        eyeShiftX: projection.eyeShiftX,
-        eyeShiftY: projection.eyeShiftY,
-        visorScale: projection.visorScale,
-        visorShiftX: projection.visorShiftX,
-        visorShiftY: projection.visorShiftY,
-        visorTilt: projection.visorTilt,
-    });
+    const [projectionStyle, setProjectionStyle] = useState<ProjectionStyleState>(
+        createDefaultProjectionStyle(projection)
+    );
 
     useEffect(() => {
-        setProjectionStyle({
-            beamOriginX: "-9999px",
-            beamOriginY: "-9999px",
-            beamAngle: projection.angle,
-            beamLength: projection.length,
-            eyeScale: projection.eyeScale,
-            eyeShiftX: projection.eyeShiftX,
-            eyeShiftY: projection.eyeShiftY,
-            visorScale: projection.visorScale,
-            visorShiftX: projection.visorShiftX,
-            visorShiftY: projection.visorShiftY,
-            visorTilt: projection.visorTilt,
-        });
+        setProjectionStyle(createDefaultProjectionStyle(projection));
     }, [
         projection.angle,
         projection.eyeScale,
@@ -263,6 +34,7 @@ export const RoundRobot = ({
         projection.visorShiftX,
         projection.visorShiftY,
         projection.visorTilt,
+        projection,
     ]);
 
     useLayoutEffect(() => {

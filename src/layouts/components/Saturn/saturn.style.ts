@@ -18,6 +18,7 @@ export const SaturnContainer = styled("div")`
     z-index: 2;
     pointer-events: none;
     overflow: visible;
+    --planet-inclination: 0deg;
 
     .saturn-main {
         position: absolute;
@@ -32,27 +33,27 @@ export const SaturnContainer = styled("div")`
         position: absolute;
         left: 50%;
         top: ${SATURN_SCENE_CENTER_Y};
-        transform: translate(-50%, -50%) rotate(-13deg);
+        transform: translate(-50%, -50%) rotate(calc(var(--planet-inclination) - 39.7deg));
         pointer-events: none;
     }
 
     .saturn-ring-glow {
-        width: 160rem;
-        height: 45rem;
+        width: 180rem;
+        height: 58rem;
         z-index: 0;
         background: radial-gradient(
             ellipse at center,
-            rgba(255, 228, 187, 0.18) 0%,
-            rgba(255, 228, 187, 0.08) 34%,
-            rgba(255, 228, 187, 0.03) 54%,
+            rgba(255, 228, 187, 0.2) 0%,
+            rgba(255, 228, 187, 0.1) 38%,
+            rgba(255, 228, 187, 0.04) 62%,
             transparent 76%
         );
         opacity: 0.72;
     }
 
     .saturn-ring-art {
-        width: 154rem;
-        height: 43rem;
+        width: 174rem;
+        height: 56rem;
     }
 
     .saturn-ring-art svg {
@@ -69,7 +70,7 @@ export const SaturnContainer = styled("div")`
     .saturn-ring-front {
         z-index: 3;
         opacity: 0.9;
-        clip-path: inset(49% 0 0 0);
+        clip-path: inset(58% 0 0 0);
         filter: drop-shadow(0 0 1rem rgba(255, 232, 193, 0.18));
     }
 
@@ -79,7 +80,7 @@ export const SaturnContainer = styled("div")`
         top: ${SATURN_SCENE_CENTER_Y};
         width: 76rem;
         height: 76rem;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) rotate(var(--planet-inclination));
         overflow: hidden;
         border-radius: 50%;
         z-index: 2;
@@ -141,14 +142,14 @@ export const SaturnContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translateY(10rem) scale(0.99);
+        transform: translateY(10rem) rotate(var(--planet-inclination)) scale(0.99);
     }
 
     @media (max-width: 900px) {
         .saturn-ring-glow,
         .saturn-ring-art {
-            width: 116rem;
-            height: 32rem;
+            width: 132rem;
+            height: 42rem;
         }
 
         .saturn-body {
@@ -160,13 +161,26 @@ export const SaturnContainer = styled("div")`
     @media (max-width: 640px) {
         .saturn-ring-glow,
         .saturn-ring-art {
-            width: 88rem;
-            height: 24rem;
+            width: min(100rem, 256vw);
+            height: min(32rem, 82vw);
         }
 
         .saturn-body {
-            width: 39rem;
-            height: 39rem;
+            width: min(39rem, 106vw);
+            height: min(39rem, 106vw);
+        }
+    }
+
+    @media (max-width: 420px) {
+        .saturn-ring-glow,
+        .saturn-ring-art {
+            width: min(78rem, 238vw);
+            height: min(25rem, 76vw);
+        }
+
+        .saturn-body {
+            width: min(31rem, 100vw);
+            height: min(31rem, 100vw);
         }
     }
 `;

@@ -1,13 +1,38 @@
-export const SPACE_THEMES = ["earth", "mars", "jupiter", "saturn", "space", "asteroids"] as const;
+export const SPACE_THEMES = [
+    "mercury",
+    "venus",
+    "earth",
+    "mars",
+    "jupiter",
+    "saturn",
+    "uranus",
+    "neptune",
+    "ceres",
+    "pluto",
+    "haumea",
+    "makemake",
+    "eris",
+    "space",
+    "asteroids",
+] as const;
 
 export type SpaceTheme = (typeof SPACE_THEMES)[number];
 
 export const SPACE_THEME_LABELS: Record<SpaceTheme, string> = {
+    mercury: "Mercurio",
+    venus: "Venus",
     earth: "Terra",
     mars: "Marte",
-    jupiter: "Júpiter",
+    jupiter: "Jupiter",
     saturn: "Saturno",
-    space: "Espaço",
+    uranus: "Urano",
+    neptune: "Netuno",
+    ceres: "Ceres",
+    pluto: "Plutao",
+    haumea: "Haumea",
+    makemake: "Makemake",
+    eris: "Eris",
+    space: "Espaco",
     asteroids: "Asteroides",
 };
 

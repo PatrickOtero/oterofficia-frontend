@@ -13,6 +13,7 @@ export const SceneParallaxLayerContainer = styled.div`
         scale(calc(1 + ((var(--scene-camera-zoom, 1) - 1) * var(--scene-layer-zoom-factor) * 1.12)));
     transform-origin: 50% 62%;
     will-change: transform;
+
 `;
 
 export const SceneCameraHudContainer = styled.div`

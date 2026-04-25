@@ -18,8 +18,10 @@ export const EarthContainer = styled("div")`
     z-index: 2;
     pointer-events: none;
     overflow: visible;
+    --planet-inclination: 0deg;
 
     .earth-main {
+        position: absolute;
         left: 50%;
         top: ${EARTH_SCENE_CENTER_Y};
         width: min(96rem, 118vw);
@@ -28,7 +30,7 @@ export const EarthContainer = styled("div")`
         overflow: hidden;
         border-radius: 50%;
         transition: transform 520ms ease;
-        transform: translate(-50%, -50%) scale(1.08);
+        transform: translate(-50%, -50%) rotate(var(--planet-inclination)) scale(1.08);
         background:
             radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.26), transparent 20%),
             radial-gradient(circle at 68% 74%, rgba(2, 10, 20, 0.82), transparent 38%),
@@ -76,7 +78,7 @@ export const EarthContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translate(-50%, calc(-50% + 10rem)) scale(1.05);
+        transform: translate(-50%, calc(-50% + 10rem)) rotate(var(--planet-inclination)) scale(1.05);
     }
 
     @media (max-width: 900px) {
@@ -88,8 +90,15 @@ export const EarthContainer = styled("div")`
 
     @media (max-width: 640px) {
         .earth-main {
-            width: 58rem;
-            height: 58rem;
+            width: min(58rem, 152vw);
+            height: min(58rem, 152vw);
+        }
+    }
+
+    @media (max-width: 420px) {
+        .earth-main {
+            width: min(48rem, 146vw);
+            height: min(48rem, 146vw);
         }
     }
 `;

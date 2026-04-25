@@ -5,9 +5,15 @@ import { OrbitalMoonsContainer } from "./orbitalMoons.style";
 export type OrbitalMoonPlacement = "back" | "front";
 
 export type OrbitalMoonConfig = {
+    bodyClipPath?: string;
+    bodyRadius?: string;
+    bodyRotate?: string;
+    bodyScaleX?: string;
+    bodyScaleY?: string;
     centerY: string;
     glow: string;
     key: string;
+    label?: string;
     map: string;
     mapFilter?: string;
     orbitDelay: string;
@@ -30,6 +36,11 @@ type OrbitalMoonsProps = {
 };
 
 type OrbitalMoonStyle = CSSProperties & {
+    "--moon-body-clip-path"?: string;
+    "--moon-body-radius"?: string;
+    "--moon-body-rotate"?: string;
+    "--moon-body-scale-x"?: string;
+    "--moon-body-scale-y"?: string;
     "--moon-center-y": string;
     "--moon-glow": string;
     "--moon-map": string;
@@ -52,6 +63,11 @@ type OrbitalMoonsContainerStyle = CSSProperties & {
 };
 
 const createMoonStyle = (moon: OrbitalMoonConfig): OrbitalMoonStyle => ({
+    "--moon-body-clip-path": moon.bodyClipPath,
+    "--moon-body-radius": moon.bodyRadius,
+    "--moon-body-rotate": moon.bodyRotate,
+    "--moon-body-scale-x": moon.bodyScaleX,
+    "--moon-body-scale-y": moon.bodyScaleY,
     "--moon-center-y": moon.centerY,
     "--moon-glow": moon.glow,
     "--moon-map": `url(${moon.map})`,

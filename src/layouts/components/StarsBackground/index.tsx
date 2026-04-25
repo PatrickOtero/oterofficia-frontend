@@ -313,7 +313,128 @@ const ASTEROID_FIELD = [
     },
 ] as const;
 
-const getWarpStyle = (warp: (typeof WARP_STREAKS)[number]) =>
+const mirrorPercent = (value: string) => `${100 - Number(value.replace("%", ""))}%`;
+
+const FULL_SCREEN_WARP_STREAKS = [
+    ...WARP_STREAKS,
+    ...WARP_STREAKS.map((warp, index) => ({
+        ...warp,
+        delay: `${Number(warp.delay.replace("s", "")) - 0.85}s`,
+        left: `${(Number(warp.left.replace("%", "")) + 6 + index * 3) % 100}%`,
+        opacity: Math.max(0.42, warp.opacity - 0.16),
+        top: mirrorPercent(warp.top),
+        width: `calc(${warp.width} * 0.86)`,
+    })),
+    ...WARP_STARS.slice(0, 8).map((star, index) => ({
+        delay: `${Number(star.delay.replace("s", "")) - 1.35}s`,
+        duration: star.duration,
+        height: index % 2 ? "1px" : "2px",
+        left: `${(Number(star.left.replace("%", "")) + 11) % 100}%`,
+        opacity: Math.min(0.86, star.opacity + 0.08),
+        top: `${8 + index * 11}%`,
+        width: `${7 + index * 1.4}rem`,
+    })),
+] as const;
+
+const FULL_SCREEN_WARP_STARS = [
+    ...WARP_STARS,
+    ...WARP_STARS.map((star, index) => ({
+        ...star,
+        delay: `${Number(star.delay.replace("s", "")) - 0.7}s`,
+        left: `${(Number(star.left.replace("%", "")) + 8 + index * 2) % 100}%`,
+        opacity: Math.max(0.36, star.opacity - 0.1),
+        size: `calc(${star.size} * 0.78)`,
+        top: mirrorPercent(star.top),
+    })),
+] as const;
+
+const FULL_SCREEN_ASTEROID_FIELD = [
+    ...ASTEROID_FIELD,
+    ...ASTEROID_FIELD.slice(0, 12).map((asteroid, index) => ({
+        ...asteroid,
+        delay: `${Number(asteroid.delay.replace("s", "")) - 4.2}s`,
+        driftX: `calc(${asteroid.driftX} * -0.72)`,
+        driftY: `calc(${asteroid.driftY} * 0.82)`,
+        left: `${(Number(asteroid.left.replace("%", "")) + 9 + index * 5) % 104 - 4}%`,
+        opacity: Math.max(0.36, asteroid.opacity - 0.28),
+        rotate: `calc(${asteroid.rotate} + 27deg)`,
+        size: `calc(${asteroid.size} * 0.56)`,
+        top: mirrorPercent(asteroid.top),
+        variant: `${asteroid.variant} distant`,
+        zIndex: 0,
+    })),
+] as const;
+
+const ASTEROID_PALETTES = [
+    {
+        crater: "rgba(4, 5, 6, 0.34)",
+        highlight: "rgba(220, 225, 220, 0.1)",
+        shadow: "rgba(2, 3, 4, 0.52)",
+        shellEnd: "#17191a",
+        shellMid: "#343433",
+        shellStart: "#62605a",
+    },
+    {
+        crater: "rgba(42, 27, 18, 0.3)",
+        highlight: "rgba(255, 224, 188, 0.18)",
+        shadow: "rgba(49, 30, 19, 0.42)",
+        shellEnd: "#463124",
+        shellMid: "#8d674d",
+        shellStart: "#c19a75",
+    },
+    {
+        crater: "rgba(20, 24, 28, 0.28)",
+        highlight: "rgba(230, 238, 242, 0.2)",
+        shadow: "rgba(9, 13, 17, 0.42)",
+        shellEnd: "#32373c",
+        shellMid: "#707983",
+        shellStart: "#aeb7bd",
+    },
+] as const;
+
+const ASTEROID_SHAPES = [
+    "polygon(10% 32%, 22% 9%, 48% 3%, 74% 12%, 96% 38%, 88% 68%, 62% 95%, 28% 86%, 3% 58%)",
+    "polygon(7% 42%, 18% 16%, 44% 2%, 72% 9%, 92% 28%, 98% 58%, 78% 86%, 46% 96%, 18% 78%)",
+    "polygon(14% 22%, 38% 5%, 64% 8%, 88% 24%, 96% 52%, 82% 76%, 54% 92%, 25% 88%, 5% 60%)",
+    "polygon(4% 28%, 30% 8%, 58% 5%, 86% 18%, 98% 44%, 90% 72%, 64% 84%, 42% 98%, 16% 80%)",
+    "polygon(13% 14%, 42% 3%, 78% 14%, 94% 40%, 84% 72%, 56% 88%, 24% 94%, 3% 56%)",
+] as const;
+
+type WarpStreak = {
+    delay: string;
+    duration: string;
+    height: string;
+    left: string;
+    opacity: number;
+    top: string;
+    width: string;
+};
+
+type WarpStar = {
+    delay: string;
+    duration: string;
+    left: string;
+    opacity: number;
+    size: string;
+    top: string;
+};
+
+type AsteroidRock = {
+    delay: string;
+    driftX: string;
+    driftY: string;
+    duration: string;
+    heightRatio: string;
+    left: string;
+    opacity: number;
+    radius: string;
+    rotate: string;
+    size: string;
+    top: string;
+    zIndex: number;
+};
+
+const getWarpStyle = (warp: WarpStreak) =>
     ({
         "--warp-delay": warp.delay,
         "--warp-duration": warp.duration,
@@ -324,7 +445,7 @@ const getWarpStyle = (warp: (typeof WARP_STREAKS)[number]) =>
         "--warp-width": warp.width,
     }) as CSSProperties;
 
-const getWarpStarStyle = (star: (typeof WARP_STARS)[number]) =>
+const getWarpStarStyle = (star: WarpStar) =>
     ({
         "--warp-star-delay": star.delay,
         "--warp-star-duration": star.duration,
@@ -334,8 +455,10 @@ const getWarpStarStyle = (star: (typeof WARP_STARS)[number]) =>
         "--warp-star-top": star.top,
     }) as CSSProperties;
 
-const getAsteroidStyle = (asteroid: (typeof ASTEROID_FIELD)[number]) =>
-    ({
+const getAsteroidStyle = (asteroid: AsteroidRock, index: number) => {
+    const palette = ASTEROID_PALETTES[index % ASTEROID_PALETTES.length];
+
+    return {
         "--asteroid-delay": asteroid.delay,
         "--asteroid-drift-x": asteroid.driftX,
         "--asteroid-drift-y": asteroid.driftY,
@@ -345,31 +468,56 @@ const getAsteroidStyle = (asteroid: (typeof ASTEROID_FIELD)[number]) =>
         "--asteroid-opacity": asteroid.opacity,
         "--asteroid-radius": asteroid.radius,
         "--asteroid-rotate": asteroid.rotate,
+        "--asteroid-clip-path": ASTEROID_SHAPES[index % ASTEROID_SHAPES.length],
+        "--asteroid-crater": palette.crater,
+        "--asteroid-highlight": palette.highlight,
+        "--asteroid-shadow": palette.shadow,
+        "--asteroid-shell-end": palette.shellEnd,
+        "--asteroid-shell-mid": palette.shellMid,
+        "--asteroid-shell-start": palette.shellStart,
         "--asteroid-size": asteroid.size,
+        "--asteroid-spin-range": `${7 + (index % 5) * 3}deg`,
         "--asteroid-top": asteroid.top,
+        "--asteroid-tumble-duration": `${9 + (index % 7) * 2.7}s`,
         "--asteroid-z-index": asteroid.zIndex,
-    }) as CSSProperties;
+    } as CSSProperties;
+};
 
 export const StarsBackground = memo(({ theme }: StarsBackgroundProps) => (
     <SpaceContainer $theme={theme} aria-hidden="true">
+        {theme === "space" ? (
+            <>
+                <span className="space-nebula space-nebula-left" />
+                <span className="space-nebula space-nebula-right" />
+                <span className="space-depth-grid" />
+            </>
+        ) : null}
+
         {theme === "space"
-            ? WARP_STREAKS.map((warp, index) => (
+            ? FULL_SCREEN_WARP_STREAKS.map((warp, index) => (
                   <span className="warp-streak" key={`warp-streak-${index}`} style={getWarpStyle(warp)} />
               ))
             : null}
 
         {theme === "space"
-            ? WARP_STARS.map((star, index) => (
+            ? FULL_SCREEN_WARP_STARS.map((star, index) => (
                   <span className="warp-star" key={`warp-star-${index}`} style={getWarpStarStyle(star)} />
               ))
             : null}
 
+        {theme === "asteroids" ? (
+            <>
+                <span className="asteroid-dust asteroid-dust-near" />
+                <span className="asteroid-dust asteroid-dust-far" />
+            </>
+        ) : null}
+
         {theme === "asteroids"
-            ? ASTEROID_FIELD.map((asteroid, index) => (
+            ? FULL_SCREEN_ASTEROID_FIELD.map((asteroid, index) => (
                   <span
                       className={`asteroid-field-rock ${asteroid.variant}`}
                       key={`asteroid-${index}`}
-                      style={getAsteroidStyle(asteroid)}
+                      style={getAsteroidStyle(asteroid, index)}
                   />
               ))
             : null}

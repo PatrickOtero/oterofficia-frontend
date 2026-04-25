@@ -18,6 +18,7 @@ export const MarsContainer = styled("div")`
     z-index: 2;
     pointer-events: none;
     overflow: visible;
+    --planet-inclination: 0deg;
 
     .mars-main {
         position: absolute;
@@ -28,7 +29,7 @@ export const MarsContainer = styled("div")`
         overflow: hidden;
         border-radius: 50%;
         transition: transform 520ms ease;
-        transform: translate(-50%, -50%) scale(1.06);
+        transform: translate(-50%, -50%) rotate(var(--planet-inclination)) scale(1.06);
         background:
             radial-gradient(circle at 30% 24%, rgba(255, 236, 214, 0.18), transparent 20%),
             radial-gradient(circle at 74% 74%, rgba(44, 16, 8, 0.72), transparent 38%),
@@ -83,7 +84,7 @@ export const MarsContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translate(-50%, calc(-50% + 10rem)) scale(1.03);
+        transform: translate(-50%, calc(-50% + 10rem)) rotate(var(--planet-inclination)) scale(1.03);
     }
 
     @media (max-width: 900px) {
@@ -95,8 +96,15 @@ export const MarsContainer = styled("div")`
 
     @media (max-width: 640px) {
         .mars-main {
-            width: 56rem;
-            height: 56rem;
+            width: min(56rem, 148vw);
+            height: min(56rem, 148vw);
+        }
+    }
+
+    @media (max-width: 420px) {
+        .mars-main {
+            width: min(46rem, 142vw);
+            height: min(46rem, 142vw);
         }
     }
 `;

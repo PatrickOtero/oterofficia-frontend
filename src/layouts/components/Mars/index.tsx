@@ -1,13 +1,12 @@
 import { memo } from "react";
+import { CelestialTexturePanels } from "../PlanetSystem/CelestialTexturePanels";
+import { createPlanetInclinationStyle } from "../PlanetSystem/planetaryInclinations";
 import { MarsContainer } from "./mars.style";
 
 export const PlanetMars = memo(({ planetPosition }: { planetPosition: string }) => (
-    <MarsContainer>
+    <MarsContainer style={createPlanetInclinationStyle("mars")}>
         <div className={`mars-main ${planetPosition}`}>
-            <div className="mars-map-track">
-                <div className="mars-map-panel" />
-                <div className="mars-map-panel" />
-            </div>
+            <CelestialTexturePanels panelClassName="mars-map-panel" trackClassName="mars-map-track" />
         </div>
     </MarsContainer>
 ));

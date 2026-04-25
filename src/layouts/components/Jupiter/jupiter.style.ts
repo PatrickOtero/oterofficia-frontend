@@ -18,6 +18,34 @@ export const JupiterContainer = styled("div")`
     z-index: 2;
     pointer-events: none;
     overflow: visible;
+    --planet-inclination: 0deg;
+
+    .jupiter-ring-art {
+        position: absolute;
+        left: 50%;
+        top: ${JUPITER_SCENE_CENTER_Y};
+        width: 164rem;
+        height: 34rem;
+        transform: translate(-50%, -50%) rotate(calc(var(--planet-inclination) - 9deg));
+        pointer-events: none;
+    }
+
+    .jupiter-ring-art svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .jupiter-ring-back {
+        z-index: 1;
+        opacity: 0.62;
+    }
+
+    .jupiter-ring-front {
+        z-index: 3;
+        filter: drop-shadow(0 0 0.7rem rgba(255, 225, 180, 0.16));
+        opacity: 0.82;
+    }
 
     .jupiter-main {
         position: absolute;
@@ -28,7 +56,7 @@ export const JupiterContainer = styled("div")`
         overflow: hidden;
         border-radius: 50%;
         transition: transform 520ms ease;
-        transform: translate(-50%, -50%) scale(1.03);
+        transform: translate(-50%, -50%) rotate(var(--planet-inclination)) scale(1.03);
         background:
             radial-gradient(circle at 26% 22%, rgba(255, 244, 225, 0.2), transparent 18%),
             radial-gradient(circle at 76% 78%, rgba(48, 24, 15, 0.4), transparent 34%),
@@ -36,6 +64,7 @@ export const JupiterContainer = styled("div")`
         box-shadow:
             inset -5rem -1.4rem 5.2rem rgba(39, 20, 12, 0.24),
             0 0 3.6rem rgba(236, 165, 96, 0.14);
+        z-index: 2;
     }
 
     .jupiter-main::before,
@@ -87,10 +116,15 @@ export const JupiterContainer = styled("div")`
     }
 
     .earth-hidden {
-        transform: translate(-50%, calc(-50% + 10rem)) scale(1.01);
+        transform: translate(-50%, calc(-50% + 10rem)) rotate(var(--planet-inclination)) scale(1.01);
     }
 
     @media (max-width: 900px) {
+        .jupiter-ring-art {
+            width: 124rem;
+            height: 26rem;
+        }
+
         .jupiter-main {
             width: 79rem;
             height: 79rem;
@@ -98,9 +132,26 @@ export const JupiterContainer = styled("div")`
     }
 
     @media (max-width: 640px) {
+        .jupiter-ring-art {
+            width: min(96rem, 246vw);
+            height: min(20rem, 52vw);
+        }
+
         .jupiter-main {
-            width: 62rem;
-            height: 62rem;
+            width: min(62rem, 160vw);
+            height: min(62rem, 160vw);
+        }
+    }
+
+    @media (max-width: 420px) {
+        .jupiter-ring-art {
+            width: min(78rem, 238vw);
+            height: min(16rem, 49vw);
+        }
+
+        .jupiter-main {
+            width: min(50rem, 152vw);
+            height: min(50rem, 152vw);
         }
     }
 `;

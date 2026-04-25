@@ -57,8 +57,12 @@ export const OrbitalMoonsContainer = styled.div`
         left: 50%;
         width: calc(var(--moon-size) * var(--planetary-moons-scale));
         height: calc(var(--moon-size) * var(--planetary-moons-scale));
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
+        transform:
+            translate(-50%, -50%)
+            rotate(var(--moon-body-rotate, 0deg))
+            scale(var(--moon-body-scale-x, 1), var(--moon-body-scale-y, 1));
+        border-radius: var(--moon-body-radius, 50%);
+        clip-path: var(--moon-body-clip-path, none);
         overflow: hidden;
         isolation: isolate;
         background:
@@ -75,7 +79,7 @@ export const OrbitalMoonsContainer = styled.div`
     .orbital-moon-surface {
         position: absolute;
         inset: 0;
-        border-radius: 50%;
+        border-radius: inherit;
         overflow: hidden;
     }
 
@@ -107,7 +111,7 @@ export const OrbitalMoonsContainer = styled.div`
         content: "";
         position: absolute;
         inset: 0;
-        border-radius: 50%;
+        border-radius: inherit;
         pointer-events: none;
     }
 
