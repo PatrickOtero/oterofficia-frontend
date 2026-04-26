@@ -31,7 +31,6 @@ type RingVisual = {
 export type GenericCelestialVisual = {
     bodyClassName?: string;
     glow: string;
-    mapBlendMode?: string;
     mapFilter?: string;
     mapOpacity?: string;
     ring?: RingVisual;

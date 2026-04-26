@@ -23,6 +23,7 @@ const MOVE_SPEED = 248;
 const ZOOM_SPEED = 0.34;
 const CAMERA_SMOOTHING = 8.8;
 const INPUT_SMOOTHING = 11.2;
+const MOBILE_CAMERA_QUERY = "(max-width: 640px)";
 
 const CONTROLLED_KEYS = new Set([
     "a",
@@ -58,9 +59,13 @@ const initialInputState: SceneCameraInputState = {
     z: 0,
 };
 
+const getIsCompactSceneViewport = () =>
+    typeof window !== "undefined" && window.matchMedia(MOBILE_CAMERA_QUERY).matches;
+
 export const useSceneCamera = (): SceneCameraController => {
     const { spaceTheme } = useBotFunctionsContext();
-    const initialCamera = getSceneCameraPresetValue(DEFAULT_SCENE_CAMERA_PRESET_ID, spaceTheme);
+    const [isCompactViewport, setIsCompactViewport] = useState(getIsCompactSceneViewport);
+    const initialCamera = getSceneCameraPresetValue(DEFAULT_SCENE_CAMERA_PRESET_ID, spaceTheme, isCompactViewport);
     const [camera, setCamera] = useState<SceneCameraState>({
         ...initialCamera,
         activePreset: DEFAULT_SCENE_CAMERA_PRESET_ID,
@@ -143,12 +148,12 @@ export const useSceneCamera = (): SceneCameraController => {
     const applyPreset = useCallback(
         (presetId: SceneCameraPresetId) => {
             pressedKeysRef.current.clear();
-            updateTargetCamera(getSceneCameraPresetValue(presetId, spaceTheme), {
+            updateTargetCamera(getSceneCameraPresetValue(presetId, spaceTheme, isCompactViewport), {
                 activePreset: presetId,
                 manualMode: false,
             });
         },
-        [spaceTheme, updateTargetCamera]
+        [isCompactViewport, spaceTheme, updateTargetCamera]
     );
 
     const resetView = useCallback(() => {
@@ -183,15 +188,31 @@ export const useSceneCamera = (): SceneCameraController => {
     }, [exitManualMode, startManualMode]);
 
     useEffect(() => {
+        if (typeof window === "undefined") {
+            return;
+        }
+
+        const mediaQuery = window.matchMedia(MOBILE_CAMERA_QUERY);
+        const syncCompactViewport = () => setIsCompactViewport(mediaQuery.matches);
+
+        syncCompactViewport();
+        mediaQuery.addEventListener("change", syncCompactViewport);
+
+        return () => {
+            mediaQuery.removeEventListener("change", syncCompactViewport);
+        };
+    }, []);
+
+    useEffect(() => {
         if (manualModeRef.current || !activePresetRef.current) {
             return;
         }
 
-        updateTargetCamera(getSceneCameraPresetValue(activePresetRef.current, spaceTheme), {
+        updateTargetCamera(getSceneCameraPresetValue(activePresetRef.current, spaceTheme, isCompactViewport), {
             activePreset: activePresetRef.current,
             manualMode: false,
         });
-    }, [spaceTheme, updateTargetCamera]);
+    }, [isCompactViewport, spaceTheme, updateTargetCamera]);
 
     useEffect(() => {
         syncDocumentCameraVars(cameraRef.current, inputStateRef.current);
@@ -323,7 +344,11 @@ export const useSceneCamera = (): SceneCameraController => {
 
             if (normalizedKey === "r") {
                 event.preventDefault();
-                targetCameraRef.current = getSceneCameraPresetValue(DEFAULT_SCENE_CAMERA_PRESET_ID, spaceTheme);
+                targetCameraRef.current = getSceneCameraPresetValue(
+                    DEFAULT_SCENE_CAMERA_PRESET_ID,
+                    spaceTheme,
+                    isCompactViewport
+                );
                 activePresetRef.current = DEFAULT_SCENE_CAMERA_PRESET_ID;
                 setCamera((currentState) => ({
                     ...currentState,
@@ -353,7 +378,7 @@ export const useSceneCamera = (): SceneCameraController => {
             window.removeEventListener("keyup", handleKeyUp);
             window.removeEventListener("blur", clearPressedKeys);
         };
-    }, [exitManualMode, spaceTheme]);
+    }, [exitManualMode, isCompactViewport, spaceTheme]);
 
     return useMemo(
         () => ({

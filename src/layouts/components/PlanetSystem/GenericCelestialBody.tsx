@@ -20,7 +20,6 @@ export const GenericCelestialBody = memo(({ planetPosition, theme }: GenericCele
         "--generic-body-texture": visual.texture,
         "--generic-body-texture-size": visual.textureSize ?? "100% 100%",
         "--generic-body-rotation-duration": visual.rotationDuration,
-        "--generic-map-blend-mode": visual.mapBlendMode ?? "normal",
         "--generic-map-filter": visual.mapFilter ?? "saturate(1.05) contrast(1.04) brightness(1)",
         "--generic-map-opacity": visual.mapOpacity ?? "0.96",
         "--generic-ring-color": visual.ring?.color,

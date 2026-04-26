@@ -14,7 +14,6 @@ export const GenericCelestialContainer = styled.div`
     --generic-body-texture: transparent;
     --generic-body-texture-size: 100% 100%;
     --generic-body-rotation-duration: 180s;
-    --generic-map-blend-mode: normal;
     --generic-map-filter: saturate(1.05) contrast(1.04) brightness(1);
     --generic-map-opacity: 0.96;
     --generic-ring-color: rgba(255, 255, 255, 0.2);
@@ -69,7 +68,6 @@ export const GenericCelestialContainer = styled.div`
         display: flex;
         animation: genericBodyRotation var(--generic-body-rotation-duration) linear infinite;
         opacity: var(--generic-map-opacity);
-        mix-blend-mode: var(--generic-map-blend-mode);
         will-change: transform;
         transform: translate3d(0, 0, 0);
     }

@@ -5,11 +5,18 @@ import callistoMap from "../../../assets/callisto-map.jpg";
 import charonMap from "../../../assets/charon-map.jpg";
 import deimosMap from "../../../assets/deimos-map.jpg";
 import dioneMap from "../../../assets/dione-map.jpg";
+import dysnomiaMap from "../../../assets/dysnomia-map.jpg";
 import enceladusMap from "../../../assets/enceladus-map.jpg";
 import europaMap from "../../../assets/europa-map.jpg";
 import ganymedeMap from "../../../assets/ganymede-map.jpg";
+import hiiakaMap from "../../../assets/hiiaka-map.jpg";
+import hydraMap from "../../../assets/hydra-map.jpg";
 import ioMap from "../../../assets/io-map.jpg";
 import mirandaMap from "../../../assets/miranda-map.jpg";
+import mk2Map from "../../../assets/mk2-map.jpg";
+import namakaMap from "../../../assets/namaka-map.jpg";
+import nereidMap from "../../../assets/nereid-map.jpg";
+import nixMap from "../../../assets/nix-map.jpg";
 import moonMap from "../../../assets/moon-map.jpg";
 import phobosMap from "../../../assets/phobos-map.jpg";
 import rheaMap from "../../../assets/rhea-map.jpg";
@@ -128,21 +135,21 @@ export const PLANET_MOON_SYSTEMS: Partial<Record<SpaceTheme, OrbitalMoonConfig[]
     ],
     neptune: [
         { ...icyMoon("triton", "Triton", EARTH_SCENE_CENTER_Y, "92rem", "4.5rem", "-54s"), map: tritonMap, mapFilter: "saturate(0.86) contrast(1.08) brightness(1.01)" },
-        { ...icyMoon("nereid", "Nereid", EARTH_SCENE_CENTER_Y, "114rem", "2.6rem", "-120s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.26", bodyScaleY: "0.82", map: phobosMap },
+        { ...icyMoon("nereid", "Nereid", EARTH_SCENE_CENTER_Y, "114rem", "2.6rem", "-120s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.26", bodyScaleY: "0.82", map: nereidMap },
     ],
     pluto: [
         { ...icyMoon("charon", "Charon", EARTH_SCENE_CENTER_Y, "72rem", "4.2rem", "-28s"), map: charonMap },
-        { ...icyMoon("nix", "Nix", EARTH_SCENE_CENTER_Y, "88rem", "2.2rem", "-84s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.36", bodyScaleY: "0.74" },
-        { ...icyMoon("hydra", "Hydra", EARTH_SCENE_CENTER_Y, "102rem", "2.3rem", "-146s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.42", bodyScaleY: "0.7" },
+        { ...icyMoon("nix", "Nix", EARTH_SCENE_CENTER_Y, "88rem", "2.2rem", "-84s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.36", bodyScaleY: "0.74", map: nixMap },
+        { ...icyMoon("hydra", "Hydra", EARTH_SCENE_CENTER_Y, "102rem", "2.3rem", "-146s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.42", bodyScaleY: "0.7", map: hydraMap },
     ],
     haumea: [
-        { ...icyMoon("hiiaka", "Hi'iaka", EARTH_SCENE_CENTER_Y, "66rem", "2.7rem", "-42s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.22", bodyScaleY: "0.86" },
-        { ...icyMoon("namaka", "Namaka", EARTH_SCENE_CENTER_Y, "82rem", "2rem", "-118s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.28", bodyScaleY: "0.78" },
+        { ...icyMoon("hiiaka", "Hi'iaka", EARTH_SCENE_CENTER_Y, "66rem", "2.7rem", "-42s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.22", bodyScaleY: "0.86", map: hiiakaMap },
+        { ...icyMoon("namaka", "Namaka", EARTH_SCENE_CENTER_Y, "82rem", "2rem", "-118s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.28", bodyScaleY: "0.78", map: namakaMap },
     ],
     makemake: [
-        { ...icyMoon("mk2", "MK2", EARTH_SCENE_CENTER_Y, "66rem", "2rem", "-74s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.3", bodyScaleY: "0.8", shellEnd: "#2f2728", shellMid: "#5f5554", shellStart: "#9b918d" },
+        { ...icyMoon("mk2", "MK2", EARTH_SCENE_CENTER_Y, "66rem", "2rem", "-74s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.3", bodyScaleY: "0.8", map: mk2Map, shellEnd: "#2f2728", shellMid: "#5f5554", shellStart: "#9b918d" },
     ],
     eris: [
-        { ...icyMoon("dysnomia", "Dysnomia", EARTH_SCENE_CENTER_Y, "68rem", "2.4rem", "-64s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.24", bodyScaleY: "0.84" },
+        { ...icyMoon("dysnomia", "Dysnomia", EARTH_SCENE_CENTER_Y, "68rem", "2.4rem", "-64s"), bodyClipPath: irregularAsteroidShape, bodyScaleX: "1.24", bodyScaleY: "0.84", map: dysnomiaMap },
     ],
 };

@@ -50,6 +50,30 @@ const compactBodyPreset: Record<SceneCameraPresetId, SceneCameraVector> = {
     centered: { x: 0, y: 168, z: 0.72 },
 };
 
+const mobilePlanetPreset: Record<SceneCameraPresetId, SceneCameraVector> = {
+    default: { x: 0, y: 176, z: 0.72 },
+    "planet-full": { x: 0, y: 220, z: 0.5 },
+    "close-up": { x: 0, y: 130, z: 0.94 },
+    "wide-orbit": { x: 0, y: 192, z: 0.42 },
+    centered: { x: 0, y: 176, z: 0.72 },
+};
+
+const mobileCompactBodyPreset: Record<SceneCameraPresetId, SceneCameraVector> = {
+    default: { x: 0, y: 154, z: 0.82 },
+    "planet-full": { x: 0, y: 182, z: 0.62 },
+    "close-up": { x: 0, y: 112, z: 1 },
+    "wide-orbit": { x: 0, y: 164, z: 0.52 },
+    centered: { x: 0, y: 154, z: 0.82 },
+};
+
+const mobileGasGiantPreset: Record<SceneCameraPresetId, SceneCameraVector> = {
+    default: { x: 0, y: 196, z: 0.62 },
+    "planet-full": { x: 0, y: 236, z: 0.44 },
+    "close-up": { x: 0, y: 150, z: 0.86 },
+    "wide-orbit": { x: 0, y: 210, z: 0.36 },
+    centered: { x: 0, y: 196, z: 0.62 },
+};
+
 const SCENE_CAMERA_THEME_PRESET_VALUES: Partial<Record<SpaceTheme, Record<SceneCameraPresetId, SceneCameraVector>>> = {
     mercury: compactBodyPreset,
     venus: compactBodyPreset,
@@ -63,7 +87,7 @@ const SCENE_CAMERA_THEME_PRESET_VALUES: Partial<Record<SpaceTheme, Record<SceneC
     mars: {
         default: { x: 0, y: -86, z: 1 },
         "planet-full": { x: 0, y: 90, z: 0.52 },
-        "close-up": { x: 0, y: -18, z: 1.08 },
+        "close-up": { x: 0, y: -88, z: 1.38 },
         "wide-orbit": { x: 0, y: 16, z: 0.4 },
         centered: { x: 0, y: 170, z: 0.72 },
     },
@@ -116,6 +140,24 @@ const SCENE_CAMERA_THEME_PRESET_VALUES: Partial<Record<SpaceTheme, Record<SceneC
     },
 };
 
+const SCENE_CAMERA_MOBILE_THEME_PRESET_VALUES: Partial<Record<SpaceTheme, Record<SceneCameraPresetId, SceneCameraVector>>> = {
+    mercury: mobileCompactBodyPreset,
+    venus: mobilePlanetPreset,
+    earth: mobilePlanetPreset,
+    mars: mobilePlanetPreset,
+    jupiter: mobileGasGiantPreset,
+    saturn: mobileGasGiantPreset,
+    uranus: mobileGasGiantPreset,
+    neptune: mobileGasGiantPreset,
+    ceres: mobileCompactBodyPreset,
+    pluto: mobileCompactBodyPreset,
+    haumea: mobileCompactBodyPreset,
+    makemake: mobileCompactBodyPreset,
+    eris: mobileCompactBodyPreset,
+    space: SCENE_CAMERA_THEME_PRESET_VALUES.space,
+    asteroids: SCENE_CAMERA_THEME_PRESET_VALUES.asteroids,
+};
+
 export const SCENE_CAMERA_PRESET_ORDER: SceneCameraPresetId[] = [
     "default",
     "planet-full",
@@ -126,8 +168,13 @@ export const SCENE_CAMERA_PRESET_ORDER: SceneCameraPresetId[] = [
 
 export const getSceneCameraPresetValue = (
     presetId: SceneCameraPresetId,
-    spaceTheme: SpaceTheme = "earth"
-): SceneCameraVector => SCENE_CAMERA_THEME_PRESET_VALUES[spaceTheme]?.[presetId] || SCENE_CAMERA_PRESETS[presetId].value;
+    spaceTheme: SpaceTheme = "earth",
+    compactViewport = false
+): SceneCameraVector => {
+    const presets = compactViewport ? SCENE_CAMERA_MOBILE_THEME_PRESET_VALUES : SCENE_CAMERA_THEME_PRESET_VALUES;
+
+    return presets[spaceTheme]?.[presetId] || SCENE_CAMERA_PRESETS[presetId].value;
+};
 
 export const getSceneCameraPresetLabel = (presetId: SceneCameraPresetId) =>
     SCENE_CAMERA_PRESETS[presetId].label;
