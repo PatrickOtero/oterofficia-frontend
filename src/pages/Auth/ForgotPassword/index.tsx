@@ -4,6 +4,7 @@ import { authApi } from "../../../features/auth/api/authApi";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
 import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const ForgotPasswordPage = () => {
   const [searchParams] = useSearchParams();
@@ -21,8 +22,8 @@ export const ForgotPasswordPage = () => {
     try {
       const response = await authApi.requestPasswordReset(email);
       setSuccessMessage(response.message);
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível solicitar a redefinição.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível solicitar a redefinição."));
     } finally {
       setIsSubmitting(false);
     }

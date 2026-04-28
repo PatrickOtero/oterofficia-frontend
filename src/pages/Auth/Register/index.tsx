@@ -39,7 +39,7 @@ export const RegisterPage = () => {
       const response = await register(form);
       setSuccessMessage(response.message);
       setShowVerificationAction(response.requiresEmailVerification);
-    } catch (error: any) {
+    } catch (error) {
       const errorInfo = getApiErrorInfo(error, "Não foi possível concluir o cadastro.");
       setErrorMessage(errorInfo.message);
     } finally {
@@ -54,7 +54,7 @@ export const RegisterPage = () => {
     try {
       const response = await authApi.resendVerificationEmail(form.email);
       setSuccessMessage(response.message);
-    } catch (error: any) {
+    } catch (error) {
       const errorInfo = getApiErrorInfo(error, "Não foi possível reenviar a confirmação.");
       setErrorMessage(errorInfo.message);
     } finally {

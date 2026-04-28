@@ -5,6 +5,7 @@ import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { authStorage } from "../../../features/auth/utils/authStorage";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const ConfirmAccountDeletionPage = () => {
   const [searchParams] = useSearchParams();
@@ -27,9 +28,9 @@ export const ConfirmAccountDeletionPage = () => {
         await refreshUser();
         setStatus("success");
         setMessage(response.message);
-      } catch (error: any) {
+      } catch (error) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Não foi possível confirmar a exclusão.");
+        setMessage(getApiErrorMessage(error, "Não foi possível confirmar a exclusão."));
       }
     };
 

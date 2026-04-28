@@ -1,23 +1,12 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { AdminSectionTabs } from "../../../features/admin/components/AdminSectionTabs";
+import { AdminPageShell } from "../../../features/admin/styles/AdminPageShell.style";
 import { aboutApi } from "../../../features/about/api/aboutApi";
 import { AboutEditorForm } from "../../../features/about/components/admin/AboutEditorForm";
 import { AboutFormValues } from "../../../features/about/types/about";
 import { createEmptyAboutForm, mapAboutToFormValues } from "../../../features/about/utils/aboutEditor";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-import { orbitalPanelCss, scrollableContentCss } from "../../../features/studies/utils/styleMixins";
-
-const AdminAboutEditorContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    height: 100%;
-    padding: 2rem;
-`;
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const AdminAboutEditorPage = () => {
   const [form, setForm] = useState<AboutFormValues>(createEmptyAboutForm());
@@ -34,8 +23,8 @@ export const AdminAboutEditorPage = () => {
       try {
         const page = await aboutApi.fetchAdminPage();
         setForm(mapAboutToFormValues(page));
-      } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar a página.");
+      } catch (error) {
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar a página."));
       } finally {
         setIsLoading(false);
       }
@@ -53,15 +42,15 @@ export const AdminAboutEditorPage = () => {
       const response = await aboutApi.updatePage(form);
       setForm(mapAboutToFormValues(response));
       setNoticeMessage("Página Sobre Mim atualizada.");
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível salvar a página.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível salvar a página."));
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <AdminAboutEditorContainer>
+    <AdminPageShell $gap="1.4rem">
       <AdminSectionTabs />
 
       {isLoading ? (
@@ -79,6 +68,6 @@ export const AdminAboutEditorPage = () => {
       {!isLoading ? (
         <AboutEditorForm form={form} isSaving={isSaving} onChange={setForm} onSave={() => void handleSave()} />
       ) : null}
-    </AdminAboutEditorContainer>
+    </AdminPageShell>
   );
 };

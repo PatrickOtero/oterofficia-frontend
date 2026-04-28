@@ -4,6 +4,7 @@ import { authApi } from "../../../features/auth/api/authApi";
 import { AuthForm } from "../../../features/auth/components/AuthForm";
 import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const ResetPasswordPage = () => {
   const [searchParams] = useSearchParams();
@@ -34,8 +35,8 @@ export const ResetPasswordPage = () => {
       setSuccessMessage(response.message);
       setPassword("");
       setConfirmPassword("");
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível redefinir a senha.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível redefinir a senha."));
     } finally {
       setIsSubmitting(false);
     }

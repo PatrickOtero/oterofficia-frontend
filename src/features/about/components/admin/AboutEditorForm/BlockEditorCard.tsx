@@ -1,4 +1,10 @@
 import { ImageUploadField } from "../../../../uploads/components/ImageUploadField";
+import {
+  moveBlockAt,
+  removeBlockAt,
+  toRecordArray,
+  updateBlockDataAt,
+} from "../../../../adminBlockEditor/blockEditorForm.utils";
 import { AboutBlock, AboutFormValues } from "../../../types/about";
 import { BlockCardContainer } from "../../../../studies/components/admin/StudyEditorForm/styles";
 
@@ -10,28 +16,13 @@ type BlockEditorCardProps = {
   onChange: (nextForm: AboutFormValues) => void;
 };
 
-const updateBlock = (
-  form: AboutFormValues,
-  blockIndex: number,
-  producer: (currentBlock: AboutBlock) => AboutBlock
-) => ({
-  ...form,
-  blocks: form.blocks.map((block, index) => (index === blockIndex ? producer(block) : block)),
-});
-
 const updateBlockData = (
   form: AboutFormValues,
   blockIndex: number,
   key: string,
   value: unknown
 ) =>
-  updateBlock(form, blockIndex, (block) => ({
-    ...block,
-    data: {
-      ...block.data,
-      [key]: value,
-    },
-  }));
+  updateBlockDataAt(form, "blocks", blockIndex, key, value);
 
 const updateStackGroups = (
   form: AboutFormValues,
@@ -39,11 +30,7 @@ const updateStackGroups = (
   producer: (groups: Array<Record<string, unknown>>) => Array<Record<string, unknown>>
 ) => {
   const currentBlock = form.blocks[blockIndex];
-  const currentGroups = Array.isArray(currentBlock?.data.groups)
-    ? currentBlock.data.groups
-        .filter((group): group is Record<string, unknown> => Boolean(group && typeof group === "object"))
-        .map((group) => ({ ...group }))
-    : [];
+  const currentGroups = toRecordArray(currentBlock?.data.groups).map((group) => ({ ...group }));
 
   return updateBlockData(form, blockIndex, "groups", producer(currentGroups));
 };
@@ -278,11 +265,7 @@ const renderBlockFields = (
         </>
       );
     case "stack": {
-      const groups = Array.isArray(block.data.groups)
-        ? block.data.groups.filter(
-            (group): group is Record<string, unknown> => Boolean(group && typeof group === "object")
-          )
-        : [];
+      const groups = toRecordArray(block.data.groups);
 
       return (
         <>
@@ -709,46 +692,19 @@ export const AboutBlockEditorCard = ({
       <strong>{label}</strong>
       <div className="block-actions">
         <button
-          onClick={() => {
-            if (blockIndex === 0) {
-              return;
-            }
-
-            const nextBlocks = [...form.blocks];
-            [nextBlocks[blockIndex - 1], nextBlocks[blockIndex]] = [
-              nextBlocks[blockIndex],
-              nextBlocks[blockIndex - 1],
-            ];
-            onChange({ ...form, blocks: nextBlocks });
-          }}
+          onClick={() => onChange(moveBlockAt(form, "blocks", blockIndex, -1))}
           type="button"
         >
           Subir
         </button>
         <button
-          onClick={() => {
-            if (blockIndex === form.blocks.length - 1) {
-              return;
-            }
-
-            const nextBlocks = [...form.blocks];
-            [nextBlocks[blockIndex], nextBlocks[blockIndex + 1]] = [
-              nextBlocks[blockIndex + 1],
-              nextBlocks[blockIndex],
-            ];
-            onChange({ ...form, blocks: nextBlocks });
-          }}
+          onClick={() => onChange(moveBlockAt(form, "blocks", blockIndex, 1))}
           type="button"
         >
           Descer
         </button>
         <button
-          onClick={() =>
-            onChange({
-              ...form,
-              blocks: form.blocks.filter((_, index) => index !== blockIndex),
-            })
-          }
+          onClick={() => onChange(removeBlockAt(form, "blocks", blockIndex))}
           type="button"
         >
           Remover

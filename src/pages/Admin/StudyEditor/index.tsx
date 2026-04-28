@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { AdminSectionTabs } from "../../../features/admin/components/AdminSectionTabs";
+import { AdminPageShell } from "../../../features/admin/styles/AdminPageShell.style";
 import { studiesApi } from "../../../features/studies/api/studiesApi";
 import { StudyEditorForm } from "../../../features/studies/components/admin/StudyEditorForm";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
@@ -10,21 +10,7 @@ import {
   createEmptyStudyForm,
   mapStudyToFormValues,
 } from "../../../features/studies/utils/studyEditor";
-import {
-  orbitalPanelCss,
-  scrollableContentCss,
-} from "../../../features/studies/utils/styleMixins";
-
-const AdminStudyEditorContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    height: 100%;
-    padding: 2rem;
-`;
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const AdminStudyEditorPage = () => {
   const navigate = useNavigate();
@@ -49,8 +35,8 @@ export const AdminStudyEditorPage = () => {
       try {
         const study = await studiesApi.fetchAdminStudy(id);
         setForm(mapStudyToFormValues(study));
-      } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar a postagem.");
+      } catch (error) {
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar a postagem."));
       } finally {
         setIsLoading(false);
       }
@@ -89,8 +75,8 @@ export const AdminStudyEditorPage = () => {
       if (!isEditing) {
         navigate(`/admin/studies/${response.id}/edit`, { replace: true });
       }
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível salvar a postagem.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível salvar a postagem."));
     } finally {
       setIsSaving(false);
       setIsPublishing(false);
@@ -98,7 +84,7 @@ export const AdminStudyEditorPage = () => {
   };
 
   return (
-    <AdminStudyEditorContainer>
+    <AdminPageShell $gap="1.4rem">
       <AdminSectionTabs />
 
       {isLoading ? (
@@ -123,6 +109,6 @@ export const AdminStudyEditorPage = () => {
           onSaveDraft={() => void persistStudy("draft")}
         />
       ) : null}
-    </AdminStudyEditorContainer>
+    </AdminPageShell>
   );
 };

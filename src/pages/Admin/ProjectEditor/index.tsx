@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { AdminSectionTabs } from "../../../features/admin/components/AdminSectionTabs";
+import { AdminPageShell } from "../../../features/admin/styles/AdminPageShell.style";
 import { projectsApi } from "../../../features/projects/api/projectsApi";
 import { ProjectEditorForm } from "../../../features/projects/components/admin/ProjectEditorForm";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
@@ -10,21 +10,7 @@ import {
   createEmptyProjectForm,
   mapProjectToFormValues,
 } from "../../../features/projects/utils/projectEditor";
-import {
-  orbitalPanelCss,
-  scrollableContentCss,
-} from "../../../features/studies/utils/styleMixins";
-
-const AdminProjectEditorContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.4rem;
-    height: 100%;
-    padding: 2rem;
-`;
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const AdminProjectEditorPage = () => {
   const navigate = useNavigate();
@@ -48,8 +34,8 @@ export const AdminProjectEditorPage = () => {
       try {
         const project = await projectsApi.fetchProjectById(id);
         setForm(mapProjectToFormValues(project));
-      } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar o projeto.");
+      } catch (error) {
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar o projeto."));
       } finally {
         setIsLoading(false);
       }
@@ -80,15 +66,15 @@ export const AdminProjectEditorPage = () => {
       if (!isEditing) {
         navigate(`/admin/projects/${response.id}/edit`, { replace: true });
       }
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível salvar o projeto.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível salvar o projeto."));
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <AdminProjectEditorContainer>
+    <AdminPageShell $gap="1.4rem">
       <AdminSectionTabs />
 
       {isLoading ? <FeedbackState title="Carregando editor" /> : null}
@@ -111,6 +97,6 @@ export const AdminProjectEditorPage = () => {
           onSave={() => void handleSaveProject()}
         />
       ) : null}
-    </AdminProjectEditorContainer>
+    </AdminPageShell>
   );
 };

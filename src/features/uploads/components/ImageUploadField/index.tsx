@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import styled from "styled-components";
+import { getApiErrorMessage } from "../../../../services/apiError";
 import { UploadFolder, uploadsApi } from "../../api/uploadsApi";
 
 type ImageUploadFieldProps = {
@@ -83,8 +84,8 @@ export const ImageUploadField = ({
           ? "Upload concluído na Cloudflare."
           : "Upload local concluído."
       );
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível concluir o upload.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível concluir o upload."));
     } finally {
       setIsUploading(false);
       event.target.value = "";

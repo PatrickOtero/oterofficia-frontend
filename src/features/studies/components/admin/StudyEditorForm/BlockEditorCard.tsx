@@ -1,4 +1,9 @@
 import { ImageUploadField } from "../../../../uploads/components/ImageUploadField";
+import {
+  moveBlockAt,
+  removeBlockAt,
+  updateBlockDataAt,
+} from "../../../../adminBlockEditor/blockEditorForm.utils";
 import { StudyBlock, StudyFormValues } from "../../../types/study";
 import { BlockCardContainer } from "./styles";
 
@@ -10,28 +15,13 @@ type BlockEditorCardProps = {
   onChange: (nextForm: StudyFormValues) => void;
 };
 
-const updateBlock = (
-  form: StudyFormValues,
-  blockIndex: number,
-  producer: (currentBlock: StudyBlock) => StudyBlock
-) => ({
-  ...form,
-  content: form.content.map((block, index) => (index === blockIndex ? producer(block) : block)),
-});
-
 const updateBlockData = (
   form: StudyFormValues,
   blockIndex: number,
   key: string,
   value: unknown
 ) =>
-  updateBlock(form, blockIndex, (block) => ({
-    ...block,
-    data: {
-      ...block.data,
-      [key]: value,
-    },
-  }));
+  updateBlockDataAt(form, "content", blockIndex, key, value);
 
 const renderBlockFields = (
   block: StudyBlock,
@@ -311,46 +301,19 @@ export const BlockEditorCard = ({
       <strong>{label}</strong>
       <div className="block-actions">
         <button
-          onClick={() => {
-            if (blockIndex === 0) {
-              return;
-            }
-
-            const nextBlocks = [...form.content];
-            [nextBlocks[blockIndex - 1], nextBlocks[blockIndex]] = [
-              nextBlocks[blockIndex],
-              nextBlocks[blockIndex - 1],
-            ];
-            onChange({ ...form, content: nextBlocks });
-          }}
+          onClick={() => onChange(moveBlockAt(form, "content", blockIndex, -1))}
           type="button"
         >
           Subir
         </button>
         <button
-          onClick={() => {
-            if (blockIndex === form.content.length - 1) {
-              return;
-            }
-
-            const nextBlocks = [...form.content];
-            [nextBlocks[blockIndex], nextBlocks[blockIndex + 1]] = [
-              nextBlocks[blockIndex + 1],
-              nextBlocks[blockIndex],
-            ];
-            onChange({ ...form, content: nextBlocks });
-          }}
+          onClick={() => onChange(moveBlockAt(form, "content", blockIndex, 1))}
           type="button"
         >
           Descer
         </button>
         <button
-          onClick={() =>
-            onChange({
-              ...form,
-              content: form.content.filter((_, index) => index !== blockIndex),
-            })
-          }
+          onClick={() => onChange(removeBlockAt(form, "content", blockIndex))}
           type="button"
         >
           Remover

@@ -1,27 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { AdminSectionTabs } from "../../../features/admin/components/AdminSectionTabs";
+import { AdminPageShell } from "../../../features/admin/styles/AdminPageShell.style";
 import { projectsApi } from "../../../features/projects/api/projectsApi";
 import { ProjectRecord } from "../../../features/projects/types/project";
 import { ProjectsTable } from "../../../features/projects/components/admin/ProjectsTable";
 import { ProjectsToolbar } from "../../../features/projects/components/admin/ProjectsToolbar";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
-import {
-  orbitalPanelCss,
-  scrollableContentCss,
-} from "../../../features/studies/utils/styleMixins";
-
-const AdminProjectsDashboardContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    height: 100%;
-    padding: 2rem;
-`;
+import { getApiErrorMessage, hasApiErrorStatus } from "../../../services/apiError";
 
 export const AdminProjectsDashboardPage = () => {
   const navigate = useNavigate();
@@ -42,11 +28,11 @@ export const AdminProjectsDashboardPage = () => {
     try {
       const response = await projectsApi.fetchProjects();
       setProjects(response);
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error) {
+      if (hasApiErrorStatus(error, 404)) {
         setProjects([]);
       } else {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar os projetos.");
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar os projetos."));
       }
     } finally {
       setIsLoading(false);
@@ -95,7 +81,7 @@ export const AdminProjectsDashboardPage = () => {
   };
 
   return (
-    <AdminProjectsDashboardContainer>
+    <AdminPageShell>
       <AdminSectionTabs />
 
       {isLoading ? <FeedbackState title="Carregando painel" /> : null}
@@ -122,6 +108,6 @@ export const AdminProjectsDashboardPage = () => {
           />
         </>
       ) : null}
-    </AdminProjectsDashboardContainer>
+    </AdminPageShell>
   );
 };

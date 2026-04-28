@@ -18,6 +18,7 @@ export type ApiErrorInfo = {
   details?: ApiErrorDetails;
   message: string;
   requestId?: string;
+  status?: number;
 };
 
 export const getApiErrorInfo = (error: unknown, fallbackMessage: string): ApiErrorInfo => {
@@ -33,6 +34,7 @@ export const getApiErrorInfo = (error: unknown, fallbackMessage: string): ApiErr
       details: payload?.details,
       message: payload?.message || fallbackMessage,
       requestId: typeof requestId === "string" ? requestId : undefined,
+      status: error.response?.status,
     };
   }
 
@@ -46,6 +48,12 @@ export const getApiErrorInfo = (error: unknown, fallbackMessage: string): ApiErr
     message: fallbackMessage,
   };
 };
+
+export const getApiErrorMessage = (error: unknown, fallbackMessage: string) =>
+  getApiErrorInfo(error, fallbackMessage).message;
+
+export const hasApiErrorStatus = (error: unknown, status: number) =>
+  axios.isAxiosError(error) && error.response?.status === status;
 
 export const logApiErrorToConsole = (error: unknown, fallbackMessage = "Erro inesperado na API.") => {
   const errorInfo = getApiErrorInfo(error, fallbackMessage);

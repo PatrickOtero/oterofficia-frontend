@@ -4,6 +4,7 @@ import { authApi } from "../../../features/auth/api/authApi";
 import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const ConfirmEmailChangePage = () => {
   const [searchParams] = useSearchParams();
@@ -25,9 +26,9 @@ export const ConfirmEmailChangePage = () => {
         await refreshUser();
         setStatus("success");
         setMessage(response.message);
-      } catch (error: any) {
+      } catch (error) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Não foi possível confirmar o novo e-mail.");
+        setMessage(getApiErrorMessage(error, "Não foi possível confirmar o novo e-mail."));
       }
     };
 

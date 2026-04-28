@@ -7,6 +7,7 @@ import { FeedbackState } from "../../features/studies/components/shared/Feedback
 import { useBotFunctionsContext } from "../../hooks/useBotFunctionsContext";
 import { useBotSceneActions } from "../../hooks/useBotSceneActions";
 import { AboutMeContainer } from "./AboutMe.style";
+import { getApiErrorMessage } from "../../services/apiError";
 
 export const AboutMePage = () => {
     const { aboutMePage } = useBotFunctionsContext();
@@ -31,8 +32,8 @@ export const AboutMePage = () => {
         try {
           const response = await aboutApi.fetchPublicPage();
           setPage(response);
-        } catch (error: any) {
-          setErrorMessage(error.response?.data?.message || "Não foi possível carregar esta página.");
+        } catch (error) {
+          setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar esta página."));
         } finally {
           setIsLoading(false);
         }

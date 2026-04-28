@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
 import { studiesApi } from "../../features/studies/api/studiesApi";
 import { StudyCard } from "../../features/studies/components/public/StudyCard";
 import { StudyFiltersBar } from "../../features/studies/components/public/StudyFiltersBar";
@@ -7,33 +6,8 @@ import { StudiesHero } from "../../features/studies/components/public/StudiesHer
 import { EmptyState } from "../../features/studies/components/shared/EmptyState";
 import { FeedbackState } from "../../features/studies/components/shared/FeedbackState";
 import { PublicStudiesResponse } from "../../features/studies/types/study";
-import {
-  orbitalPanelCss,
-  scrollableContentCss,
-} from "../../features/studies/utils/styleMixins";
-
-const StudiesPageContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    height: 100%;
-    padding: 2rem;
-
-    .studies-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.4rem;
-    }
-
-    @media (max-width: 960px) {
-        .studies-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-`;
+import { getApiErrorMessage } from "../../services/apiError";
+import { StudiesPageContainer } from "./Studies.style";
 
 const initialResponse: PublicStudiesResponse = {
   filters: {
@@ -75,8 +49,8 @@ export const StudiesPage = () => {
           tag,
         });
         setData(response);
-      } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar os estudos.");
+      } catch (error) {
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar os estudos."));
       } finally {
         setIsLoading(false);
       }

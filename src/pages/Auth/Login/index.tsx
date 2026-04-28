@@ -5,6 +5,7 @@ import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { authApi } from "../../../features/auth/api/authApi";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorInfo, getApiErrorMessage } from "../../../services/apiError";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -35,13 +36,12 @@ export const LoginPage = () => {
     try {
       await login(form);
       navigate(redirectPath, { replace: true });
-    } catch (error: any) {
-      const nextMessage = error.response?.data?.message || "Não foi possível concluir o login.";
-      const nextCode = error.response?.data?.code;
+    } catch (error) {
+      const errorInfo = getApiErrorInfo(error, "Não foi possível concluir o login.");
 
-      setErrorMessage(nextMessage);
+      setErrorMessage(errorInfo.message);
 
-      if (nextCode === "email_not_verified") {
+      if (errorInfo.code === "email_not_verified") {
         setPendingVerificationEmail(form.email.trim().toLowerCase());
       }
     } finally {
@@ -60,8 +60,8 @@ export const LoginPage = () => {
     try {
       const response = await authApi.resendVerificationEmail(pendingVerificationEmail);
       setVerificationMessage(response.message);
-    } catch (error: any) {
-      setVerificationMessage(error.response?.data?.message || "Não foi possível reenviar a confirmação.");
+    } catch (error) {
+      setVerificationMessage(getApiErrorMessage(error, "Não foi possível reenviar a confirmação."));
     } finally {
       setIsResendingVerification(false);
     }

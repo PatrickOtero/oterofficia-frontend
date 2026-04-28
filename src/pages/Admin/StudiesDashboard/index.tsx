@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { AdminSectionTabs } from "../../../features/admin/components/AdminSectionTabs";
+import { AdminPageShell } from "../../../features/admin/styles/AdminPageShell.style";
 import { studiesApi } from "../../../features/studies/api/studiesApi";
 import { AdminCommentsPanel } from "../../../features/studies/components/admin/AdminCommentsPanel";
 import { AdminFiltersBar } from "../../../features/studies/components/admin/AdminFiltersBar";
@@ -9,21 +9,7 @@ import { AdminMetricsStrip } from "../../../features/studies/components/admin/Ad
 import { StudiesTable } from "../../../features/studies/components/admin/StudiesTable";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
 import { StudyComment, StudyDashboardData, StudySummary } from "../../../features/studies/types/study";
-import {
-  orbitalPanelCss,
-  scrollableContentCss,
-} from "../../../features/studies/utils/styleMixins";
-
-const AdminStudiesDashboardContainer = styled.section`
-    ${orbitalPanelCss};
-    ${scrollableContentCss};
-
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-    height: 100%;
-    padding: 2rem;
-`;
+import { getApiErrorMessage } from "../../../services/apiError";
 
 const initialDashboard: StudyDashboardData = {
   metrics: {
@@ -68,8 +54,8 @@ export const AdminStudiesDashboardPage = () => {
 
       setDashboard(dashboardResponse);
       setComments(commentsResponse);
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível carregar o painel de estudos.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar o painel de estudos."));
     } finally {
       setIsLoading(false);
     }
@@ -94,8 +80,8 @@ export const AdminStudiesDashboardPage = () => {
         status,
       });
       setStudies(studiesResponse);
-    } catch (error: any) {
-      setErrorMessage(error.response?.data?.message || "Não foi possível carregar a lista de estudos.");
+    } catch (error) {
+      setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar a lista de estudos."));
     } finally {
       setIsStudiesLoading(false);
     }
@@ -160,7 +146,7 @@ export const AdminStudiesDashboardPage = () => {
   };
 
   return (
-    <AdminStudiesDashboardContainer>
+    <AdminPageShell>
       <AdminSectionTabs />
 
       {(isLoading || isStudiesLoading) ? (
@@ -194,6 +180,6 @@ export const AdminStudiesDashboardPage = () => {
           />
         </>
       ) : null}
-    </AdminStudiesDashboardContainer>
+    </AdminPageShell>
   );
 };

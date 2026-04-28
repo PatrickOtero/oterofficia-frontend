@@ -6,6 +6,7 @@ import { FeedbackState } from "../../../features/studies/components/shared/Feedb
 import { useBotFunctionsContext } from "../../../hooks/useBotFunctionsContext";
 import { useBotSceneActions } from "../../../hooks/useBotSceneActions";
 import { ProjectCarouselContainer } from "./Carousel.style";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 const SOU_JUNIOR_OVERVIEW = {
   ctaLabel: "Conhecer a iniciativa",
@@ -218,8 +219,8 @@ export const ProjectCarousel = () => {
       try {
         const response = await projectsApi.fetchProjects();
         setProjects([...response].sort((left, right) => right.id - left.id));
-      } catch (error: any) {
-        setErrorMessage(error.response?.data?.message || "Não foi possível carregar os projetos.");
+      } catch (error) {
+        setErrorMessage(getApiErrorMessage(error, "Não foi possível carregar os projetos."));
       } finally {
         setIsLoading(false);
       }

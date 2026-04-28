@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { authApi } from "../../../features/auth/api/authApi";
 import { AuthSceneShell } from "../../../features/auth/components/AuthSceneShell";
 import { FeedbackState } from "../../../features/studies/components/shared/FeedbackState";
+import { getApiErrorMessage } from "../../../services/apiError";
 
 export const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
@@ -22,9 +23,9 @@ export const VerifyEmailPage = () => {
         const response = await authApi.verifyEmail(token);
         setStatus("success");
         setMessage(response.message);
-      } catch (error: any) {
+      } catch (error) {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Não foi possível confirmar o e-mail.");
+        setMessage(getApiErrorMessage(error, "Não foi possível confirmar o e-mail."));
       }
     };
 

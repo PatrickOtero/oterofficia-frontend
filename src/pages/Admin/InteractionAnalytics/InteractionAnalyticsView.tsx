@@ -3,7 +3,6 @@ import {
   InteractionAnalyticsSeriesPoint,
   InteractionAnalyticsUserRow,
 } from "../../../features/studies/types/study";
-import { AdminInteractionAnalyticsContainer } from "./InteractionAnalytics.style";
 import {
   activityLabelMap,
   formatCompact,
@@ -99,7 +98,7 @@ export const AdminInteractionAnalyticsView = ({
     analytics.overview.totalStudyLikes;
 
   return (
-    <AdminInteractionAnalyticsContainer>
+    <>
       <div className="analytics-hero">
         <div className="analytics-hero-copy">
           <span className="analytics-eyebrow">Painel comportamental</span>
@@ -255,6 +254,6 @@ export const AdminInteractionAnalyticsView = ({
           volume de {analytics.overview.totalReads} leituras autenticadas distribuído entre as suas publicações.
         </p>
       </div>
-    </AdminInteractionAnalyticsContainer>
+    </>
   );
 };

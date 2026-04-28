@@ -5,16 +5,6 @@ export const OrbitalMoonsContainer = styled.div`
     --planetary-moons-tablet-scale: 0.82;
     --planetary-moons-mobile-scale: 0.68;
 
-    @keyframes orbitalMoonOrbit {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
     @keyframes orbitalMoonRotation {
         from {
             transform: translate3d(0, 0, 0);
@@ -29,36 +19,48 @@ export const OrbitalMoonsContainer = styled.div`
     inset: 0;
     overflow: visible;
     pointer-events: none;
-    z-index: 2;
 
     .orbital-moon-system {
         position: absolute;
         left: 50%;
         top: var(--moon-center-y);
-        width: calc(var(--moon-orbit-size) * var(--planetary-moons-scale));
-        height: calc(var(--moon-orbit-size) * var(--planetary-moons-scale));
-        margin-left: calc((var(--moon-orbit-size) * var(--planetary-moons-scale)) / -2);
-        margin-top: calc((var(--moon-orbit-size) * var(--planetary-moons-scale)) / -2);
+        width: 0;
+        height: 0;
+        --moon-orbit-radius-x: calc(var(--moon-orbit-width) * var(--planetary-moons-scale) / 2);
+        --moon-orbit-radius-y: calc(var(--moon-orbit-height) * var(--planetary-moons-scale) / 2);
         overflow: visible;
     }
 
-    .orbital-moon-orbit {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        animation: orbitalMoonOrbit var(--moon-orbit-duration) linear infinite;
-        animation-delay: var(--moon-orbit-delay);
-        will-change: transform;
-    }
-
-    .orbital-moon-body {
+    .orbital-moon-position {
         position: absolute;
         top: 0;
-        left: 50%;
+        left: 0;
         width: calc(var(--moon-size) * var(--planetary-moons-scale));
         height: calc(var(--moon-size) * var(--planetary-moons-scale));
         transform:
             translate(-50%, -50%)
+            translate3d(
+                calc(var(--moon-orbit-radius-x) * var(--moon-orbit-x, 0)),
+                calc(var(--moon-orbit-radius-y) * var(--moon-orbit-y, -1)),
+                0
+            );
+        will-change: transform;
+    }
+
+    .orbital-moon-depth {
+        position: absolute;
+        inset: 0;
+        transform: scale(var(--moon-depth-scale, 1));
+        filter:
+            brightness(var(--moon-depth-brightness, 1))
+            saturate(var(--moon-depth-saturation, 1));
+        will-change: filter, transform;
+    }
+
+    .orbital-moon-body {
+        position: absolute;
+        inset: 0;
+        transform:
             rotate(var(--moon-body-rotate, 0deg))
             scale(var(--moon-body-scale-x, 1), var(--moon-body-scale-y, 1));
         border-radius: var(--moon-body-radius, 50%);
@@ -73,7 +75,7 @@ export const OrbitalMoonsContainer = styled.div`
             0 0 1.4rem var(--moon-glow),
             0 0 2.4rem rgba(0, 0, 0, 0.08);
         filter: saturate(1.01) brightness(1);
-        will-change: transform, filter;
+        will-change: transform;
     }
 
     .orbital-moon-surface {
