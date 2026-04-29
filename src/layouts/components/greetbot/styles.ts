@@ -934,6 +934,20 @@ export const RobotFigure = styled.div<{
               `
             : ""}
 
+    @media (prefers-reduced-motion: reduce) {
+        .robot-float-shell,
+        .orbit-item,
+        .orbit-node,
+        .turbine-trail,
+        .turbine-trail::before,
+        .turbine-trail::after,
+        .robot-hologram-beam,
+        .robot-hologram-origin,
+        .robot-visor-scan {
+            animation: none;
+        }
+    }
+
     @media (max-width: 900px) {
         --robot-size: 10.4rem;
         --body-scale: 1.25;

@@ -24,6 +24,9 @@ const ZOOM_SPEED = 0.34;
 const CAMERA_SMOOTHING = 8.8;
 const INPUT_SMOOTHING = 11.2;
 const MOBILE_CAMERA_QUERY = "(max-width: 640px)";
+const CAMERA_STATE_COMMIT_INTERVAL_MS = 90;
+const CAMERA_SETTLE_EPSILON = 0.025;
+const INPUT_SETTLE_EPSILON = 0.01;
 
 const CONTROLLED_KEYS = new Set([
     "a",
@@ -78,6 +81,8 @@ export const useSceneCamera = (): SceneCameraController => {
     const manualModeRef = useRef(false);
     const activePresetRef = useRef<SceneCameraPresetId | null>(DEFAULT_SCENE_CAMERA_PRESET_ID);
     const pressedKeysRef = useRef<Set<string>>(new Set());
+    const documentCameraVarsRef = useRef<Record<string, string>>({});
+    const scheduleCameraFrameRef = useRef<() => void>(() => undefined);
 
     const syncDocumentCameraVars = useCallback((nextCamera: SceneCameraVector, nextInputState: SceneCameraInputState) => {
         if (typeof document === "undefined") {
@@ -85,14 +90,24 @@ export const useSceneCamera = (): SceneCameraController => {
         }
 
         const rootStyle = document.documentElement.style;
+        const nextVars = {
+            "--scene-camera-x": `${roundSceneCameraValue(nextCamera.x)}px`,
+            "--scene-camera-y": `${roundSceneCameraValue(nextCamera.y)}px`,
+            "--scene-camera-zoom": `${roundSceneCameraValue(nextCamera.z)}`,
+            "--scene-pilot-x": `${roundSceneCameraValue(nextInputState.x)}`,
+            "--scene-pilot-y": `${roundSceneCameraValue(nextInputState.y)}`,
+            "--scene-pilot-z": `${roundSceneCameraValue(nextInputState.z)}`,
+            "--scene-pilot-thrust": `${roundSceneCameraValue(nextInputState.thrust)}`,
+        };
 
-        rootStyle.setProperty("--scene-camera-x", `${roundSceneCameraValue(nextCamera.x)}px`);
-        rootStyle.setProperty("--scene-camera-y", `${roundSceneCameraValue(nextCamera.y)}px`);
-        rootStyle.setProperty("--scene-camera-zoom", `${roundSceneCameraValue(nextCamera.z)}`);
-        rootStyle.setProperty("--scene-pilot-x", `${roundSceneCameraValue(nextInputState.x)}`);
-        rootStyle.setProperty("--scene-pilot-y", `${roundSceneCameraValue(nextInputState.y)}`);
-        rootStyle.setProperty("--scene-pilot-z", `${roundSceneCameraValue(nextInputState.z)}`);
-        rootStyle.setProperty("--scene-pilot-thrust", `${roundSceneCameraValue(nextInputState.thrust)}`);
+        Object.entries(nextVars).forEach(([property, value]) => {
+            if (documentCameraVarsRef.current[property] === value) {
+                return;
+            }
+
+            documentCameraVarsRef.current[property] = value;
+            rootStyle.setProperty(property, value);
+        });
     }, []);
 
     const commitCameraState = useCallback(
@@ -141,6 +156,8 @@ export const useSceneCamera = (): SceneCameraController => {
                     mode: nextManualMode ? "manual" : "preset",
                 }));
             }
+
+            scheduleCameraFrameRef.current();
         },
         [commitCameraState, syncDocumentCameraVars]
     );
@@ -166,6 +183,7 @@ export const useSceneCamera = (): SceneCameraController => {
             ...currentState,
             mode: "manual",
         }));
+        scheduleCameraFrameRef.current();
     }, []);
 
     const exitManualMode = useCallback(() => {
@@ -176,6 +194,7 @@ export const useSceneCamera = (): SceneCameraController => {
             ...currentState,
             mode: "preset",
         }));
+        scheduleCameraFrameRef.current();
     }, []);
 
     const toggleManualMode = useCallback(() => {
@@ -219,8 +238,20 @@ export const useSceneCamera = (): SceneCameraController => {
 
         let animationFrameId = 0;
         let previousTimestamp = 0;
+        let lastStateCommitAt = 0;
+        let hasCommittedSettledState = false;
 
-        const tick = (timestamp: number) => {
+        const scheduleTick = () => {
+            if (animationFrameId) {
+                return;
+            }
+
+            animationFrameId = window.requestAnimationFrame(tick);
+        };
+
+        function tick(timestamp: number) {
+            animationFrameId = 0;
+
             if (!previousTimestamp) {
                 previousTimestamp = timestamp;
             }
@@ -301,14 +332,44 @@ export const useSceneCamera = (): SceneCameraController => {
             cameraRef.current = nextCamera;
             inputStateRef.current = nextInputState;
             syncDocumentCameraVars(nextCamera, nextInputState);
-            commitCameraState(nextCamera, nextInputState);
 
-            animationFrameId = window.requestAnimationFrame(tick);
-        };
+            const cameraDistance =
+                Math.abs(nextCamera.x - targetCameraRef.current.x) +
+                Math.abs(nextCamera.y - targetCameraRef.current.y) +
+                Math.abs(nextCamera.z - targetCameraRef.current.z);
+            const inputDistance =
+                Math.abs(nextInputState.x) +
+                Math.abs(nextInputState.y) +
+                Math.abs(nextInputState.z) +
+                Math.abs(nextInputState.thrust);
+            const isSettled = cameraDistance < CAMERA_SETTLE_EPSILON && inputDistance < INPUT_SETTLE_EPSILON;
+            const shouldCommitState =
+                timestamp - lastStateCommitAt >= CAMERA_STATE_COMMIT_INTERVAL_MS ||
+                (isSettled && !hasCommittedSettledState);
 
-        animationFrameId = window.requestAnimationFrame(tick);
+            if (shouldCommitState) {
+                lastStateCommitAt = timestamp;
+                hasCommittedSettledState = isSettled;
+                commitCameraState(nextCamera, nextInputState);
+            }
+
+            if (!isSettled) {
+                hasCommittedSettledState = false;
+            }
+
+            if (!isSettled || pressedKeysRef.current.size > 0) {
+                scheduleTick();
+                return;
+            }
+
+            previousTimestamp = 0;
+        }
+
+        scheduleCameraFrameRef.current = scheduleTick;
+        scheduleTick();
 
         return () => {
+            scheduleCameraFrameRef.current = () => undefined;
             window.cancelAnimationFrame(animationFrameId);
 
             if (typeof document !== "undefined") {
@@ -320,6 +381,7 @@ export const useSceneCamera = (): SceneCameraController => {
                 rootStyle.removeProperty("--scene-pilot-y");
                 rootStyle.removeProperty("--scene-pilot-z");
                 rootStyle.removeProperty("--scene-pilot-thrust");
+                documentCameraVarsRef.current = {};
             }
         };
     }, [commitCameraState, syncDocumentCameraVars]);
@@ -354,19 +416,23 @@ export const useSceneCamera = (): SceneCameraController => {
                     ...currentState,
                     activePreset: DEFAULT_SCENE_CAMERA_PRESET_ID,
                 }));
+                scheduleCameraFrameRef.current();
                 return;
             }
 
             pressedKeysRef.current.add(normalizedKey);
+            scheduleCameraFrameRef.current();
             event.preventDefault();
         };
 
         const handleKeyUp = (event: KeyboardEvent) => {
             pressedKeysRef.current.delete(event.key.toLowerCase());
+            scheduleCameraFrameRef.current();
         };
 
         const clearPressedKeys = () => {
             pressedKeysRef.current.clear();
+            scheduleCameraFrameRef.current();
         };
 
         window.addEventListener("keydown", handleKeyDown);

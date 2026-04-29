@@ -1,8 +1,8 @@
 import { ImageUploadField } from "../../../../uploads/components/ImageUploadField";
 import {
-  moveBlockAt,
-  removeBlockAt,
-  updateBlockDataAt,
+  moveItem,
+  removeItem,
+  updateBlockData as updateBlockDataInList,
 } from "../../../../adminBlockEditor/blockEditorForm.utils";
 import { StudyBlock, StudyFormValues } from "../../../types/study";
 import { BlockCardContainer } from "./styles";
@@ -20,8 +20,10 @@ const updateBlockData = (
   blockIndex: number,
   key: string,
   value: unknown
-) =>
-  updateBlockDataAt(form, "content", blockIndex, key, value);
+): StudyFormValues => ({
+  ...form,
+  content: updateBlockDataInList(form.content, blockIndex, key, value),
+});
 
 const renderBlockFields = (
   block: StudyBlock,
@@ -301,19 +303,19 @@ export const BlockEditorCard = ({
       <strong>{label}</strong>
       <div className="block-actions">
         <button
-          onClick={() => onChange(moveBlockAt(form, "content", blockIndex, -1))}
+          onClick={() => onChange({ ...form, content: moveItem(form.content, blockIndex, -1) })}
           type="button"
         >
           Subir
         </button>
         <button
-          onClick={() => onChange(moveBlockAt(form, "content", blockIndex, 1))}
+          onClick={() => onChange({ ...form, content: moveItem(form.content, blockIndex, 1) })}
           type="button"
         >
           Descer
         </button>
         <button
-          onClick={() => onChange(removeBlockAt(form, "content", blockIndex))}
+          onClick={() => onChange({ ...form, content: removeItem(form.content, blockIndex) })}
           type="button"
         >
           Remover

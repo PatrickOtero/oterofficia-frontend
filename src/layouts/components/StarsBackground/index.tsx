@@ -1,4 +1,6 @@
 import { CSSProperties, memo } from "react";
+import type { ScenePerformanceTier } from "../../../features/scenePerformance/scenePerformance.types";
+import { useScenePerformanceProfile } from "../../../features/scenePerformance/useScenePerformanceProfile";
 import type { SpaceTheme } from "../greetbot/spaceThemes";
 import { SpaceContainer } from "./stars.style";
 
@@ -313,6 +315,342 @@ const ASTEROID_FIELD = [
     },
 ] as const;
 
+const ASTEROID_BELT_REINFORCEMENTS = [
+    {
+        delay: "-17s",
+        driftX: "2.1rem",
+        driftY: "-1.2rem",
+        duration: "31s",
+        heightRatio: "0.72",
+        left: "2%",
+        opacity: 0.76,
+        radius: "51% 49% 63% 37% / 42% 57% 43% 58%",
+        rotate: "21deg",
+        size: "6.8rem",
+        top: "78%",
+        variant: "large",
+        zIndex: 1,
+    },
+    {
+        delay: "-20s",
+        driftX: "1.3rem",
+        driftY: "-0.7rem",
+        duration: "36s",
+        heightRatio: "0.64",
+        left: "9%",
+        opacity: 0.58,
+        radius: "58% 42% 48% 52% / 60% 39% 61% 40%",
+        rotate: "-7deg",
+        size: "2.8rem",
+        top: "88%",
+        variant: "small",
+        zIndex: 1,
+    },
+    {
+        delay: "-19s",
+        driftX: "1.8rem",
+        driftY: "1rem",
+        duration: "34s",
+        heightRatio: "0.7",
+        left: "17%",
+        opacity: 0.66,
+        radius: "46% 54% 57% 43% / 47% 59% 41% 53%",
+        rotate: "12deg",
+        size: "3.6rem",
+        top: "38%",
+        variant: "medium",
+        zIndex: 1,
+    },
+    {
+        delay: "-22s",
+        driftX: "2rem",
+        driftY: "-0.9rem",
+        duration: "32s",
+        heightRatio: "0.74",
+        left: "24%",
+        opacity: 0.72,
+        radius: "60% 40% 52% 48% / 38% 58% 42% 62%",
+        rotate: "-26deg",
+        size: "7.8rem",
+        top: "76%",
+        variant: "large",
+        zIndex: 1,
+    },
+    {
+        delay: "-18s",
+        driftX: "1rem",
+        driftY: "-0.5rem",
+        duration: "38s",
+        heightRatio: "0.66",
+        left: "31%",
+        opacity: 0.54,
+        radius: "44% 56% 61% 39% / 55% 44% 56% 45%",
+        rotate: "18deg",
+        size: "2.1rem",
+        top: "31%",
+        variant: "shard",
+        zIndex: 1,
+    },
+    {
+        delay: "-23s",
+        driftX: "2.4rem",
+        driftY: "1.3rem",
+        duration: "29s",
+        heightRatio: "0.78",
+        left: "39%",
+        opacity: 0.78,
+        radius: "53% 47% 65% 35% / 49% 41% 59% 51%",
+        rotate: "-18deg",
+        size: "8.6rem",
+        top: "73%",
+        variant: "large",
+        zIndex: 1,
+    },
+    {
+        delay: "-16s",
+        driftX: "1.5rem",
+        driftY: "-0.7rem",
+        duration: "35s",
+        heightRatio: "0.69",
+        left: "49%",
+        opacity: 0.68,
+        radius: "47% 53% 42% 58% / 61% 43% 57% 39%",
+        rotate: "9deg",
+        size: "4.2rem",
+        top: "46%",
+        variant: "medium",
+        zIndex: 1,
+    },
+    {
+        delay: "-24s",
+        driftX: "1.2rem",
+        driftY: "0.8rem",
+        duration: "37s",
+        heightRatio: "0.62",
+        left: "57%",
+        opacity: 0.5,
+        radius: "55% 45% 50% 50% / 46% 54% 49% 51%",
+        rotate: "-3deg",
+        size: "1.9rem",
+        top: "25%",
+        variant: "shard",
+        zIndex: 1,
+    },
+    {
+        delay: "-21s",
+        driftX: "2rem",
+        driftY: "-1.1rem",
+        duration: "33s",
+        heightRatio: "0.71",
+        left: "71%",
+        opacity: 0.73,
+        radius: "61% 39% 49% 51% / 44% 62% 38% 56%",
+        rotate: "23deg",
+        size: "6.2rem",
+        top: "80%",
+        variant: "large",
+        zIndex: 1,
+    },
+    {
+        delay: "-18s",
+        driftX: "1.4rem",
+        driftY: "-0.8rem",
+        duration: "36s",
+        heightRatio: "0.68",
+        left: "75%",
+        opacity: 0.62,
+        radius: "45% 55% 58% 42% / 51% 44% 56% 49%",
+        rotate: "-12deg",
+        size: "3.4rem",
+        top: "66%",
+        variant: "medium",
+        zIndex: 1,
+    },
+    {
+        delay: "-25s",
+        driftX: "2.2rem",
+        driftY: "1.2rem",
+        duration: "30s",
+        heightRatio: "0.76",
+        left: "88%",
+        opacity: 0.8,
+        radius: "57% 43% 62% 38% / 40% 59% 41% 60%",
+        rotate: "15deg",
+        size: "8.8rem",
+        top: "72%",
+        variant: "large",
+        zIndex: 1,
+    },
+    {
+        delay: "-19s",
+        driftX: "1rem",
+        driftY: "-0.6rem",
+        duration: "39s",
+        heightRatio: "0.65",
+        left: "96%",
+        opacity: 0.56,
+        radius: "49% 51% 43% 57% / 54% 46% 55% 45%",
+        rotate: "-19deg",
+        size: "2.7rem",
+        top: "28%",
+        variant: "small edge",
+        zIndex: 1,
+    },
+] as const;
+
+const ASTEROID_FOREGROUND_BOULDERS = [
+    {
+        delay: "-12s",
+        driftX: "3.4rem",
+        driftY: "-1.4rem",
+        duration: "26s",
+        heightRatio: "0.72",
+        left: "-7%",
+        opacity: 0.88,
+        radius: "55% 45% 67% 33% / 41% 62% 38% 59%",
+        rotate: "-20deg",
+        size: "34rem",
+        top: "76%",
+        variant: "colossal foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-15s",
+        driftX: "2.8rem",
+        driftY: "1.6rem",
+        duration: "28s",
+        heightRatio: "0.7",
+        left: "31%",
+        opacity: 0.82,
+        radius: "47% 53% 58% 42% / 54% 37% 63% 46%",
+        rotate: "16deg",
+        size: "17rem",
+        top: "86%",
+        variant: "giant foreground",
+        zIndex: 2,
+    },
+    {
+        delay: "-18s",
+        driftX: "3rem",
+        driftY: "-1.2rem",
+        duration: "24s",
+        heightRatio: "0.76",
+        left: "67%",
+        opacity: 0.86,
+        radius: "63% 37% 51% 49% / 38% 58% 42% 62%",
+        rotate: "-9deg",
+        size: "20rem",
+        top: "78%",
+        variant: "giant foreground",
+        zIndex: 2,
+    },
+    {
+        delay: "-10s",
+        driftX: "2.5rem",
+        driftY: "1rem",
+        duration: "25s",
+        heightRatio: "0.73",
+        left: "86%",
+        opacity: 0.9,
+        radius: "44% 56% 64% 36% / 52% 39% 61% 48%",
+        rotate: "17deg",
+        size: "18rem",
+        top: "35%",
+        variant: "giant foreground",
+        zIndex: 2,
+    },
+    {
+        delay: "-14s",
+        driftX: "3.6rem",
+        driftY: "-1.8rem",
+        duration: "23s",
+        heightRatio: "0.68",
+        left: "98%",
+        opacity: 0.84,
+        radius: "58% 42% 47% 53% / 44% 56% 45% 55%",
+        rotate: "-24deg",
+        size: "38rem",
+        top: "-5%",
+        variant: "colossal foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-20s",
+        driftX: "2.7rem",
+        driftY: "-1.1rem",
+        duration: "27s",
+        heightRatio: "0.74",
+        left: "15%",
+        opacity: 0.82,
+        radius: "62% 38% 55% 45% / 39% 61% 42% 58%",
+        rotate: "-13deg",
+        size: "24rem",
+        top: "-3%",
+        variant: "giant foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-22s",
+        driftX: "3.1rem",
+        driftY: "1.4rem",
+        duration: "29s",
+        heightRatio: "0.7",
+        left: "50%",
+        opacity: 0.76,
+        radius: "48% 52% 66% 34% / 56% 39% 61% 44%",
+        rotate: "10deg",
+        size: "14.5rem",
+        top: "93%",
+        variant: "giant foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-16s",
+        driftX: "2.4rem",
+        driftY: "-1rem",
+        duration: "30s",
+        heightRatio: "0.77",
+        left: "101%",
+        opacity: 0.86,
+        radius: "51% 49% 60% 40% / 43% 57% 40% 60%",
+        rotate: "24deg",
+        size: "30rem",
+        top: "62%",
+        variant: "colossal foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-26s",
+        driftX: "2.8rem",
+        driftY: "-1.2rem",
+        duration: "34s",
+        heightRatio: "0.72",
+        left: "-16%",
+        opacity: 0.78,
+        radius: "49% 51% 70% 30% / 42% 58% 39% 61%",
+        rotate: "11deg",
+        size: "46rem",
+        top: "14%",
+        variant: "colossal foreground edge",
+        zIndex: 2,
+    },
+    {
+        delay: "-28s",
+        driftX: "2.4rem",
+        driftY: "1.1rem",
+        duration: "36s",
+        heightRatio: "0.69",
+        left: "73%",
+        opacity: 0.72,
+        radius: "61% 39% 48% 52% / 37% 63% 42% 58%",
+        rotate: "-18deg",
+        size: "33rem",
+        top: "-15%",
+        variant: "colossal foreground edge",
+        zIndex: 2,
+    },
+] as const;
+
 const mirrorPercent = (value: string) => `${100 - Number(value.replace("%", ""))}%`;
 
 const FULL_SCREEN_WARP_STREAKS = [
@@ -350,7 +688,9 @@ const FULL_SCREEN_WARP_STARS = [
 
 const FULL_SCREEN_ASTEROID_FIELD = [
     ...ASTEROID_FIELD,
-    ...ASTEROID_FIELD.slice(0, 12).map((asteroid, index) => ({
+    ...ASTEROID_BELT_REINFORCEMENTS,
+    ...ASTEROID_FOREGROUND_BOULDERS,
+    ...ASTEROID_FIELD.map((asteroid, index) => ({
         ...asteroid,
         delay: `${Number(asteroid.delay.replace("s", "")) - 4.2}s`,
         driftX: `calc(${asteroid.driftX} * -0.72)`,
@@ -360,7 +700,20 @@ const FULL_SCREEN_ASTEROID_FIELD = [
         rotate: `calc(${asteroid.rotate} + 27deg)`,
         size: `calc(${asteroid.size} * 0.56)`,
         top: mirrorPercent(asteroid.top),
-        variant: `${asteroid.variant} distant`,
+        variant: `${asteroid.variant} distant still`,
+        zIndex: 0,
+    })),
+    ...ASTEROID_BELT_REINFORCEMENTS.map((asteroid, index) => ({
+        ...asteroid,
+        delay: `${Number(asteroid.delay.replace("s", "")) - 7.6}s`,
+        driftX: `calc(${asteroid.driftX} * -0.58)`,
+        driftY: `calc(${asteroid.driftY} * -0.64)`,
+        left: `${(Number(asteroid.left.replace("%", "")) + 17 + index * 7) % 110 - 5}%`,
+        opacity: Math.max(0.34, asteroid.opacity - 0.22),
+        rotate: `calc(${asteroid.rotate} - 33deg)`,
+        size: `calc(${asteroid.size} * 0.72)`,
+        top: `${(Number(mirrorPercent(asteroid.top).replace("%", "")) + index * 3) % 102 - 1}%`,
+        variant: `${asteroid.variant} distant still`,
         zIndex: 0,
     })),
 ] as const;
@@ -431,7 +784,53 @@ type AsteroidRock = {
     rotate: string;
     size: string;
     top: string;
+    variant: string;
     zIndex: number;
+};
+
+const visibleAsteroid = (asteroid: AsteroidRock) =>
+    !asteroid.variant.includes("small") && !asteroid.variant.includes("shard");
+
+const freezeAsteroid = (asteroid: AsteroidRock): AsteroidRock => ({
+    ...asteroid,
+    duration: "60s",
+    variant: `${asteroid.variant} still`,
+});
+
+const BALANCED_ASTEROID_FIELD: readonly AsteroidRock[] = [
+    ...ASTEROID_FOREGROUND_BOULDERS,
+    ...ASTEROID_FIELD.filter(visibleAsteroid),
+    ...ASTEROID_BELT_REINFORCEMENTS.filter(visibleAsteroid).slice(0, 8),
+];
+
+const REDUCED_ASTEROID_FIELD: readonly AsteroidRock[] = [
+    ...[
+        ASTEROID_FOREGROUND_BOULDERS[0],
+        ASTEROID_FOREGROUND_BOULDERS[3],
+        ASTEROID_FOREGROUND_BOULDERS[4],
+        ASTEROID_FOREGROUND_BOULDERS[8],
+        ASTEROID_FOREGROUND_BOULDERS[9],
+    ].map(freezeAsteroid),
+    ...ASTEROID_FIELD.filter(visibleAsteroid).slice(0, 10).map(freezeAsteroid),
+    ...ASTEROID_BELT_REINFORCEMENTS.filter(visibleAsteroid).slice(0, 5).map(freezeAsteroid),
+];
+
+const ASTEROID_FIELD_BY_TIER: Record<ScenePerformanceTier, readonly AsteroidRock[]> = {
+    balanced: BALANCED_ASTEROID_FIELD,
+    reduced: REDUCED_ASTEROID_FIELD,
+    rich: FULL_SCREEN_ASTEROID_FIELD,
+};
+
+const WARP_STREAKS_BY_TIER: Record<ScenePerformanceTier, readonly WarpStreak[]> = {
+    balanced: FULL_SCREEN_WARP_STREAKS.slice(0, 18),
+    reduced: WARP_STREAKS.slice(0, 8),
+    rich: FULL_SCREEN_WARP_STREAKS,
+};
+
+const WARP_STARS_BY_TIER: Record<ScenePerformanceTier, readonly WarpStar[]> = {
+    balanced: FULL_SCREEN_WARP_STARS.slice(0, 18),
+    reduced: WARP_STARS.slice(0, 8),
+    rich: FULL_SCREEN_WARP_STARS,
 };
 
 const getWarpStyle = (warp: WarpStreak) =>
@@ -476,50 +875,58 @@ const getAsteroidStyle = (asteroid: AsteroidRock, index: number) => {
         "--asteroid-shell-mid": palette.shellMid,
         "--asteroid-shell-start": palette.shellStart,
         "--asteroid-size": asteroid.size,
-        "--asteroid-spin-range": `${7 + (index % 5) * 3}deg`,
         "--asteroid-top": asteroid.top,
-        "--asteroid-tumble-duration": `${9 + (index % 7) * 2.7}s`,
         "--asteroid-z-index": asteroid.zIndex,
     } as CSSProperties;
 };
 
-export const StarsBackground = memo(({ theme }: StarsBackgroundProps) => (
-    <SpaceContainer $theme={theme} aria-hidden="true">
-        {theme === "space" ? (
-            <>
-                <span className="space-nebula space-nebula-left" />
-                <span className="space-nebula space-nebula-right" />
-                <span className="space-depth-grid" />
-            </>
-        ) : null}
+export const StarsBackground = memo(({ theme }: StarsBackgroundProps) => {
+    const { tier } = useScenePerformanceProfile();
+    const asteroidField = ASTEROID_FIELD_BY_TIER[tier];
+    const warpStreaks = WARP_STREAKS_BY_TIER[tier];
+    const warpStars = WARP_STARS_BY_TIER[tier];
 
-        {theme === "space"
-            ? FULL_SCREEN_WARP_STREAKS.map((warp, index) => (
-                  <span className="warp-streak" key={`warp-streak-${index}`} style={getWarpStyle(warp)} />
-              ))
-            : null}
+    return (
+        <SpaceContainer $performanceTier={tier} $theme={theme} aria-hidden="true">
+            {theme === "space" ? (
+                <>
+                    <span className="space-nebula space-nebula-left" />
+                    <span className="space-nebula space-nebula-right" />
+                    <span className="space-depth-grid" />
+                </>
+            ) : null}
 
-        {theme === "space"
-            ? FULL_SCREEN_WARP_STARS.map((star, index) => (
-                  <span className="warp-star" key={`warp-star-${index}`} style={getWarpStarStyle(star)} />
-              ))
-            : null}
+            {theme === "space"
+                ? warpStreaks.map((warp, index) => (
+                      <span className="warp-streak" key={`warp-streak-${index}`} style={getWarpStyle(warp)} />
+                  ))
+                : null}
 
-        {theme === "asteroids" ? (
-            <>
-                <span className="asteroid-dust asteroid-dust-near" />
-                <span className="asteroid-dust asteroid-dust-far" />
-            </>
-        ) : null}
+            {theme === "space"
+                ? warpStars.map((star, index) => (
+                      <span className="warp-star" key={`warp-star-${index}`} style={getWarpStarStyle(star)} />
+                  ))
+                : null}
 
-        {theme === "asteroids"
-            ? FULL_SCREEN_ASTEROID_FIELD.map((asteroid, index) => (
-                  <span
-                      className={`asteroid-field-rock ${asteroid.variant}`}
-                      key={`asteroid-${index}`}
-                      style={getAsteroidStyle(asteroid, index)}
-                  />
-              ))
-            : null}
-    </SpaceContainer>
-));
+            {theme === "asteroids" ? (
+                <>
+                    <span className="asteroid-pebble-field asteroid-pebble-field-back" />
+                    {tier !== "reduced" ? <span className="asteroid-pebble-field asteroid-pebble-field-mid" /> : null}
+                    {tier === "rich" ? <span className="asteroid-pebble-field asteroid-pebble-field-front" /> : null}
+                    <span className="asteroid-dust asteroid-dust-near" />
+                    {tier !== "reduced" ? <span className="asteroid-dust asteroid-dust-far" /> : null}
+                </>
+            ) : null}
+
+            {theme === "asteroids"
+                ? asteroidField.map((asteroid, index) => (
+                      <span
+                          className={`asteroid-field-rock ${asteroid.variant}`}
+                          key={`asteroid-${index}`}
+                          style={getAsteroidStyle(asteroid, index)}
+                      />
+                  ))
+                : null}
+        </SpaceContainer>
+    );
+});

@@ -1,5 +1,5 @@
 import { ROBOT_NAME } from "../../../features/robot/robot.constants";
-import { getSpaceThemeLabel } from "./spaceThemes";
+import { getSpaceThemeLabel, type SpaceTheme } from "./spaceThemes";
 import type {
     RobotQuickMenuAction,
     RobotQuickMenuActionPosition,
@@ -16,7 +16,7 @@ const ACTION_POSITION_BY_ID: Record<RobotQuickMenuAction["id"], RobotQuickMenuAc
 
 type ActionDraft = Omit<RobotQuickMenuAction, "position">;
 
-const getTravelTone = (spaceTheme: RobotQuickMenuActionSource["nextTheme"]): RobotQuickMenuActionTone => {
+const getTravelTone = (spaceTheme: SpaceTheme): RobotQuickMenuActionTone => {
     if (spaceTheme === "mars") {
         return "travel-mars";
     }
@@ -43,6 +43,7 @@ const getTravelTone = (spaceTheme: RobotQuickMenuActionSource["nextTheme"]): Rob
 export const getRobotQuickMenuActions = ({
     activeScenePresetLabel,
     cameraHint,
+    currentTheme,
     isContentScene = false,
     isCameraManualMode,
     isNotificationAlerting,
@@ -110,6 +111,7 @@ export const getRobotQuickMenuActions = ({
     }
 
     if (showTravel) {
+        const currentThemeLabel = getSpaceThemeLabel(currentTheme);
         const nextThemeLabel = getSpaceThemeLabel(nextTheme);
         const previousThemeLabel = getSpaceThemeLabel(previousTheme);
 
@@ -117,7 +119,8 @@ export const getRobotQuickMenuActions = ({
             ariaLabel: `Viajar para ${nextThemeLabel}`,
             iconWeight: "fill",
             id: "travel",
-            label: nextThemeLabel,
+            caption: "Planeta atual",
+            label: currentThemeLabel,
             navigation: {
                 nextAriaLabel: `Próximo planeta: ${nextThemeLabel}`,
                 onNextClick: onTravelNextClick,
@@ -125,7 +128,7 @@ export const getRobotQuickMenuActions = ({
                 previousAriaLabel: `Planeta anterior: ${previousThemeLabel}`,
             },
             onClick: onTravelClick,
-            tone: getTravelTone(nextTheme),
+            tone: getTravelTone(currentTheme),
         });
     }
 

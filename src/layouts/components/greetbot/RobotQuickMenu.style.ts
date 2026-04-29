@@ -456,8 +456,8 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, var(--quick-label-bg) 100%);
         color: rgba(219, 241, 255, 0.88);
         font-family: "IBM Plex Mono", monospace;
-        font-size: 0.74rem;
-        letter-spacing: 0.08em;
+        font-size: 0.92rem;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
         white-space: nowrap;
         box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.16);
@@ -469,8 +469,8 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
     }
 
     .quick-menu-label-caption {
-        font-size: 0.6rem;
-        letter-spacing: 0.06em;
+        font-size: 0.68rem;
+        letter-spacing: 0.05em;
         opacity: 0.76;
         line-height: 1;
     }
@@ -590,7 +590,7 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
         }
 
         .quick-menu-label {
-            font-size: 0.68rem;
+            font-size: 0.84rem;
         }
     }
 
@@ -685,11 +685,18 @@ export const QuickMenuContainer = styled.div<{ $actionCount: number }>`
 
         .quick-menu-label {
             padding: 0.28rem 0.58rem;
-            font-size: 0.62rem;
+            font-size: 0.78rem;
         }
 
         .quick-menu-label-caption {
-            font-size: 0.52rem;
+            font-size: 0.62rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .quick-menu-orbit::after,
+        .quick-menu-action[data-alerting="true"] .quick-menu-button::after {
+            animation: none;
         }
     }
 `;

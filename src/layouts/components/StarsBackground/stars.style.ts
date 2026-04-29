@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import type { ScenePerformanceTier } from "../../../features/scenePerformance/scenePerformance.types";
 import type { SpaceTheme } from "../greetbot/spaceThemes";
 
 const starsGlow = keyframes`
@@ -76,44 +77,6 @@ const asteroidDrift = keyframes`
 
     50% {
         transform: translate3d(var(--asteroid-drift-x), var(--asteroid-drift-y), 0) rotate(calc(var(--asteroid-rotate) + 8deg));
-    }
-`;
-
-const asteroidTumble = keyframes`
-    0%,
-    100% {
-        transform: rotate(0deg) scale(1, 1);
-        filter: brightness(0.92) contrast(1.04);
-    }
-
-    35% {
-        transform: rotate(var(--asteroid-spin-range)) scale(1.04, 0.94);
-        filter: brightness(1.08) contrast(1.1);
-    }
-
-    70% {
-        transform: rotate(calc(var(--asteroid-spin-range) * -0.72)) scale(0.96, 1.03);
-        filter: brightness(0.82) contrast(1.12);
-    }
-`;
-
-const dustDrift = keyframes`
-    from {
-        transform: translate3d(0, 0, 0);
-    }
-
-    to {
-        transform: translate3d(8rem, -3rem, 0);
-    }
-`;
-
-const asteroidDustSweep = keyframes`
-    from {
-        transform: translate3d(-6rem, 4rem, 0) rotate(-8deg);
-    }
-
-    to {
-        transform: translate3d(8rem, -5rem, 0) rotate(-8deg);
     }
 `;
 
@@ -221,8 +184,11 @@ const asteroidTheme = css`
         radial-gradient(circle at 50% 58%, rgba(61, 47, 34, 0.08), transparent 36%),
         linear-gradient(180deg, rgba(9, 12, 18, 0.14) 0%, rgba(4, 7, 12, 0.38) 100%);
 
+    &::before {
+        animation: none;
+    }
+
     &::after {
-        animation: ${dustDrift} 18s linear infinite alternate;
         opacity: 0.26;
         background-image:
             radial-gradient(circle at 8% 18%, rgba(255, 226, 184, 0.36) 0 1px, transparent 2px),
@@ -236,7 +202,7 @@ const asteroidTheme = css`
     }
 `;
 
-export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
+export const SpaceContainer = styled.div<{ $performanceTier: ScenePerformanceTier; $theme: SpaceTheme }>`
     position: absolute;
     inset: -14vmax;
     z-index: 0;
@@ -252,6 +218,7 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
     .warp-streak,
     .warp-star,
     .asteroid-field-rock,
+    .asteroid-pebble-field,
     .space-nebula,
     .space-depth-grid,
     .asteroid-dust {
@@ -349,10 +316,8 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
             inset -0.4rem -0.45rem 0.8rem rgba(24, 16, 12, 0.36),
             0 0 1.4rem rgba(255, 204, 145, 0.1);
         transform: rotate(var(--asteroid-rotate));
-        animation:
-            ${asteroidDrift} var(--asteroid-duration) ease-in-out infinite,
-            ${asteroidTumble} var(--asteroid-tumble-duration) ease-in-out infinite;
-        animation-delay: var(--asteroid-delay), calc(var(--asteroid-delay) * 0.45);
+        animation: ${asteroidDrift} var(--asteroid-duration) ease-in-out infinite;
+        animation-delay: var(--asteroid-delay);
     }
 
     .asteroid-field-rock::before,
@@ -388,6 +353,36 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
             0 0 1.6rem rgba(255, 205, 144, 0.12);
     }
 
+    .asteroid-field-rock.giant {
+        filter: saturate(1.08) contrast(1.06);
+        box-shadow:
+            inset -1.05rem -1.15rem 2.1rem rgba(20, 12, 8, 0.52),
+            inset 0.5rem 0.42rem 1.1rem rgba(255, 235, 206, 0.12),
+            0 0 2.4rem rgba(255, 205, 144, 0.16);
+    }
+
+    .asteroid-field-rock.colossal {
+        filter: saturate(1.12) contrast(1.08);
+        box-shadow:
+            inset -1.6rem -1.8rem 3rem rgba(16, 9, 6, 0.58),
+            inset 0.72rem 0.58rem 1.6rem rgba(255, 235, 206, 0.13),
+            0 0 3.2rem rgba(255, 205, 144, 0.16);
+    }
+
+    .asteroid-field-rock.giant::before {
+        opacity: 0.72;
+        background:
+            radial-gradient(circle at 18% 24%, var(--asteroid-highlight) 0 8%, transparent 10%),
+            radial-gradient(circle at 34% 58%, var(--asteroid-crater) 0 9%, transparent 12%),
+            radial-gradient(circle at 63% 70%, var(--asteroid-crater) 0 12%, transparent 15%),
+            radial-gradient(circle at 78% 30%, rgba(255, 242, 221, 0.11) 0 7%, transparent 10%);
+    }
+
+    .asteroid-field-rock.foreground {
+        opacity: min(var(--asteroid-opacity), 0.92);
+        animation-duration: calc(var(--asteroid-duration) * 1.35);
+    }
+
     .asteroid-field-rock.medium {
         box-shadow:
             inset -0.38rem -0.42rem 0.82rem rgba(24, 16, 12, 0.34),
@@ -402,13 +397,68 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
     }
 
     .asteroid-field-rock.distant {
-        filter: saturate(0.78) brightness(0.78) blur(0.2px);
+        filter: saturate(0.78) brightness(0.78);
+    }
+
+    .asteroid-field-rock.still {
+        animation: none;
+        transform: rotate(var(--asteroid-rotate));
+    }
+
+    .asteroid-field-rock.small,
+    .asteroid-field-rock.shard,
+    .asteroid-field-rock.distant {
+        animation: none;
+        transform: rotate(var(--asteroid-rotate));
+    }
+
+    .asteroid-pebble-field {
+        inset: -8%;
+        pointer-events: none;
+        background-repeat: repeat;
+    }
+
+    .asteroid-pebble-field-back {
+        z-index: 0;
+        opacity: 0.38;
+        background-image:
+            radial-gradient(ellipse at 12% 18%, rgba(96, 91, 82, 0.58) 0 0.22rem, transparent 0.28rem),
+            radial-gradient(ellipse at 26% 52%, rgba(138, 112, 86, 0.5) 0 0.18rem, transparent 0.26rem),
+            radial-gradient(ellipse at 42% 31%, rgba(184, 190, 188, 0.42) 0 0.16rem, transparent 0.24rem),
+            radial-gradient(ellipse at 63% 78%, rgba(117, 91, 70, 0.46) 0 0.2rem, transparent 0.28rem),
+            radial-gradient(ellipse at 86% 44%, rgba(172, 151, 128, 0.42) 0 0.18rem, transparent 0.26rem);
+        background-size: 18rem 15rem;
+    }
+
+    .asteroid-pebble-field-mid {
+        z-index: 1;
+        opacity: 0.5;
+        background-image:
+            radial-gradient(ellipse at 8% 72%, rgba(96, 80, 67, 0.66) 0 0.34rem, transparent 0.44rem),
+            radial-gradient(ellipse at 20% 28%, rgba(190, 156, 118, 0.54) 0 0.28rem, transparent 0.38rem),
+            radial-gradient(ellipse at 38% 64%, rgba(108, 116, 122, 0.5) 0 0.26rem, transparent 0.36rem),
+            radial-gradient(ellipse at 61% 22%, rgba(153, 119, 89, 0.58) 0 0.32rem, transparent 0.44rem),
+            radial-gradient(ellipse at 78% 82%, rgba(201, 184, 162, 0.48) 0 0.26rem, transparent 0.36rem),
+            radial-gradient(ellipse at 92% 48%, rgba(77, 72, 66, 0.62) 0 0.3rem, transparent 0.42rem);
+        background-size: 28rem 22rem;
+    }
+
+    .asteroid-pebble-field-front {
+        z-index: 1;
+        opacity: 0.42;
+        background-image:
+            radial-gradient(ellipse at 14% 34%, rgba(127, 94, 70, 0.72) 0 0.52rem, transparent 0.7rem),
+            radial-gradient(ellipse at 32% 84%, rgba(82, 80, 77, 0.72) 0 0.46rem, transparent 0.64rem),
+            radial-gradient(ellipse at 53% 48%, rgba(176, 142, 104, 0.62) 0 0.58rem, transparent 0.76rem),
+            radial-gradient(ellipse at 74% 18%, rgba(136, 145, 150, 0.56) 0 0.5rem, transparent 0.7rem),
+            radial-gradient(ellipse at 91% 70%, rgba(96, 70, 54, 0.7) 0 0.54rem, transparent 0.74rem);
+        background-size: 42rem 34rem;
     }
 
     .asteroid-dust {
         inset: -10%;
         z-index: 0;
-        opacity: 0.32;
+        opacity: 0.4;
         transform: rotate(-8deg);
         background-image:
             radial-gradient(circle at 6% 18%, rgba(255, 224, 181, 0.24) 0 1px, transparent 2px),
@@ -418,7 +468,6 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
             radial-gradient(circle at 58% 18%, rgba(255, 241, 224, 0.2) 0 1px, transparent 2px),
             radial-gradient(circle at 74% 62%, rgba(196, 218, 255, 0.14) 0 1px, transparent 2px),
             radial-gradient(circle at 88% 34%, rgba(255, 224, 181, 0.18) 0 1px, transparent 2px);
-        animation: ${asteroidDustSweep} 28s linear infinite alternate;
     }
 
     .asteroid-dust-near {
@@ -426,11 +475,81 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
     }
 
     .asteroid-dust-far {
-        opacity: 0.18;
+        opacity: 0.24;
         background-size: 18rem 18rem;
-        animation-duration: 40s;
-        animation-direction: alternate-reverse;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        &::before,
+        &::after,
+        .warp-streak,
+        .warp-star,
+        .space-nebula,
+        .asteroid-field-rock,
+        .asteroid-dust {
+            animation: none;
+        }
+    }
+
+    ${({ $performanceTier }) =>
+        $performanceTier === "balanced"
+            ? css`
+                  .asteroid-field-rock {
+                      animation-duration: calc(var(--asteroid-duration) * 1.45);
+                  }
+
+                  .asteroid-field-rock.medium,
+                  .asteroid-field-rock.distant {
+                      animation: none;
+                      transform: rotate(var(--asteroid-rotate));
+                  }
+
+                  .space-nebula {
+                      animation-duration: 28s;
+                      filter: blur(36px);
+                  }
+              `
+            : ""}
+
+    ${({ $performanceTier }) =>
+        $performanceTier === "reduced"
+            ? css`
+                  &::before,
+                  &::after,
+                  .warp-streak,
+                  .warp-star,
+                  .space-nebula,
+                  .asteroid-field-rock,
+                  .asteroid-dust {
+                      animation: none;
+                  }
+
+                  .space-nebula {
+                      filter: blur(28px);
+                      opacity: 0.34;
+                  }
+
+                  .warp-streak,
+                  .warp-star {
+                      box-shadow: none;
+                  }
+
+                  .asteroid-field-rock {
+                      transform: rotate(var(--asteroid-rotate));
+                      box-shadow: inset -0.42rem -0.48rem 0.88rem rgba(24, 16, 12, 0.36);
+                  }
+
+                  .asteroid-field-rock.giant,
+                  .asteroid-field-rock.colossal,
+                  .asteroid-field-rock.distant {
+                      filter: none;
+                  }
+
+                  .asteroid-dust-near {
+                      opacity: 0.22;
+                  }
+              `
+            : ""}
 
     @media (max-width: 640px) {
         .warp-streak {
@@ -440,6 +559,16 @@ export const SpaceContainer = styled.div<{ $theme: SpaceTheme }>`
         .asteroid-field-rock {
             width: calc(var(--asteroid-size) * 0.78);
             height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 0.78);
+        }
+
+        .asteroid-field-rock.giant {
+            width: calc(var(--asteroid-size) * 0.58);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 0.58);
+        }
+
+        .asteroid-field-rock.colossal {
+            width: calc(var(--asteroid-size) * 0.46);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 0.46);
         }
     }
 `;

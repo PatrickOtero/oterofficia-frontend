@@ -25,6 +25,7 @@ export type GreetBotRouteState = {
 export type GreetBotQuickMenuState = {
     activeScenePresetLabel: string;
     cameraHint?: string;
+    currentTheme: SpaceTheme;
     isNotificationAlerting: boolean;
     isSceneCameraManualMode: boolean;
     launcherMode: "content" | "default";

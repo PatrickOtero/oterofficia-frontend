@@ -3,6 +3,7 @@ import type { SpaceTheme } from "./spaceThemes";
 export type RobotQuickMenuActionSource = {
     activeScenePresetLabel: string;
     cameraHint?: string;
+    currentTheme: SpaceTheme;
     isContentScene?: boolean;
     isCameraManualMode: boolean;
     isNotificationAlerting: boolean;

@@ -7,6 +7,8 @@ import type { ProjectionStyleState } from "./robotProjection.types";
 import { createDefaultProjectionStyle, resolveProjectedBeamLength } from "./robotProjection.utils";
 import type { RoundRobotProps } from "./types";
 
+const PROJECTION_STABILIZATION_FRAMES = 45;
+
 export const RoundRobot = ({
     attentionTarget = "center",
     motionIntent = "idle",
@@ -43,6 +45,7 @@ export const RoundRobot = ({
         }
 
         let animationFrameId = 0;
+        let viewportFrameId = 0;
         let stabilizationFrame = 0;
         let resizeObserver: ResizeObserver | null = null;
 
@@ -67,7 +70,7 @@ export const RoundRobot = ({
                     : null;
 
             if (!projectorAnchor || !targetElement || !sceneHost) {
-                if (stabilizationFrame < 180) {
+                if (stabilizationFrame < PROJECTION_STABILIZATION_FRAMES) {
                     stabilizationFrame += 1;
                     animationFrameId = window.requestAnimationFrame(updateProjection);
                 }
@@ -137,14 +140,21 @@ export const RoundRobot = ({
                     : nextState;
             });
 
-            if (stabilizationFrame < 180) {
+            if (stabilizationFrame < PROJECTION_STABILIZATION_FRAMES) {
                 stabilizationFrame += 1;
                 animationFrameId = window.requestAnimationFrame(updateProjection);
             }
 
             if (!resizeObserver) {
                 resizeObserver = new ResizeObserver(() => {
-                    window.requestAnimationFrame(updateProjection);
+                    if (viewportFrameId) {
+                        return;
+                    }
+
+                    viewportFrameId = window.requestAnimationFrame(() => {
+                        viewportFrameId = 0;
+                        updateProjection();
+                    });
                 });
                 resizeObserver.observe(projectorAnchor);
                 resizeObserver.observe(targetElement);
@@ -152,7 +162,14 @@ export const RoundRobot = ({
         };
 
         const handleViewportChange = () => {
-            window.requestAnimationFrame(updateProjection);
+            if (viewportFrameId) {
+                return;
+            }
+
+            viewportFrameId = window.requestAnimationFrame(() => {
+                viewportFrameId = 0;
+                updateProjection();
+            });
         };
 
         window.addEventListener("resize", handleViewportChange);
@@ -161,6 +178,7 @@ export const RoundRobot = ({
 
         return () => {
             window.cancelAnimationFrame(animationFrameId);
+            window.cancelAnimationFrame(viewportFrameId);
             window.removeEventListener("resize", handleViewportChange);
             window.removeEventListener("scroll", handleViewportChange, true);
             resizeObserver?.disconnect();

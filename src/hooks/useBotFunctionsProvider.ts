@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { SpaceTheme } from "../layouts/components/greetbot/spaceThemes";
 import { isSpaceTheme } from "../layouts/components/greetbot/spaceThemes";
 
@@ -29,24 +29,37 @@ export const useBotFunctionsContextProvider = () => {
         window.localStorage.setItem("oterofficia-space-theme", spaceTheme);
     }, [spaceTheme]);
 
-    return {
-        sceneTransition,
-        setSceneTransition,
-        spaceTheme,
-        setSpaceTheme,
-        earthPosition,
-        setEarthPosition,
-        authPage,
-        setAuthPage,
-        aboutMePage,
-        setAboutMePage,
-        homePage,
-        setHomePage,
-        portfolioPage,
-        setPortfolioPage,
-        isShowingMenu,
-        setIsShowingMenu,
-        isLoading,
-        setIsLoading,
-    };
+    return useMemo(
+        () => ({
+            sceneTransition,
+            setSceneTransition,
+            spaceTheme,
+            setSpaceTheme,
+            earthPosition,
+            setEarthPosition,
+            authPage,
+            setAuthPage,
+            aboutMePage,
+            setAboutMePage,
+            homePage,
+            setHomePage,
+            portfolioPage,
+            setPortfolioPage,
+            isShowingMenu,
+            setIsShowingMenu,
+            isLoading,
+            setIsLoading,
+        }),
+        [
+            aboutMePage,
+            authPage,
+            earthPosition,
+            homePage,
+            isLoading,
+            isShowingMenu,
+            portfolioPage,
+            sceneTransition,
+            spaceTheme,
+        ]
+    );
 };

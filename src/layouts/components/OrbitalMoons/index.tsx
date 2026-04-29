@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import { createOrbitalMoonStyle } from "./orbitalMoons.motion";
 import { OrbitalMoonsContainer } from "./orbitalMoons.style";
 import type { OrbitalMoonConfig, OrbitalMoonsContainerStyle } from "./orbitalMoons.types";
@@ -27,9 +27,13 @@ export const OrbitalMoons = memo(
         tabletScale = "0.82",
     }: OrbitalMoonsProps) => {
         const moonNodesRef = useOrbitalMoonMotion(moons);
+        const containerStyle = useMemo(
+            () => createContainerStyle(tabletScale, mobileScale),
+            [mobileScale, tabletScale]
+        );
 
         return (
-            <OrbitalMoonsContainer style={createContainerStyle(tabletScale, mobileScale)}>
+            <OrbitalMoonsContainer style={containerStyle}>
                 {moons.map((moon) => (
                     <div className="orbital-moon-system" key={moon.key} style={createOrbitalMoonStyle(moon)}>
                         <div

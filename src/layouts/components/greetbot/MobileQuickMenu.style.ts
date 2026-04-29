@@ -34,8 +34,8 @@ export const MobileQuickMenuContainer = styled.div<{ $mode: RobotQuickMenuLaunch
         justify-content: center;
         gap: 0.7rem;
         border-radius: 999px;
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
+        font-size: 0.92rem;
+        letter-spacing: 0.06em;
     }
 
     .mobile-quick-menu-panel {
@@ -59,7 +59,7 @@ export const MobileQuickMenuContainer = styled.div<{ $mode: RobotQuickMenuLaunch
                 .mobile-quick-menu-trigger {
                     height: 3.5rem;
                     padding: 0 1.05rem;
-                    font-size: 0.7rem;
+                    font-size: 0.84rem;
                 }
 
                 .mobile-quick-menu-panel {
@@ -134,14 +134,14 @@ export const MobileQuickMenuContainer = styled.div<{ $mode: RobotQuickMenuLaunch
 
     .mobile-quick-menu-label {
         color: rgba(var(--scene-title-rgb), 0.96);
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
+        font-size: 0.92rem;
+        letter-spacing: 0.06em;
     }
 
     .mobile-quick-menu-caption {
         color: rgba(var(--scene-accent-soft-rgb), 0.68);
-        font-size: 0.62rem;
-        letter-spacing: 0.06em;
+        font-size: 0.72rem;
+        letter-spacing: 0.05em;
     }
 
     .mobile-quick-menu-controls {
@@ -190,7 +190,7 @@ export const MobileQuickMenuContainer = styled.div<{ $mode: RobotQuickMenuLaunch
         .mobile-quick-menu-trigger {
             height: ${({ $mode }) => ($mode === "content" ? "3.15rem" : "4.1rem")};
             padding: ${({ $mode }) => ($mode === "content" ? "0 0.9rem" : "0 1.15rem")};
-            font-size: ${({ $mode }) => ($mode === "content" ? "0.64rem" : "0.74rem")};
+            font-size: ${({ $mode }) => ($mode === "content" ? "0.78rem" : "0.86rem")};
         }
 
         ${({ $mode }) =>

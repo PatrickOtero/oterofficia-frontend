@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { GreetText } from "../GreetText";
 import { NotificationCenterModal } from "../../../features/notifications/components/NotificationCenterModal";
 import { RobotConversationPanel } from "../../../features/robotConversation/components/RobotConversationPanel";
@@ -43,31 +43,61 @@ export const GreetBot = memo((props: GreetBotProps) => {
         slot,
     } = useGreetBotController(props);
     const shouldUseConversationLauncher = quickMenu.launcherMode === "content";
-    const quickMenuActions = getRobotQuickMenuActions({
-        activeScenePresetLabel: quickMenu.activeScenePresetLabel,
-        cameraHint: quickMenu.cameraHint,
-        isContentScene: shouldUseConversationLauncher,
-        isCameraManualMode: quickMenu.isSceneCameraManualMode,
-        isNotificationAlerting: quickMenu.isNotificationAlerting,
-        isNotificationLoading: isNotificationsLoading,
-        nextScenePresetLabel: quickMenu.nextScenePresetLabel,
-        nextTheme: quickMenu.nextTheme,
-        onCameraClick: handleSceneCameraClick,
-        onCameraNextClick: handleSceneCameraNextClick,
-        onCameraPreviousClick: handleSceneCameraPreviousClick,
-        onConversationClick: handleConversationClick,
-        onNotificationClick: handleNotificationClick,
-        onTravelClick: handleTravelClick,
-        onTravelNextClick: handleTravelNextClick,
-        onTravelPreviousClick: handleTravelPreviousClick,
-        previousScenePresetLabel: quickMenu.previousScenePresetLabel,
-        previousTheme: quickMenu.previousTheme,
-        showCamera: quickMenu.showCamera,
-        showConversation: quickMenu.showConversation,
-        showNotification: quickMenu.showNotification,
-        showTravel: quickMenu.showTravel,
-        unreadCount: quickMenu.unreadCount,
-    });
+    const quickMenuActions = useMemo(
+        () =>
+            getRobotQuickMenuActions({
+                activeScenePresetLabel: quickMenu.activeScenePresetLabel,
+                cameraHint: quickMenu.cameraHint,
+                currentTheme: quickMenu.currentTheme,
+                isContentScene: shouldUseConversationLauncher,
+                isCameraManualMode: quickMenu.isSceneCameraManualMode,
+                isNotificationAlerting: quickMenu.isNotificationAlerting,
+                isNotificationLoading: isNotificationsLoading,
+                nextScenePresetLabel: quickMenu.nextScenePresetLabel,
+                nextTheme: quickMenu.nextTheme,
+                onCameraClick: handleSceneCameraClick,
+                onCameraNextClick: handleSceneCameraNextClick,
+                onCameraPreviousClick: handleSceneCameraPreviousClick,
+                onConversationClick: handleConversationClick,
+                onNotificationClick: handleNotificationClick,
+                onTravelClick: handleTravelClick,
+                onTravelNextClick: handleTravelNextClick,
+                onTravelPreviousClick: handleTravelPreviousClick,
+                previousScenePresetLabel: quickMenu.previousScenePresetLabel,
+                previousTheme: quickMenu.previousTheme,
+                showCamera: quickMenu.showCamera,
+                showConversation: quickMenu.showConversation,
+                showNotification: quickMenu.showNotification,
+                showTravel: quickMenu.showTravel,
+                unreadCount: quickMenu.unreadCount,
+            }),
+        [
+            handleConversationClick,
+            handleNotificationClick,
+            handleSceneCameraClick,
+            handleSceneCameraNextClick,
+            handleSceneCameraPreviousClick,
+            handleTravelClick,
+            handleTravelNextClick,
+            handleTravelPreviousClick,
+            isNotificationsLoading,
+            quickMenu.activeScenePresetLabel,
+            quickMenu.cameraHint,
+            quickMenu.currentTheme,
+            quickMenu.isNotificationAlerting,
+            quickMenu.isSceneCameraManualMode,
+            quickMenu.nextScenePresetLabel,
+            quickMenu.nextTheme,
+            quickMenu.previousScenePresetLabel,
+            quickMenu.previousTheme,
+            quickMenu.showCamera,
+            quickMenu.showConversation,
+            quickMenu.showNotification,
+            quickMenu.showTravel,
+            quickMenu.unreadCount,
+            shouldUseConversationLauncher,
+        ]
+    );
     const shouldUseFloatingQuickMenu = shouldUseConversationLauncher || isTouchDevice;
 
     useEffect(() => {

@@ -34,6 +34,8 @@ body {
         linear-gradient(180deg, #05080d 0%, #03060a 100%);
     color: rgb(var(--scene-accent-soft-rgb));
     font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
     overflow: hidden;
 }
 

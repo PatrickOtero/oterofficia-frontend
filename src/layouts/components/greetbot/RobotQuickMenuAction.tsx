@@ -1,4 +1,5 @@
 import { CaretLeft, CaretRight } from "phosphor-react";
+import { memo } from "react";
 import type { RobotQuickMenuAction as RobotQuickMenuActionType } from "./RobotQuickMenu.types";
 import { getQuickMenuBadgeLabel } from "./RobotQuickMenu.utils";
 import { renderQuickMenuIcon } from "./quickMenuIcons";
@@ -43,7 +44,7 @@ const renderActionNavigation = (action: RobotQuickMenuActionType) => {
     );
 };
 
-export const RobotQuickMenuAction = ({ action }: RobotQuickMenuActionProps) => (
+export const RobotQuickMenuAction = memo(({ action }: RobotQuickMenuActionProps) => (
     <div
         className={`quick-menu-action position-${action.position} tone-${action.tone}${action.navigation ? " has-navigation" : ""}`}
         data-alerting={action.alerting ? "true" : "false"}
@@ -75,4 +76,4 @@ export const RobotQuickMenuAction = ({ action }: RobotQuickMenuActionProps) => (
             {action.caption ? <span className="quick-menu-label-caption">{action.caption}</span> : null}
         </span>
     </div>
-);
+));

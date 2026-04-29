@@ -177,6 +177,7 @@ export const getQuickMenuState = ({
         return {
             activeScenePresetLabel,
             cameraHint: undefined,
+            currentTheme: spaceTheme,
             isNotificationAlerting: false,
             isSceneCameraManualMode: false,
             launcherMode: "content",
@@ -197,6 +198,7 @@ export const getQuickMenuState = ({
         return {
             activeScenePresetLabel,
             cameraHint: undefined,
+            currentTheme: spaceTheme,
             isNotificationAlerting: false,
             isSceneCameraManualMode: false,
             launcherMode: "content",
@@ -226,6 +228,7 @@ export const getQuickMenuState = ({
     return {
         activeScenePresetLabel,
         cameraHint: isSceneCameraManualMode ? "WASD / QE / ESC" : activeScenePresetLabel,
+        currentTheme: spaceTheme,
         isNotificationAlerting,
         isSceneCameraManualMode,
         launcherMode: "default",

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from "react";
+import { useScenePerformanceProfile } from "../../../features/scenePerformance/useScenePerformanceProfile";
 import type { OrbitalMoonConfig } from "./orbitalMoons.types";
 import {
     createOrbitalMoonMotion,
@@ -7,6 +8,12 @@ import {
 } from "./orbitalMoons.motion";
 
 type MoonNodeMap = Record<string, HTMLDivElement | null>;
+
+const MOON_FRAME_INTERVAL_BY_TIER = {
+    balanced: 1000 / 24,
+    reduced: 1000 / 12,
+    rich: 1000 / 30,
+};
 
 const formatMotionValue = (value: number, precision = 4) => value.toFixed(precision);
 
@@ -24,12 +31,37 @@ const applyMoonFrame = (node: HTMLDivElement, elapsedMs: number, motion: Orbital
 export const useOrbitalMoonMotion = (moons: OrbitalMoonConfig[]) => {
     const moonNodesRef = useRef<MoonNodeMap>({});
     const moonMotion = useMemo(() => moons.map(createOrbitalMoonMotion), [moons]);
+    const { isDocumentHidden, isReducedMotion, tier } = useScenePerformanceProfile();
+    const frameInterval = MOON_FRAME_INTERVAL_BY_TIER[tier];
 
     useEffect(() => {
+        if (!moonMotion.length || isDocumentHidden) {
+            return;
+        }
+
+        if (isReducedMotion) {
+            moonMotion.forEach((motion) => {
+                const moonNode = moonNodesRef.current[motion.key];
+
+                if (moonNode) {
+                    applyMoonFrame(moonNode, 0, motion);
+                }
+            });
+
+            return;
+        }
+
         let animationFrameId = 0;
+        let lastFrameAt = 0;
         const startedAt = performance.now();
 
         const animateMoons = (now: number) => {
+            if (now - lastFrameAt < frameInterval) {
+                animationFrameId = window.requestAnimationFrame(animateMoons);
+                return;
+            }
+
+            lastFrameAt = now;
             const elapsedMs = now - startedAt;
 
             moonMotion.forEach((motion) => {
@@ -46,7 +78,7 @@ export const useOrbitalMoonMotion = (moons: OrbitalMoonConfig[]) => {
         animationFrameId = window.requestAnimationFrame(animateMoons);
 
         return () => window.cancelAnimationFrame(animationFrameId);
-    }, [moonMotion]);
+    }, [frameInterval, isDocumentHidden, isReducedMotion, moonMotion]);
 
     return moonNodesRef;
 };

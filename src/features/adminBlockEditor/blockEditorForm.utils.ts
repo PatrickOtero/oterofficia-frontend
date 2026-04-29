@@ -1,85 +1,47 @@
-type BlockWithData = {
+export type EditableBlock = {
     data: Record<string, unknown>;
 };
 
-type BlockListKey<TForm> = {
-    [Key in keyof TForm]: TForm[Key] extends BlockWithData[] ? Key : never;
-}[keyof TForm];
-
-type FormBlock<TForm, TKey extends BlockListKey<TForm>> =
-    TForm[TKey] extends Array<infer TBlock extends BlockWithData> ? TBlock : never;
-
-const getBlockList = <TForm, TKey extends BlockListKey<TForm>>(
-    form: TForm,
-    key: TKey
-) => form[key] as FormBlock<TForm, TKey>[];
-
-export const updateBlockAt = <
-    TForm,
-    TKey extends BlockListKey<TForm>
->(
-    form: TForm,
-    key: TKey,
-    blockIndex: number,
-    producer: (currentBlock: FormBlock<TForm, TKey>) => FormBlock<TForm, TKey>
-): TForm => ({
-    ...form,
-    [key]: getBlockList(form, key).map((block, index) => (index === blockIndex ? producer(block) : block)),
-});
-
-export const updateBlockDataAt = <
-    TForm,
-    TKey extends BlockListKey<TForm>
->(
-    form: TForm,
-    key: TKey,
+export const updateBlockData = <TBlock extends EditableBlock>(
+    blocks: TBlock[],
     blockIndex: number,
     dataKey: string,
     value: unknown
-): TForm =>
-    updateBlockAt(form, key, blockIndex, (block) => ({
-        ...block,
-        data: {
-            ...block.data,
-            [dataKey]: value,
-        },
-    }));
+): TBlock[] =>
+    blocks.map((block, index) =>
+        index === blockIndex
+            ? {
+                  ...block,
+                  data: {
+                      ...block.data,
+                      [dataKey]: value,
+                  },
+              }
+            : block
+    );
 
-export const moveBlockAt = <
-    TForm,
-    TKey extends BlockListKey<TForm>
->(
-    form: TForm,
-    key: TKey,
-    blockIndex: number,
+export const moveItem = <TItem>(
+    items: TItem[],
+    itemIndex: number,
     direction: -1 | 1
-): TForm => {
-    const blocks = [...getBlockList(form, key)];
-    const nextIndex = blockIndex + direction;
+): TItem[] => {
+    const nextIndex = itemIndex + direction;
 
-    if (nextIndex < 0 || nextIndex >= blocks.length) {
-        return form;
+    if (nextIndex < 0 || nextIndex >= items.length) {
+        return items;
     }
 
-    [blocks[blockIndex], blocks[nextIndex]] = [blocks[nextIndex], blocks[blockIndex]];
+    const reorderedItems = [...items];
+    [reorderedItems[itemIndex], reorderedItems[nextIndex]] = [
+        reorderedItems[nextIndex],
+        reorderedItems[itemIndex],
+    ];
 
-    return {
-        ...form,
-        [key]: blocks,
-    };
+    return reorderedItems;
 };
 
-export const removeBlockAt = <
-    TForm,
-    TKey extends BlockListKey<TForm>
->(
-    form: TForm,
-    key: TKey,
-    blockIndex: number
-): TForm => ({
-    ...form,
-    [key]: getBlockList(form, key).filter((_, index) => index !== blockIndex),
-});
+export const removeItem = <TItem>(items: TItem[], itemIndex: number): TItem[] =>
+    items.filter((_, index) => index !== itemIndex);
 
 export const toRecordArray = (value: unknown): Array<Record<string, unknown>> =>
     Array.isArray(value)

@@ -54,7 +54,7 @@ export const OrbitalMoonsContainer = styled.div`
         filter:
             brightness(var(--moon-depth-brightness, 1))
             saturate(var(--moon-depth-saturation, 1));
-        will-change: filter, transform;
+        will-change: transform;
     }
 
     .orbital-moon-body {
@@ -75,7 +75,6 @@ export const OrbitalMoonsContainer = styled.div`
             0 0 1.4rem var(--moon-glow),
             0 0 2.4rem rgba(0, 0, 0, 0.08);
         filter: saturate(1.01) brightness(1);
-        will-change: transform;
     }
 
     .orbital-moon-surface {
@@ -135,6 +134,12 @@ export const OrbitalMoonsContainer = styled.div`
 
     @media (max-width: 900px) {
         --planetary-moons-scale: var(--planetary-moons-tablet-scale);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .orbital-moon-track {
+            animation: none;
+        }
     }
 
     @media (max-width: 640px) {

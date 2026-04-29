@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
 import { useNotifications } from "../../../features/notifications/hooks/useNotifications";
@@ -116,59 +116,59 @@ export const useGreetBotController = ({
     });
     const shouldShowGreetText = isInteractiveAtHome && !isShowingMenu && isHintVisible && !isConversationOpen;
 
-    const handleConversationClose = () => {
+    const handleConversationClose = useCallback(() => {
         setIsConversationOpen(false);
         setSessionKey(null);
-    };
+    }, []);
 
-    const handleConversationClick = () => {
+    const handleConversationClick = useCallback(() => {
         setSessionKey(createConversationSessionKey());
         setIsConversationOpen(true);
-    };
+    }, []);
 
-    const handleNotificationCenterClose = () => {
+    const handleNotificationCenterClose = useCallback(() => {
         setIsNotificationCenterOpen(false);
-    };
+    }, []);
 
-    const handleNotificationClick = () => {
+    const handleNotificationClick = useCallback(() => {
         void refreshNotifications();
         setIsNotificationCenterOpen(true);
-    };
+    }, [refreshNotifications]);
 
-    const handleTravelClick = () => {
+    const handleTravelClick = useCallback(() => {
         setSpaceTheme((currentTheme) => getNextSpaceTheme(currentTheme));
-    };
+    }, [setSpaceTheme]);
 
-    const handleTravelNextClick = () => {
+    const handleTravelNextClick = useCallback(() => {
         setSpaceTheme((currentTheme) => getNextSpaceTheme(currentTheme));
-    };
+    }, [setSpaceTheme]);
 
-    const handleTravelPreviousClick = () => {
+    const handleTravelPreviousClick = useCallback(() => {
         setSpaceTheme((currentTheme) => getPreviousSpaceTheme(currentTheme));
-    };
+    }, [setSpaceTheme]);
 
-    const handleSceneCameraClick = () => {
+    const handleSceneCameraClick = useCallback(() => {
         toggleManualMode();
-    };
+    }, [toggleManualMode]);
 
-    const handleSceneCameraNextClick = () => {
+    const handleSceneCameraNextClick = useCallback(() => {
         applyPreset(nextScenePresetId);
-    };
+    }, [applyPreset, nextScenePresetId]);
 
-    const handleSceneCameraPreviousClick = () => {
+    const handleSceneCameraPreviousClick = useCallback(() => {
         applyPreset(previousScenePresetId);
-    };
+    }, [applyPreset, previousScenePresetId]);
 
-    const handleRobotActivate = () => {
+    const handleRobotActivate = useCallback(() => {
         if (!isInteractiveAtHome) {
             return;
         }
 
         setIsHintVisible(false);
         showHomeMenu();
-    };
+    }, [isInteractiveAtHome, showHomeMenu]);
 
-    const handleRobotHoverChange = (hovered: boolean) => {
+    const handleRobotHoverChange = useCallback((hovered: boolean) => {
         setIsBotHovered(hovered);
 
         if (!isInteractiveAtHome || isShowingMenu) {
@@ -177,9 +177,9 @@ export const useGreetBotController = ({
         }
 
         setIsHintVisible(hovered);
-    };
+    }, [isInteractiveAtHome, isShowingMenu]);
 
-    const handleNotificationItemClick = (item: NotificationItem) => {
+    const handleNotificationItemClick = useCallback((item: NotificationItem) => {
         const openTarget = async () => {
             if (!item.readAt) {
                 await markAsRead(item.id);
@@ -193,11 +193,11 @@ export const useGreetBotController = ({
         };
 
         void openTarget();
-    };
+    }, [markAsRead, navigate]);
 
-    const handleMarkAllNotificationsAsRead = () => {
+    const handleMarkAllNotificationsAsRead = useCallback(() => {
         void markAllAsRead();
-    };
+    }, [markAllAsRead]);
 
     useEffect(() => {
         if (!isReturningFromContent) {
