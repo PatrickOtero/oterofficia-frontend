@@ -551,6 +551,35 @@ export const SpaceContainer = styled.div<{ $performanceTier: ScenePerformanceTie
               `
             : ""}
 
+    @media (min-width: 1180px) {
+        .asteroid-field-rock.large {
+            width: calc(var(--asteroid-size) * 1.14);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 1.14);
+        }
+
+        .asteroid-field-rock.giant {
+            width: calc(var(--asteroid-size) * 1.22);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 1.22);
+        }
+
+        .asteroid-field-rock.colossal {
+            width: calc(var(--asteroid-size) * 1.18);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 1.18);
+        }
+    }
+
+    @media (min-width: 1600px) {
+        .asteroid-field-rock.giant {
+            width: calc(var(--asteroid-size) * 1.34);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 1.34);
+        }
+
+        .asteroid-field-rock.colossal {
+            width: calc(var(--asteroid-size) * 1.3);
+            height: calc(var(--asteroid-size) * var(--asteroid-height-ratio) * 1.3);
+        }
+    }
+
     @media (max-width: 640px) {
         .warp-streak {
             width: calc(var(--warp-width) * 0.78);
